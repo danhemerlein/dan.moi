@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <title>dan hemerlein</title>
+    <script src="/contentful-env.js"></script>
+  </head>
+  <body>
+    <div class="paragraph-container">
+      <div class="homepage-paragraph">
+        <div>
+          <p class="body-text">
+            Dan Hemerlein is a reader first and a
+            <dropdown-trigger
+              for="note-taker"
+              bg="var(--color-mint)"
+              bg-open="var(--color-lime)"
+              body-bg="var(--color-spring)"
+              >note taker</dropdown-trigger
+            >
+            second.
+          </p>
+          <dropdown-panel id="note-taker">
+            <ul
+              id="note-taker-posts"
+              class="note-taker-posts"
+              aria-live="polite"
+            ></ul>
+          </dropdown-panel>
+          <p class="body-text middle-line">
+            He also
+            <dropdown-trigger
+              for="writes-code"
+              bg="var(--color-lavender)"
+              bg-open="var(--color-orchid)"
+              body-bg="var(--color-orchid-soft)"
+              >writes code,</dropdown-trigger
+            >
+            <dropdown-trigger
+              for="makes-music"
+              bg="var(--color-sky)"
+              bg-open="var(--color-azure)"
+              body-bg="var(--color-azure-soft)"
+              >makes music,</dropdown-trigger
+            >
+            and
+            <dropdown-trigger
+              for="collects-moods"
+              bg="var(--color-aqua)"
+              bg-open="var(--color-cyan)"
+              body-bg="var(--color-cyan-soft)"
+              >collects moods.</dropdown-trigger
+            >
+          </p>
+          <dropdown-panel id="writes-code">
+            <p>Builds tools, prototypes ideas, and ships small improvements.</p>
+          </dropdown-panel>
+          <dropdown-panel id="makes-music">
+            <p>Composes, experiments, and finds patterns in sound.</p>
+          </dropdown-panel>
+          <dropdown-panel id="collects-moods">
+            <p>
+              Curates vibes and turns feelings into something you can share.
+            </p>
+          </dropdown-panel>
+          <p class="body-text bottom-line">
+            Based in nyc and it's super trill.
+          </p>
+        </div>
+        <image-element
+          class="hero-image"
+          src="./assets/fonts/temporary-heart.png"
+          alt="temporary heart"
+        ></image-element>
+        <image-element
+          class="image-dock"
+          src="./assets/fonts/temporary-heart.png"
+          alt="temporary heart"
+          aria-hidden="true"
+        ></image-element>
+      </div>
+    </div>
+    <script src="./js/dropdown.js" defer></script>
+    <script src="./js/image.js" defer></script>
+    <script src="./js/dropdown-image.js" defer></script>
+    <script src="./js/contentful-graphql.js" defer></script>
+    <script src="./js/note-taker-posts.js" defer></script>
+  </body>
+</html>

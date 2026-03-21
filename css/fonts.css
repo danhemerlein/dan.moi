@@ -1,0 +1,63 @@
+@font-face {
+  font-family: "00Hypertext";
+  src:
+    url("../assets/fonts/00Hypertext-Regular.woff2") format("woff2"),
+    url("../assets/fonts/00Hypertext-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "00Hypertext";
+  src:
+    url("../assets/fonts/00Hypertext-Italic.woff2") format("woff2"),
+    url("../assets/fonts/00Hypertext-Italic.woff") format("woff");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "00Hypertext";
+  src:
+    url("../assets/fonts/00Hypertext-Bold.woff2") format("woff2"),
+    url("../assets/fonts/00Hypertext-Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "00Hypertext";
+  src:
+    url("../assets/fonts/00Hypertext-BoldItalic.woff2") format("woff2"),
+    url("../assets/fonts/00Hypertext-BoldItalic.woff") format("woff");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+html,
+body {
+  font-family:
+    "00Hypertext",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+/* Utility typography class: 00 Hypertext / Non-Commercial / Regular */
+.body-text {
+  font-family: "00Hypertext";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
