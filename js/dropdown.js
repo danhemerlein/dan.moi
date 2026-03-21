@@ -56,6 +56,32 @@
           :host {
             display: block;
           }
+          /* Stable box: match width to the column; avoid horizontal reflow from content. */
+          :host([variant="scroll"][open]) {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+          }
+          /* Fixed footprint: slot content must not change the open panel size — use explicit height. */
+          :host([variant="scroll"][open]) .inner {
+            --dropdown-scroll-panel-height: var(
+              --dropdown-scroll-max-height,
+              min(55vh, 28rem)
+            );
+            height: var(--dropdown-scroll-panel-height);
+            max-height: var(--dropdown-scroll-panel-height);
+            min-height: var(--dropdown-scroll-panel-height);
+            box-sizing: border-box;
+          }
+          :host([variant="scroll"][open]) .inner .content {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+          }
           .panel {
             border-radius: 0.875rem;
             overflow: hidden;
@@ -86,6 +112,12 @@
           .inner .content {
             min-height: 0;
           }
+          /* Closed: slot content must not contribute min-height (avoids layout shift when
+             slotted trees grow, e.g. blog list loading after fetch). */
+          :host(:not([open])) .inner > .content {
+            max-height: 0;
+            overflow: hidden;
+          }
           :host([open]) .inner {
             opacity: 1;
             transform: translateY(0);
@@ -110,6 +142,7 @@
 
       // Ensure panels are closed immediately (prevents an initial "flash").
       this.setAttribute("aria-hidden", "true");
+      this.setAttribute("inert", "");
     }
 
     connectedCallback() {
@@ -132,15 +165,34 @@
       const wasOpen = this.hasAttribute("open");
       if (wasOpen === isOpen) {
         this.setAttribute("aria-hidden", String(!isOpen));
+        this.#syncInert(isOpen);
         return;
       }
+
+      if (!isOpen && wasOpen && this.contains(document.activeElement)) {
+        const id = this.id;
+        if (id) {
+          const trigger = document.querySelector(
+            `dropdown-trigger[for="${CSS.escape(id)}"]`,
+          );
+          trigger?.shadowRoot?.querySelector("button")?.focus();
+        }
+      }
+
       if (isOpen) this.setAttribute("open", "");
       else this.removeAttribute("open");
 
       this.setAttribute("aria-hidden", String(!isOpen));
+      this.#syncInert(isOpen);
       this.dispatchEvent(
         new CustomEvent(STATE_EVENT, { bubbles: true, composed: true }),
       );
+    }
+
+    /** aria-hidden alone does not exclude focusables from tab order; inert does. */
+    #syncInert(isOpen) {
+      if (isOpen) this.removeAttribute("inert");
+      else this.setAttribute("inert", "");
     }
   }
 

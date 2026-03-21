@@ -18,6 +18,14 @@
   --color-cyan: #6bd8ef;
   --color-cyan-soft: #eafbff;
   --body-background: #fff;
+  --color-blog-posts-item-bg: #f4fff6;
+  --color-blog-posts-item-border: #c4e9ca;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html, body, div, span, applet, object, iframe,

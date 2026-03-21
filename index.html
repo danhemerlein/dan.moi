@@ -6,31 +6,56 @@
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/blog.css" />
     <title>dan hemerlein</title>
     <script src="/contentful-env.js"></script>
   </head>
   <body>
-    <div class="paragraph-container">
-      <div class="homepage-paragraph">
-        <div>
-          <p class="body-text">
-            Dan Hemerlein is a reader first and a
-            <dropdown-trigger
-              for="note-taker"
-              bg="var(--color-mint)"
-              bg-open="var(--color-lime)"
-              body-bg="var(--color-spring)"
-              >note taker</dropdown-trigger
-            >
-            second.
-          </p>
-          <dropdown-panel id="note-taker">
-            <ul
-              id="note-taker-posts"
-              class="note-taker-posts"
-              aria-live="polite"
-            ></ul>
-          </dropdown-panel>
+    <main class="main-content">
+      <div class="container">
+        <div class="paragraph-container">
+          <div class="blog-intro">
+            <p class="body-text">
+              Dan Hemerlein is a reader first and a
+              <dropdown-trigger
+                for="blog"
+                bg="var(--color-mint)"
+                bg-open="var(--color-lime)"
+                body-bg="var(--color-spring)"
+                >note taker</dropdown-trigger
+              >
+              second.
+            </p>
+            <dropdown-panel id="blog" variant="scroll">
+              <div id="blog-panel" class="blog-panel" aria-live="polite">
+                <div
+                  id="blog-posts-list-wrap"
+                  class="blog-panel__list-wrap"
+                >
+                  <ul id="blog-posts" class="blog-posts"></ul>
+                </div>
+                <div
+                  id="blog-post-article"
+                  class="blog-panel__article"
+                  hidden
+                >
+                  <button
+                    type="button"
+                    id="blog-post-back"
+                    class="blog-post__back"
+                  >
+                    Back
+                  </button>
+                  <h2 id="blog-post-title" class="blog-post__title"></h2>
+                  <div id="blog-post-meta" hidden></div>
+                  <article
+                    id="blog-post-body"
+                    class="blog-post__body"
+                  ></article>
+                </div>
+              </div>
+            </dropdown-panel>
+          </div>
           <p class="body-text middle-line">
             He also
             <dropdown-trigger
@@ -83,11 +108,12 @@
           aria-hidden="true"
         ></image-element>
       </div>
-    </div>
+    </main>
+    <script src="./js/layout-debug.js" defer></script>
     <script src="./js/dropdown.js" defer></script>
     <script src="./js/image.js" defer></script>
     <script src="./js/dropdown-image.js" defer></script>
     <script src="./js/contentful-graphql.js" defer></script>
-    <script src="./js/note-taker-posts.js" defer></script>
+    <script type="module" src="./js/blog-panel.js"></script>
   </body>
 </html>

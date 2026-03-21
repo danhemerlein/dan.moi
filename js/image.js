@@ -12,7 +12,6 @@
         <style>
           :host {
             display: block;
-            margin-top: 1.25rem;
             align-self: center; /* centers within flex cross-axis */
           }
 
@@ -81,4 +80,3 @@
 
   customElements.define("image-element", MoiImage);
 })();
-

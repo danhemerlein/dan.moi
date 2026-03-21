@@ -37,6 +37,54 @@
           title
           handle
           published
+          content {
+            json
+          }
+        }
+      }
+    }
+  `;
+
+  /** Rich text field API id must match your Blog post model (this space uses "content"). */
+  const GET_BLOG_POST_BY_HANDLE_QUERY = `
+    query BlogPostByHandle($handle: String!) {
+      blogPostCollection(where: { handle: $handle }, limit: 1) {
+        items {
+          sys {
+            id
+          }
+          title
+          handle
+          published
+          content {
+            json
+            links {
+              assets {
+                block {
+                  sys {
+                    id
+                  }
+                  url
+                  title
+                  description
+                  width
+                  height
+                  contentType
+                }
+              }
+              entries {
+                block {
+                  sys {
+                    id
+                  }
+                  ... on BlogPost {
+                    title
+                    handle
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -44,4 +92,5 @@
 
   window.contentfulRequest = contentfulRequest;
   window.GET_ALL_BLOG_POSTS_QUERY = GET_ALL_BLOG_POSTS_QUERY;
+  window.GET_BLOG_POST_BY_HANDLE_QUERY = GET_BLOG_POST_BY_HANDLE_QUERY;
 })();
