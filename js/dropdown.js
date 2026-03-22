@@ -122,7 +122,6 @@
             opacity: 1;
             transform: translateY(0);
             grid-template-rows: 1fr;
-            padding: 0.75rem 1rem;
             pointer-events: auto;
           }
           ::slotted(p) {

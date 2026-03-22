@@ -1,5 +1,8 @@
 import { documentToHtmlString } from "https://esm.sh/@contentful/rich-text-html-renderer@16.3.0";
-import { BLOCKS, INLINES } from "https://esm.sh/@contentful/rich-text-types@16.0.0";
+import {
+  BLOCKS,
+  INLINES,
+} from "https://esm.sh/@contentful/rich-text-types@16.0.0";
 import { createBlogPostMetaElement } from "./blog-utils.js";
 
 function layoutDebugMark(name, detail) {
@@ -34,6 +37,50 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
+function getYearFromPublished(published) {
+  if (!published) return null;
+  const d = new Date(published);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.getFullYear();
+}
+
+function yearBoundsFromPosts(items) {
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (const item of items) {
+    const y = getYearFromPublished(item?.published);
+    if (y == null) continue;
+    minY = Math.min(minY, y);
+    maxY = Math.max(maxY, y);
+  }
+  if (!Number.isFinite(minY)) return { min: null, max: null };
+  return { min: minY, max: maxY };
+}
+
+function buildYearFilterOptions(minY, maxY) {
+  const opts = [{ value: "", label: "ALL" }];
+  if (minY == null || maxY == null) return opts;
+  for (let y = maxY; y >= minY; y--) {
+    opts.push({ value: String(y), label: String(y) });
+  }
+  return opts;
+}
+
+function filterPostsByYear(items, yearStr) {
+  if (!yearStr) return items;
+  const y = Number(yearStr);
+  if (Number.isNaN(y)) return items;
+  return items.filter((i) => getYearFromPublished(i?.published) === y);
+}
+
+/** How many rows to reveal each time the list hits the bottom (ALL view only). */
+const BLOG_LIST_PAGE_SIZE = 20;
+
+function formatPostCount(n) {
+  const k = Math.max(0, Math.floor(Number(n)) || 0);
+  return `${k} ${k === 1 ? "post" : "posts"}`;
+}
+
 function buildAssetEntryMaps(links) {
   const assets = new Map();
   for (const a of links?.assets?.block ?? []) {
@@ -57,8 +104,14 @@ function richTextOptions(links) {
         const asset = assetMap.get(id);
         if (!asset?.url) return "";
         const alt = escapeHtml(asset.title || asset.description || "");
-        const w = asset.width != null ? ` width="${escapeHtml(String(asset.width))}"` : "";
-        const h = asset.height != null ? ` height="${escapeHtml(String(asset.height))}"` : "";
+        const w =
+          asset.width != null
+            ? ` width="${escapeHtml(String(asset.width))}"`
+            : "";
+        const h =
+          asset.height != null
+            ? ` height="${escapeHtml(String(asset.height))}"`
+            : "";
         return `<figure class="blog-post__figure"><img src="${escapeHtml(asset.url)}" alt="${alt}"${w}${h} loading="lazy" /></figure>`;
       },
       [BLOCKS.EMBEDDED_ENTRY]: (node, next) => {
@@ -114,7 +167,7 @@ function setListStatus(ul, text, className = "blog-posts__status") {
   ul.appendChild(li);
 }
 
-function renderPostList(ul, items) {
+function renderPostList(ul, items, emptyMessage = "No posts yet.") {
   ul.replaceChildren();
   const fragment = document.createDocumentFragment();
   for (const item of items) {
@@ -148,7 +201,7 @@ function renderPostList(ul, items) {
   }
   ul.appendChild(fragment);
   if (!ul.children.length) {
-    setListStatus(ul, "No posts yet.");
+    setListStatus(ul, emptyMessage);
   }
   layoutDebugMark("blog:list-rendered", {
     itemCount: items.filter(Boolean).length,
@@ -158,6 +211,10 @@ function renderPostList(ul, items) {
 function initBlogPanel() {
   const panel = document.getElementById("blog-panel");
   const ul = document.getElementById("blog-posts");
+  const yearFilterEl = document.getElementById("blog-year-filter");
+  const listFooter = document.getElementById("blog-posts-list-footer");
+  const pageStatusEl = document.getElementById("blog-posts-page-status");
+  const loadSentinel = document.getElementById("blog-posts-load-sentinel");
   const listWrap = document.getElementById("blog-posts-list-wrap");
   const articleRoot = document.getElementById("blog-post-article");
   const backBtn = document.getElementById("blog-post-back");
@@ -182,6 +239,107 @@ function initBlogPanel() {
 
   /** Used to paint title + meta immediately when opening from the list (reduces CLS). */
   let blogPostListItems = [];
+
+  /**
+   * How many posts to show from the top when viewing ALL (grows via scroll / sentinel).
+   * Year filter shows the full set for that year in one pass.
+   */
+  let visibleCount = BLOG_LIST_PAGE_SIZE;
+
+  function getYearFilterValue() {
+    if (!yearFilterEl) return "";
+    return yearFilterEl.value ?? "";
+  }
+
+  /** Syncs footer copy + infinite-scroll sentinel (ALL only). */
+  function updateListFooterAndSentinel(
+    yearStr,
+    total,
+    toShow,
+    sliceForDisplay,
+  ) {
+    if (loadSentinel) {
+      const needMore =
+        !yearStr && total > 0 && toShow < total && sliceForDisplay.length > 0;
+      loadSentinel.hidden = !needMore;
+    }
+
+    if (!listFooter || !pageStatusEl) return;
+
+    if (total === 0) {
+      if (yearStr) {
+        listFooter.hidden = false;
+        pageStatusEl.textContent = `${formatPostCount(0)} in ${yearStr}`;
+      } else {
+        listFooter.hidden = true;
+        pageStatusEl.textContent = "";
+      }
+      return;
+    }
+
+    listFooter.hidden = false;
+
+    if (yearStr) {
+      pageStatusEl.textContent = `${formatPostCount(total)} in ${yearStr}`;
+      return;
+    }
+
+    pageStatusEl.textContent = `Showing ${toShow} of ${total}`;
+  }
+
+  let listLoadObserver = null;
+  if (loadSentinel && listWrap) {
+    listLoadObserver = new IntersectionObserver(
+      (entries) => {
+        const e = entries[0];
+        if (!e?.isIntersecting) return;
+        if (getYearFilterValue()) return;
+        const filtered = filterPostsByYear(blogPostListItems, "");
+        const total = filtered.length;
+        if (visibleCount >= total) return;
+        visibleCount = Math.min(
+          visibleCount + BLOG_LIST_PAGE_SIZE,
+          total,
+        );
+        refreshBlogList();
+      },
+      { root: listWrap, rootMargin: "120px", threshold: 0 },
+    );
+  }
+
+  function refreshBlogList() {
+    const yearStr = getYearFilterValue();
+    const filtered = filterPostsByYear(blogPostListItems, yearStr);
+    const total = filtered.length;
+
+    let pageItems;
+    let toShow;
+
+    if (yearStr) {
+      pageItems = filtered;
+      toShow = total;
+    } else {
+      toShow = Math.min(visibleCount, total);
+      pageItems = filtered.slice(0, toShow);
+    }
+
+    const emptyMessage =
+      total === 0
+        ? yearStr
+          ? "No posts for this year."
+          : "No posts yet."
+        : "No posts yet.";
+
+    renderPostList(ul, pageItems, emptyMessage);
+    updateListFooterAndSentinel(yearStr, total, toShow, pageItems);
+
+    if (listLoadObserver && loadSentinel) {
+      listLoadObserver.disconnect();
+      if (!loadSentinel.hidden) {
+        listLoadObserver.observe(loadSentinel);
+      }
+    }
+  }
 
   function scrollBlogPanelToTop() {
     const blogPanel = document.getElementById("blog");
@@ -279,8 +437,7 @@ function initBlogPanel() {
     if (!item) {
       titleEl.textContent = "";
       bodyEl.removeAttribute("aria-busy");
-      bodyEl.innerHTML =
-        '<p class="blog-post__error">Post not found.</p>';
+      bodyEl.innerHTML = '<p class="blog-post__error">Post not found.</p>';
       metaEl.replaceChildren();
       metaEl.hidden = true;
       return;
@@ -354,25 +511,74 @@ function initBlogPanel() {
     showListView();
   });
 
+  if (yearFilterEl) {
+    yearFilterEl.addEventListener("change", () => {
+      if (!getYearFilterValue()) {
+        visibleCount = BLOG_LIST_PAGE_SIZE;
+      }
+      refreshBlogList();
+      listWrap.scrollTop = 0;
+    });
+  }
+
   (async () => {
     layoutDebugMark("blog:list-fetch-start");
-    setListStatus(ul, "Loading…", "blog-posts__status blog-posts__status--loading");
-
-    const { data, errors } = await window.contentfulRequest(
-      window.GET_ALL_BLOG_POSTS_QUERY,
+    setListStatus(
+      ul,
+      "Loading…",
+      "blog-posts__status blog-posts__status--loading",
     );
+
+    const [listRes, boundsRes] = await Promise.all([
+      window.fetchAllBlogPosts(),
+      window.contentfulRequest(window.GET_BLOG_YEAR_BOUNDS_QUERY),
+    ]);
+
+    const { items: fetchedItems, errors } = listRes;
 
     layoutDebugMark("blog:list-fetch-done", { ok: !errors?.length });
 
     if (errors?.length) {
       const first = errors[0]?.message || "Could not load posts.";
       setListStatus(ul, first, "blog-posts__status blog-posts__status--error");
+      if (yearFilterEl) yearFilterEl.hidden = true;
+      if (listFooter) listFooter.hidden = true;
+      if (loadSentinel) loadSentinel.hidden = true;
       return;
     }
 
-    const collection = data?.blogPostCollection;
-    blogPostListItems = collection?.items ?? [];
-    renderPostList(ul, blogPostListItems);
+    blogPostListItems = fetchedItems ?? [];
+    visibleCount = BLOG_LIST_PAGE_SIZE;
+
+    let minY = null;
+    let maxY = null;
+    if (!boundsRes.errors?.length && boundsRes.data) {
+      const oldestPub = boundsRes.data.oldest?.items?.[0]?.published;
+      const newestPub = boundsRes.data.newest?.items?.[0]?.published;
+      if (oldestPub && newestPub) {
+        minY = new Date(oldestPub).getFullYear();
+        maxY = new Date(newestPub).getFullYear();
+      }
+    }
+    if (minY == null || maxY == null) {
+      const fb = yearBoundsFromPosts(blogPostListItems);
+      minY = fb.min;
+      maxY = fb.max;
+    }
+
+    if (
+      yearFilterEl &&
+      blogPostListItems.length &&
+      minY != null &&
+      maxY != null
+    ) {
+      yearFilterEl.setOptions(buildYearFilterOptions(minY, maxY));
+      yearFilterEl.hidden = false;
+      refreshBlogList();
+    } else {
+      if (yearFilterEl) yearFilterEl.hidden = true;
+      refreshBlogList();
+    }
   })();
 }
 

@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
+    />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="stylesheet" href="./css/index.css" />
@@ -28,17 +34,33 @@
             </p>
             <dropdown-panel id="blog" variant="scroll">
               <div id="blog-panel" class="blog-panel" aria-live="polite">
-                <div
-                  id="blog-posts-list-wrap"
-                  class="blog-panel__list-wrap"
-                >
+                <accessible-select
+                  id="blog-year-filter"
+                  class="blog-year-filter type-roboto-mono-12-caps"
+                  hidden
+                  placeholder="YEAR"
+                  aria-label="Filter posts by year published"
+                ></accessible-select>
+                <div id="blog-posts-list-wrap" class="blog-panel__list-wrap">
                   <ul id="blog-posts" class="blog-posts"></ul>
+                  <div
+                    id="blog-posts-load-sentinel"
+                    class="blog-posts-load-sentinel"
+                    hidden
+                    aria-hidden="true"
+                  ></div>
                 </div>
                 <div
-                  id="blog-post-article"
-                  class="blog-panel__article"
+                  id="blog-posts-list-footer"
+                  class="blog-posts-list-footer"
                   hidden
                 >
+                  <p
+                    id="blog-posts-page-status"
+                    class="blog-posts-list-footer__status"
+                  ></p>
+                </div>
+                <div id="blog-post-article" class="blog-panel__article" hidden>
                   <button
                     type="button"
                     id="blog-post-back"
@@ -111,6 +133,7 @@
     </main>
     <script src="./js/layout-debug.js" defer></script>
     <script src="./js/dropdown.js" defer></script>
+    <script src="./js/accessible-select.js" defer></script>
     <script src="./js/image.js" defer></script>
     <script src="./js/dropdown-image.js" defer></script>
     <script src="./js/contentful-graphql.js" defer></script>
