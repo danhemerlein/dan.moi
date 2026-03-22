@@ -27,7 +27,7 @@ body {
   max-height: 100vh;
   margin: 0;
   overflow: hidden;
-  background-color: var(--body-background);
+  background-color: var(--color-surface);
   transition: background-color 260ms ease;
 }
 
@@ -74,6 +74,8 @@ body {
 
 .middle-line {
   margin-top: 0.75rem;
+  /* Match blog intro: cap scroll height for writes-code / other dropdowns here */
+  --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
 }
 
 .bottom-line {

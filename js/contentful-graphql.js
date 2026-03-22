@@ -126,8 +126,95 @@
     }
   `;
 
+  /** List payload: ids + titles (+ optional date); full rich text loaded per selection.
+   * Field API id must match Contentful (default: timelineLaunchDate). If you use another
+   * field for timeline text, add it here and read it in code-panel `timelineValueFromItem`. */
+  const GET_CODE_PROJECTS_PAGE_QUERY = `
+    query CodeProjectsPage($skip: Int!, $limit: Int!) {
+      codeProjectCollection(order: order_ASC, skip: $skip, limit: $limit) {
+        items {
+          sys {
+            id
+          }
+          title
+          timelineLaunchDate
+        }
+      }
+    }
+  `;
+
+  async function fetchAllCodeProjects() {
+    const pageSize = 100;
+    const all = [];
+    let skip = 0;
+    for (;;) {
+      const { data, errors } = await contentfulRequest(
+        GET_CODE_PROJECTS_PAGE_QUERY,
+        { skip, limit: pageSize },
+      );
+      if (errors?.length) {
+        return { items: all, errors };
+      }
+      const items = data?.codeProjectCollection?.items ?? [];
+      all.push(...items);
+      if (items.length < pageSize) break;
+      skip += pageSize;
+    }
+    return { items: all, errors: [] };
+  }
+
+  const GET_CODE_PROJECT_BY_ID_QUERY = `
+    query CodeProjectById($id: String!) {
+      codeProjectCollection(where: { sys: { id: $id } }, limit: 1) {
+        items {
+          sys {
+            id
+          }
+          title
+          link
+          timelineLaunchDate
+          image {
+            url
+            title
+          }
+          description {
+            json
+            links {
+              assets {
+                block {
+                  sys {
+                    id
+                  }
+                  url
+                  title
+                  description
+                  width
+                  height
+                  contentType
+                }
+              }
+              entries {
+                block {
+                  sys {
+                    id
+                  }
+                  ... on BlogPost {
+                    title
+                    handle
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
   window.contentfulRequest = contentfulRequest;
   window.fetchAllBlogPosts = fetchAllBlogPosts;
+  window.fetchAllCodeProjects = fetchAllCodeProjects;
   window.GET_BLOG_YEAR_BOUNDS_QUERY = GET_BLOG_YEAR_BOUNDS_QUERY;
   window.GET_BLOG_POST_BY_HANDLE_QUERY = GET_BLOG_POST_BY_HANDLE_QUERY;
+  window.GET_CODE_PROJECT_BY_ID_QUERY = GET_CODE_PROJECT_BY_ID_QUERY;
 })();

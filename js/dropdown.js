@@ -5,7 +5,7 @@
   function syncBodyBackground() {
     const openPanel = document.querySelector("dropdown-panel[open]");
     if (!openPanel?.id) {
-      document.documentElement.style.removeProperty("--body-background");
+      document.documentElement.style.removeProperty("--color-surface");
       return;
     }
     const trigger = document.querySelector(
@@ -13,9 +13,9 @@
     );
     const bodyBg = trigger?.getAttribute("body-bg");
     if (bodyBg) {
-      document.documentElement.style.setProperty("--body-background", bodyBg);
+      document.documentElement.style.setProperty("--color-surface", bodyBg);
     } else {
-      document.documentElement.style.removeProperty("--body-background");
+      document.documentElement.style.removeProperty("--color-surface");
     }
   }
 
