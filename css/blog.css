@@ -23,8 +23,21 @@ dropdown-panel#blog:not([open]) #blog-panel {
   max-width: 100%;
   min-width: 0;
   min-height: 0;
-  box-sizing: border-box;
   overflow: hidden;
+}
+
+.blog-year-filter {
+  flex-shrink: 0;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+accessible-select.blog-year-filter:not(:defined) {
+  display: block;
+  min-height: 2.75rem;
+  margin-bottom: 28px;
 }
 
 .blog-panel__list-wrap {
@@ -169,6 +182,36 @@ dropdown-panel#blog:not([open]) #blog-panel {
 .blog-posts__status--error {
   opacity: 1;
   font-style: normal;
+}
+
+/* Scroll target for loading more posts (ALL view only); sits below the list inside the scroll area. */
+.blog-posts-load-sentinel {
+  flex-shrink: 0;
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.blog-posts-list-footer {
+  flex-shrink: 0;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-blog-posts-item-border);
+}
+
+.blog-posts-list-footer__status {
+  margin: 0;
+  font-family:
+    "Roboto Mono",
+    ui-monospace,
+    monospace;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  opacity: 0.85;
 }
 
 .blog-panel__article {

@@ -27,9 +27,10 @@
     return { data: json.data ?? {}, errors: [] };
   }
 
-  const GET_ALL_BLOG_POSTS_QUERY = `
-    query AllBlogPosts {
-      blogPostCollection(order: published_DESC, limit: 50) {
+  /** Contentful caps collection queries at 100 items; use skip to page through. */
+  const GET_BLOG_POSTS_PAGE_QUERY = `
+    query BlogPostsPage($skip: Int!, $limit: Int!) {
+      blogPostCollection(order: published_DESC, skip: $skip, limit: $limit) {
         items {
           sys {
             id
@@ -40,6 +41,41 @@
           content {
             json
           }
+        }
+      }
+    }
+  `;
+
+  async function fetchAllBlogPosts() {
+    const pageSize = 100;
+    const all = [];
+    let skip = 0;
+    for (;;) {
+      const { data, errors } = await contentfulRequest(
+        GET_BLOG_POSTS_PAGE_QUERY,
+        { skip, limit: pageSize },
+      );
+      if (errors?.length) {
+        return { items: all, errors };
+      }
+      const items = data?.blogPostCollection?.items ?? [];
+      all.push(...items);
+      if (items.length < pageSize) break;
+      skip += pageSize;
+    }
+    return { items: all, errors: [] };
+  }
+
+  const GET_BLOG_YEAR_BOUNDS_QUERY = `
+    query BlogYearBounds {
+      oldest: blogPostCollection(order: published_ASC, limit: 1) {
+        items {
+          published
+        }
+      }
+      newest: blogPostCollection(order: published_DESC, limit: 1) {
+        items {
+          published
         }
       }
     }
@@ -91,6 +127,7 @@
   `;
 
   window.contentfulRequest = contentfulRequest;
-  window.GET_ALL_BLOG_POSTS_QUERY = GET_ALL_BLOG_POSTS_QUERY;
+  window.fetchAllBlogPosts = fetchAllBlogPosts;
+  window.GET_BLOG_YEAR_BOUNDS_QUERY = GET_BLOG_YEAR_BOUNDS_QUERY;
   window.GET_BLOG_POST_BY_HANDLE_QUERY = GET_BLOG_POST_BY_HANDLE_QUERY;
 })();
