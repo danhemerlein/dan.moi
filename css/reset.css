@@ -17,9 +17,21 @@
   --color-azure-soft: #e9f3ff;
   --color-cyan: #6bd8ef;
   --color-cyan-soft: #eafbff;
-  --body-background: #fff;
-  --color-blog-posts-item-bg: #f4fff6;
-  --color-blog-posts-item-border: #c4e9ca;
+  --color-white: #fff;
+  --color-surface: var(--color-white);
+
+  --color-mint-cream: #f4fff6;
+  --color-mint-border: #c4e9ca;
+
+  --color-lavender-cream: #fefbff;
+  --color-lilac-border: #edd7f8;
+  --color-stone-gray: #6b6b6b;
+
+  /* Ink at opacity (base rgb matches --color-ink) */
+  --color-ink-6: rgba(27, 27, 27, 0.06);
+  --color-ink-10: rgba(27, 27, 27, 0.1);
+  --color-ink-14: rgba(27, 27, 27, 0.14);
+  --color-ink-18: rgba(27, 27, 27, 0.18);
 }
 
 *,

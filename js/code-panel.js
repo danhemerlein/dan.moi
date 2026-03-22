@@ -1,0 +1,313 @@
+import { documentToHtmlString } from "https://esm.sh/@contentful/rich-text-html-renderer@16.3.0";
+import {
+  escapeHtml,
+  richTextOptions,
+} from "./contentful-rich-text-html.js";
+
+function layoutDebugMark(name, detail) {
+  window.__layoutDebugMark?.(name, detail);
+}
+
+/** Ensures at least one paint before continuing (skeleton visible on fast/cached fetches). */
+function waitForPaint() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+}
+
+const ARTICLE_BODY_SKELETON_HTML = `
+<div class="blog-post__skeleton" aria-hidden="true">
+  <div class="blog-post__skeleton-line blog-post__skeleton-line--lg"></div>
+  <div class="blog-post__skeleton-line"></div>
+  <div class="blog-post__skeleton-line"></div>
+  <div class="blog-post__skeleton-line"></div>
+  <div class="blog-post__skeleton-line blog-post__skeleton-line--sm"></div>
+</div>`;
+
+/**
+ * Renders a single year or a year range from Contentful timeline / launch data.
+ * Handles ISO Date strings, and plain text that includes months or ranges (e.g. "Jan 2020 – Dec 2022").
+ */
+function formatTimelineLabel(raw) {
+  if (raw == null) return null;
+  const s = String(raw).trim();
+  if (!s) return null;
+
+  const fourDigitYears = s.match(/\b(19\d{2}|20\d{2})\b/g);
+  if (fourDigitYears?.length) {
+    const years = [...new Set(fourDigitYears.map(Number))].sort((a, b) => a - b);
+    if (years.length === 1) return String(years[0]);
+    return `${years[0]}–${years[years.length - 1]}`;
+  }
+
+  const t = Date.parse(s);
+  if (!Number.isNaN(t)) {
+    return String(new Date(t).getUTCFullYear());
+  }
+
+  return null;
+}
+
+function setListStatus(ul, text, className = "panel-list__status") {
+  ul.replaceChildren();
+  const li = document.createElement("li");
+  li.className = className;
+  li.textContent = text;
+  ul.appendChild(li);
+}
+
+function renderProjectList(ul, items, emptyMessage = "No projects yet.") {
+  ul.replaceChildren();
+  const fragment = document.createDocumentFragment();
+  for (const item of items) {
+    if (!item) continue;
+    const id = item.sys?.id?.trim();
+    const title = item.title?.trim() || "Untitled";
+    const li = document.createElement("li");
+    li.className = "panel-list__item";
+
+    const yearStr = formatTimelineLabel(item.timelineLaunchDate);
+
+    if (id) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "panel-list__button";
+      btn.dataset.id = id;
+      btn.textContent = title;
+      li.appendChild(btn);
+    } else {
+      const titleOnly = document.createElement("span");
+      titleOnly.className = "panel-list__title-fallback";
+      titleOnly.textContent = title;
+      li.appendChild(titleOnly);
+    }
+
+    if (yearStr) {
+      const meta = document.createElement("p");
+      meta.className = "code-project-meta code-project-meta--list";
+      meta.textContent = yearStr;
+      li.appendChild(meta);
+    }
+
+    fragment.appendChild(li);
+  }
+  ul.appendChild(fragment);
+  if (!ul.children.length) {
+    setListStatus(ul, emptyMessage);
+  }
+  layoutDebugMark("code:list-rendered", {
+    itemCount: items.filter(Boolean).length,
+  });
+}
+
+function initCodePanel() {
+  const panel = document.getElementById("code-panel");
+  const ul = document.getElementById("code-projects");
+  const listWrap = document.getElementById("code-projects-list-wrap");
+  const articleRoot = document.getElementById("code-project-article");
+  const backBtn = document.getElementById("code-project-back");
+  const titleEl = document.getElementById("code-project-title");
+  const heroEl = document.getElementById("code-project-hero");
+  const bodyEl = document.getElementById("code-project-body");
+
+  if (
+    !panel ||
+    !ul ||
+    !listWrap ||
+    !articleRoot ||
+    !backBtn ||
+    !titleEl ||
+    !heroEl ||
+    !bodyEl
+  ) {
+    return;
+  }
+
+  layoutDebugMark("code:panel-init");
+
+  let codeProjectListItems = [];
+
+  function scrollCodePanelToTop() {
+    const writesCodePanel = document.getElementById("writes-code");
+    const scrollEl = writesCodePanel?.shadowRoot?.querySelector(".content");
+    if (scrollEl instanceof HTMLElement) scrollEl.scrollTop = 0;
+    listWrap.scrollTop = 0;
+    articleRoot.scrollTop = 0;
+  }
+
+  function showListView() {
+    layoutDebugMark("code:show-list-view");
+    listWrap.hidden = false;
+    articleRoot.hidden = true;
+    bodyEl.removeAttribute("aria-busy");
+    bodyEl.innerHTML = "";
+    titleEl.textContent = "";
+    heroEl.replaceChildren();
+    heroEl.hidden = true;
+    scrollCodePanelToTop();
+  }
+
+  function showArticleView() {
+    layoutDebugMark("code:show-article-view");
+    listWrap.hidden = true;
+    articleRoot.hidden = false;
+    scrollCodePanelToTop();
+    backBtn.focus({ preventScroll: true });
+  }
+
+  async function openProjectById(id) {
+    if (!id) return;
+
+    layoutDebugMark("code:open-project-start", { id });
+    showArticleView();
+
+    bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML;
+    bodyEl.setAttribute("aria-busy", "true");
+
+    const snapshot = codeProjectListItems.find((i) => i?.sys?.id === id);
+
+    if (snapshot) {
+      titleEl.textContent = snapshot.title?.trim() || "Untitled";
+    } else {
+      titleEl.textContent = "Loading…";
+    }
+
+    await waitForPaint();
+
+    const { data, errors } = await window.contentfulRequest(
+      window.GET_CODE_PROJECT_BY_ID_QUERY,
+      { id },
+    );
+
+    layoutDebugMark("code:open-project-fetch-done", {
+      ok: !errors?.length,
+      hasItem: Boolean(data?.codeProjectCollection?.items?.[0]),
+    });
+
+    if (errors?.length) {
+      const first = errors[0]?.message || "Could not load project.";
+      titleEl.textContent = "";
+      bodyEl.removeAttribute("aria-busy");
+      bodyEl.innerHTML = `<p class="blog-post__error">${escapeHtml(first)}</p>`;
+      heroEl.replaceChildren();
+      heroEl.hidden = true;
+      return;
+    }
+
+    const item = data?.codeProjectCollection?.items?.[0];
+    if (!item) {
+      titleEl.textContent = "";
+      bodyEl.removeAttribute("aria-busy");
+      bodyEl.innerHTML =
+        '<p class="blog-post__error">Project not found.</p>';
+      heroEl.replaceChildren();
+      heroEl.hidden = true;
+      return;
+    }
+
+    const t = item.title?.trim() || "Untitled";
+    titleEl.textContent = t;
+
+    heroEl.replaceChildren();
+    const imgFields = item.image;
+    if (imgFields?.url) {
+      const fig = document.createElement("figure");
+      fig.className = "code-project__figure";
+      const img = document.createElement("img");
+      img.src = imgFields.url;
+      img.alt = (imgFields.title || "").trim() || "";
+      img.loading = "lazy";
+      fig.appendChild(img);
+      heroEl.appendChild(fig);
+      heroEl.hidden = false;
+    } else {
+      heroEl.hidden = true;
+    }
+
+    const json = item.description?.json;
+    const links = item.description?.links;
+
+    if (!json) {
+      bodyEl.removeAttribute("aria-busy");
+      bodyEl.innerHTML =
+        '<p class="blog-post__empty">No description for this project yet.</p>';
+      return;
+    }
+
+    try {
+      const html = documentToHtmlString(json, richTextOptions(links));
+      bodyEl.removeAttribute("aria-busy");
+      bodyEl.innerHTML = html;
+      layoutDebugMark("code:article-body-set", { htmlLength: html.length });
+    } catch (e) {
+      console.warn(e);
+      bodyEl.removeAttribute("aria-busy");
+      bodyEl.innerHTML =
+        '<p class="blog-post__error">Could not render this project.</p>';
+    }
+  }
+
+  panel.addEventListener("click", (ev) => {
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+
+    const projectBtn = t.closest("[data-id].panel-list__button");
+    if (projectBtn instanceof HTMLElement) {
+      const id = projectBtn.dataset.id?.trim();
+      if (id) {
+        ev.preventDefault();
+        openProjectById(id);
+      }
+      return;
+    }
+
+    const postBtn = t.closest(
+      "[data-handle].blog-post__embed-btn, [data-handle].blog-post__inline-entry, [data-handle].blog-post__embed-inline-btn",
+    );
+    if (postBtn instanceof HTMLElement) {
+      const handle = postBtn.dataset.handle?.trim();
+      if (handle) {
+        ev.preventDefault();
+        window.__openBlogPostByHandle?.(handle);
+      }
+    }
+  });
+
+  backBtn.addEventListener("click", () => {
+    layoutDebugMark("code:back-click");
+    showListView();
+  });
+
+  (async () => {
+    layoutDebugMark("code:list-fetch-start");
+    setListStatus(
+      ul,
+      "Loading…",
+      "panel-list__status panel-list__status--loading",
+    );
+
+    const { items: fetchedItems, errors } =
+      await window.fetchAllCodeProjects();
+
+    layoutDebugMark("code:list-fetch-done", { ok: !errors?.length });
+
+    if (errors?.length) {
+      const first = errors[0]?.message || "Could not load projects.";
+      setListStatus(ul, first, "panel-list__status panel-list__status--error");
+      return;
+    }
+
+    codeProjectListItems = fetchedItems ?? [];
+    renderProjectList(ul, codeProjectListItems);
+  })();
+}
+
+function boot() {
+  initCodePanel();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
