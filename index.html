@@ -70,8 +70,15 @@
               </div>
             </div>
           </dropdown-panel>
-          <dropdown-panel id="makes-music">
-            <p>Composes, experiments, and finds patterns in sound.</p>
+          <dropdown-panel id="makes-music" variant="scroll">
+            <div id="music-panel" class="blog-panel" aria-live="polite">
+              <div
+                id="music-projects-list-wrap"
+                class="blog-panel__list-wrap"
+              >
+                <ul id="music-projects" class="panel-list"></ul>
+              </div>
+            </div>
           </dropdown-panel>
           <dropdown-panel id="collects-moods">
             <p>
@@ -104,5 +111,6 @@
     <script src="./js/contentful-graphql.js" defer></script>
     <script type="module" src="./js/blog-panel.js"></script>
     <script type="module" src="./js/code-panel.js"></script>
+    <script type="module" src="./js/music-panel.js"></script>
   </body>
 </html>

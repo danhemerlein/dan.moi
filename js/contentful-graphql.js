@@ -163,6 +163,63 @@
     return { items: all, errors: [] };
   }
 
+  const GET_MUSIC_PROJECTS_PAGE_QUERY = `
+    query MusicProjectsPage($skip: Int!, $limit: Int!) {
+      musicProjectCollection(
+        order: releaseDateSort_DESC,
+        skip: $skip,
+        limit: $limit
+      ) {
+        items {
+          sys {
+            id
+          }
+          performed
+          produced
+          wrote
+          artist
+          role
+          handle
+          title
+          artwork {
+            title
+            url
+          }
+          releaseDate
+          spotify
+          bandcamp
+          apple
+          tidal
+          amazon
+          deezer
+          napster
+          googlePlay
+          soundcloud
+        }
+      }
+    }
+  `;
+
+  async function fetchAllMusicProjects() {
+    const pageSize = 100;
+    const all = [];
+    let skip = 0;
+    for (;;) {
+      const { data, errors } = await contentfulRequest(
+        GET_MUSIC_PROJECTS_PAGE_QUERY,
+        { skip, limit: pageSize },
+      );
+      if (errors?.length) {
+        return { items: all, errors };
+      }
+      const items = data?.musicProjectCollection?.items ?? [];
+      all.push(...items);
+      if (items.length < pageSize) break;
+      skip += pageSize;
+    }
+    return { items: all, errors: [] };
+  }
+
   const GET_CODE_PROJECT_BY_ID_QUERY = `
     query CodeProjectById($id: String!) {
       codeProjectCollection(where: { sys: { id: $id } }, limit: 1) {
@@ -214,6 +271,7 @@
   window.contentfulRequest = contentfulRequest;
   window.fetchAllBlogPosts = fetchAllBlogPosts;
   window.fetchAllCodeProjects = fetchAllCodeProjects;
+  window.fetchAllMusicProjects = fetchAllMusicProjects;
   window.GET_BLOG_YEAR_BOUNDS_QUERY = GET_BLOG_YEAR_BOUNDS_QUERY;
   window.GET_BLOG_POST_BY_HANDLE_QUERY = GET_BLOG_POST_BY_HANDLE_QUERY;
   window.GET_CODE_PROJECT_BY_ID_QUERY = GET_CODE_PROJECT_BY_ID_QUERY;
