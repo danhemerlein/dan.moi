@@ -220,6 +220,59 @@
     return { items: all, errors: [] };
   }
 
+  const MOODBOARD_ENTRY_ID = "5qaYjs8UZbaw8ZFihn1Y3w";
+
+  const GET_MOODBOARD_INITIAL_QUERY = `
+    query MoodboardInitial($id: String!) {
+      moodboard(id: $id) {
+        sys {
+          id
+        }
+        imagesCollection(limit: 10, skip: 0) {
+          total
+          items {
+            title
+            url
+          }
+        }
+      }
+    }
+  `;
+
+  const GET_MOODBOARD_IMAGES_PAGE_QUERY = `
+    query MoodboardImagesPage($id: String!, $skip: Int!, $limit: Int!) {
+      moodboard(id: $id) {
+        imagesCollection(limit: $limit, skip: $skip) {
+          items {
+            title
+            url
+          }
+        }
+      }
+    }
+  `;
+
+  async function fetchMoodboardInitial() {
+    const { data, errors } = await contentfulRequest(
+      GET_MOODBOARD_INITIAL_QUERY,
+      { id: MOODBOARD_ENTRY_ID },
+    );
+    return {
+      moodboard: data?.moodboard ?? null,
+      errors,
+    };
+  }
+
+  async function fetchMoodboardImagesPage(skip, limit = 10) {
+    const { data, errors } = await contentfulRequest(
+      GET_MOODBOARD_IMAGES_PAGE_QUERY,
+      { id: MOODBOARD_ENTRY_ID, skip, limit },
+    );
+    const items =
+      data?.moodboard?.imagesCollection?.items?.filter(Boolean) ?? [];
+    return { items, errors };
+  }
+
   const GET_CODE_PROJECT_BY_ID_QUERY = `
     query CodeProjectById($id: String!) {
       codeProjectCollection(where: { sys: { id: $id } }, limit: 1) {
@@ -275,4 +328,6 @@
   window.GET_BLOG_YEAR_BOUNDS_QUERY = GET_BLOG_YEAR_BOUNDS_QUERY;
   window.GET_BLOG_POST_BY_HANDLE_QUERY = GET_BLOG_POST_BY_HANDLE_QUERY;
   window.GET_CODE_PROJECT_BY_ID_QUERY = GET_CODE_PROJECT_BY_ID_QUERY;
+  window.fetchMoodboardInitial = fetchMoodboardInitial;
+  window.fetchMoodboardImagesPage = fetchMoodboardImagesPage;
 })();

@@ -13,7 +13,10 @@
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="stylesheet" href="./css/panel-list.css" />
+    <link rel="stylesheet" href="./css/panel-scroll.css" />
     <link rel="stylesheet" href="./css/blog.css" />
+    <link rel="stylesheet" href="./css/music-panel.css" />
+    <link rel="stylesheet" href="./css/moodboard-panel.css" />
     <title>dan hemerlein</title>
     <script src="/contentful-env.js"></script>
   </head>
@@ -48,11 +51,11 @@
             >
           </p>
           <dropdown-panel id="writes-code" variant="scroll">
-            <div id="code-panel" class="blog-panel" aria-live="polite">
-              <div id="code-projects-list-wrap" class="blog-panel__list-wrap">
+            <div id="code-panel" class="panel-scroll" aria-live="polite">
+              <div id="code-projects-list-wrap" class="panel-scroll__viewport">
                 <ul id="code-projects" class="panel-list"></ul>
               </div>
-              <div id="code-project-article" class="blog-panel__article" hidden>
+              <div id="code-project-article" class="panel-scroll__article" hidden>
                 <button
                   type="button"
                   id="code-project-back"
@@ -71,19 +74,17 @@
             </div>
           </dropdown-panel>
           <dropdown-panel id="makes-music" variant="scroll">
-            <div id="music-panel" class="blog-panel" aria-live="polite">
+            <div id="music-panel" class="panel-scroll" aria-live="polite">
               <div
                 id="music-projects-list-wrap"
-                class="blog-panel__list-wrap"
+                class="panel-scroll__viewport"
               >
                 <ul id="music-projects" class="panel-list"></ul>
               </div>
             </div>
           </dropdown-panel>
-          <dropdown-panel id="collects-moods">
-            <p>
-              Curates vibes and turns feelings into something you can share.
-            </p>
+          <dropdown-panel id="collects-moods" variant="scroll">
+            <moodboard-panel></moodboard-panel>
           </dropdown-panel>
           <p class="body-text bottom-line">
             Based in nyc and it's super trill.
@@ -112,5 +113,6 @@
     <script type="module" src="./js/blog-panel.js"></script>
     <script type="module" src="./js/code-panel.js"></script>
     <script type="module" src="./js/music-panel.js"></script>
+    <script type="module" src="./js/moodboard-panel.js"></script>
   </body>
 </html>

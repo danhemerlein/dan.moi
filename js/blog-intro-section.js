@@ -14,7 +14,7 @@ const HTML = `
     second.
   </p>
   <dropdown-panel id="blog" variant="scroll">
-    <div id="blog-panel" class="blog-panel" aria-live="polite">
+    <div id="blog-panel" class="panel-scroll" aria-live="polite">
       <accessible-select
         id="blog-year-filter"
         class="blog-year-filter type-roboto-mono-12-caps"
@@ -22,26 +22,26 @@ const HTML = `
         placeholder="YEAR"
         aria-label="Filter posts by year published"
       ></accessible-select>
-      <div id="blog-posts-list-wrap" class="blog-panel__list-wrap">
+      <div id="blog-posts-list-wrap" class="panel-scroll__viewport">
         <ul id="blog-posts" class="panel-list"></ul>
         <div
           id="blog-posts-load-sentinel"
-          class="blog-panel__load-sentinel"
+          class="panel-scroll__load-sentinel"
           hidden
           aria-hidden="true"
         ></div>
       </div>
       <div
         id="blog-posts-list-footer"
-        class="blog-panel__list-footer"
+        class="panel-scroll__list-footer"
         hidden
       >
         <p
           id="blog-posts-page-status"
-          class="blog-panel__list-footer__status"
+          class="panel-scroll__list-footer__status"
         ></p>
       </div>
-      <div id="blog-post-article" class="blog-panel__article" hidden>
+      <div id="blog-post-article" class="panel-scroll__article" hidden>
         <button
           type="button"
           id="blog-post-back"

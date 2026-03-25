@@ -74,7 +74,7 @@
             cursor: not-allowed;
           }
           /* Inset ring: default outline sits outside the border and is clipped by
-             dropdown-panel / blog-panel overflow (top/left vanish at the scroll edge). */
+             dropdown-panel / panel-scroll overflow (top/left vanish at the scroll edge). */
           .trigger:focus-visible {
             outline: none;
             box-shadow: inset 0 0 0 0.125rem

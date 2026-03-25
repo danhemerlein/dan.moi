@@ -6,171 +6,13 @@
 
 /* When the note taker is closed, take #blog-panel out of layout entirely so the
    async blog list (dozens of rows) cannot affect min-content / CLS. When [open],
-   this rule does not apply and .blog-panel is shown normally. */
+   this rule does not apply and #blog-panel is shown normally. */
 dropdown-panel#blog:not([open]) #blog-panel {
   display: none !important;
 }
 
 dropdown-panel#writes-code:not([open]) #code-panel {
   display: none !important;
-}
-
-dropdown-panel#makes-music:not([open]) #music-panel {
-  display: none !important;
-}
-
-/* Music projects list (sky / azure trigger) — list only, no in-panel detail */
-#music-panel .panel-list__item.music-project {
-  background-color: var(--color-azure-soft);
-  border: 1px solid rgba(103, 172, 255, 0.38);
-}
-
-/* One row: fixed square artwork beside text — nothing wraps under the image */
-.music-project__shell {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 0.75rem;
-  min-width: 0;
-}
-
-.music-project__media {
-  flex-shrink: 0;
-  width: 80px;
-  height: 80px;
-  overflow: hidden;
-  border: 1px solid var(--color-ink-10);
-}
-
-.music-project__art {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.music-project__column {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.music-project__headline {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 0.75rem;
-  justify-content: flex-start;
-}
-
-.music-project__title {
-  flex: 1 1 auto;
-  min-width: 0;
-  margin: 0;
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.3;
-  font-weight: 400;
-  color: inherit;
-}
-
-.music-project__date {
-  flex-shrink: 0;
-  margin: 0;
-  margin-left: auto;
-  color: var(--color-stone-gray);
-  font-family: "Roboto Mono", ui-monospace, monospace;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 16px;
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.music-project__meta {
-  margin: 0;
-  color: var(--color-stone-gray);
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.2;
-  letter-spacing: 0;
-}
-
-.music-project__footer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.35rem 0.5rem;
-  min-width: 0;
-}
-
-.music-project__credits {
-  margin: 0;
-  font-size: 0.8125rem;
-  line-height: 1.35;
-  opacity: 0.8;
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-}
-
-.music-project__links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem 0.5rem;
-  min-width: 0;
-}
-
-.music-project__links-sep {
-  opacity: 0.55;
-  user-select: none;
-}
-
-.music-project__link {
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.35;
-  color: var(--color-azure);
-  text-decoration: underline;
-  text-underline-offset: 0.12em;
-}
-
-.music-project__link:hover {
-  color: var(--color-ink);
 }
 
 .code-project-meta {
@@ -237,21 +79,6 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   vertical-align: middle;
 }
 
-/* Fill the dropdown scroll viewport; scroll list/article inside so height doesn’t
-   track full list scrollHeight (~5000px) and collapse when swapping to an article.
-   Parent is dropdown shadow .content (flex column when open). */
-.blog-panel {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-}
-
 .blog-year-filter {
   flex-shrink: 0;
   margin-bottom: 1.5rem;
@@ -264,21 +91,6 @@ accessible-select.blog-year-filter:not(:defined) {
   display: block;
   min-height: 2.75rem;
   margin-bottom: 28px;
-}
-
-.blog-panel__list-wrap {
-  flex: 1 1 auto;
-  min-height: 0;
-  /* scroll keeps a consistent track width when list ↔ article toggles (auto can drop the track). */
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-}
-
-.blog-panel__list-wrap[hidden],
-.blog-panel__article[hidden] {
-  display: none !important;
 }
 
 /* Publication date + reading time (list row + article under title) */
@@ -331,55 +143,6 @@ accessible-select.blog-year-filter:not(:defined) {
 
 .blog-post-meta--article {
   margin-top: 0.35rem;
-}
-
-/* Scroll target for loading more posts (ALL view only); sits below the list inside the scroll area. */
-.blog-panel__load-sentinel {
-  flex-shrink: 0;
-  width: 100%;
-  height: 1px;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
-}
-
-.blog-panel__list-footer {
-  flex-shrink: 0;
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-mint-border);
-}
-
-.blog-panel__list-footer__status {
-  margin: 0;
-  font-family: "Roboto Mono", ui-monospace, monospace;
-  font-size: 0.75rem;
-  line-height: 1.25rem;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  opacity: 0.85;
-}
-
-.blog-panel__article {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-}
-
-/* Keep chrome from shrinking; body may scroll inside this column (not grow to content height). */
-.blog-panel__article > :not(.blog-post__body) {
-  flex-shrink: 0;
-}
-
-.blog-panel__article .blog-post__body {
-  flex: 1 1 auto;
-  min-height: 0;
 }
 
 .blog-post__back {
@@ -476,7 +239,7 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 /* Loading skeleton: bounded min-height only inside the article scroller (avoids flex min-height:auto → full content height). */
-.blog-panel__article .blog-post__body[aria-busy="true"] {
+.panel-scroll__article .blog-post__body[aria-busy="true"] {
   min-height: min(14rem, 45vh);
 }
 

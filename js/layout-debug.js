@@ -257,7 +257,7 @@
         clientH: panel.clientHeight,
       };
     }
-    const listWrap = document.querySelector(".blog-panel__list-wrap");
+    const listWrap = document.querySelector(".panel-scroll__viewport");
     if (listWrap instanceof HTMLElement && !listWrap.hidden) {
       out.blogListWrapScroll = {
         clientHeight: listWrap.clientHeight,
