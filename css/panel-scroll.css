@@ -1,0 +1,80 @@
+/* Shared scroll layout for dropdown panels: outer column fills the dropdown viewport;
+   list and article views scroll inside so height doesn’t track full content height.
+   Pair with panel-list.css for list rows. */
+
+.panel-scroll {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panel-scroll__viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  /* scroll keeps a consistent track width when list ↔ article toggles (auto can drop the track). */
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.panel-scroll__viewport[hidden],
+.panel-scroll__article[hidden] {
+  display: none !important;
+}
+
+/* Intersection / infinite-scroll sentinel; sits below the list inside the viewport. */
+.panel-scroll__load-sentinel {
+  flex-shrink: 0;
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.panel-scroll__list-footer {
+  flex-shrink: 0;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-mint-border);
+}
+
+.panel-scroll__list-footer__status {
+  margin: 0;
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.panel-scroll__article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Keep chrome from shrinking; main content may scroll inside this column.
+   Prose uses .blog-post__body (blog + code detail views). */
+.panel-scroll__article > :not(.blog-post__body) {
+  flex-shrink: 0;
+}
+
+.panel-scroll__article .blog-post__body {
+  flex: 1 1 auto;
+  min-height: 0;
+}

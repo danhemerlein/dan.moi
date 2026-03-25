@@ -21,6 +21,13 @@ image-element:not(:defined) {
   min-height: 0;
 }
 
+moodboard-panel:not(:defined) {
+  display: block;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
 body {
   min-height: 100vh;
   height: 100vh;
