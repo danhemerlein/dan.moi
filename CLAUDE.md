@@ -10,6 +10,10 @@ node serve.mjs
 ```
 Serves on port 3333 by default (override with `PORT` env var). Open `http://localhost:3333`.
 
+**Dev modes** (append to any URL, including direct article links):
+- `?dev-mode=blog-list` — blog panel opens and stays open; won't close on outside clicks
+- `?dev-mode=blog-article` — blog panel opens and the first article loads automatically
+
 **No build step, no package manager.** This is a vanilla JS project — no npm, no bundler, no transpilation.
 
 **Environment:** Contentful credentials go in `.env` (see `.env.example` or `js/contentful-config.example.js`). The server reads these and exposes them to the browser at runtime via the `/contentful-env.js` endpoint as `window.CONTENTFUL_CONFIG`.

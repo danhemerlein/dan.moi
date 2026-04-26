@@ -153,6 +153,7 @@ function initBlogPanel() {
 
   /** Used to paint title + meta immediately when opening from the list (reduces CLS). */
   let blogPostListItems = [];
+  let yearFilterReady = false;
 
   /**
    * How many posts to show from the top when viewing ALL (grows via scroll / sentinel).
@@ -182,7 +183,7 @@ function initBlogPanel() {
 
     if (total === 0) {
       if (yearStr) {
-        listFooter.hidden = false;
+        listFooter.hidden = !articleRoot.hidden;
         pageStatusEl.textContent = `${formatPostCount(0)} in ${yearStr}`;
       } else {
         listFooter.hidden = true;
@@ -191,7 +192,7 @@ function initBlogPanel() {
       return;
     }
 
-    listFooter.hidden = false;
+    listFooter.hidden = !articleRoot.hidden;
 
     if (yearStr) {
       pageStatusEl.textContent = `${formatPostCount(total)} in ${yearStr}`;
@@ -272,6 +273,8 @@ function initBlogPanel() {
     titleEl.textContent = "";
     metaEl.replaceChildren();
     metaEl.hidden = true;
+    if (yearFilterEl && yearFilterReady) yearFilterEl.hidden = false;
+    if (blogPostListItems.length) refreshBlogList();
     scrollBlogPanelToTop();
   }
 
@@ -279,6 +282,8 @@ function initBlogPanel() {
     layoutDebugMark("blog:show-article-view");
     listWrap.hidden = true;
     articleRoot.hidden = false;
+    if (yearFilterEl) yearFilterEl.hidden = true;
+    if (listFooter) listFooter.hidden = true;
     scrollBlogPanelToTop();
     backBtn.focus({ preventScroll: true });
   }
@@ -293,6 +298,11 @@ function initBlogPanel() {
       blogPanelOffsetH: panel.offsetHeight,
     });
     showArticleView();
+
+    const articleUrl = "/notes/" + encodeURIComponent(handle);
+    if (location.pathname !== articleUrl) {
+      history.pushState({ blogHandle: handle }, "", articleUrl);
+    }
 
     bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML;
     bodyEl.setAttribute("aria-busy", "true");
@@ -438,10 +448,56 @@ function initBlogPanel() {
     }
   });
 
+  // Always reset to list view when the blog panel opens.
+  document.addEventListener("dropdown:state-changed", () => {
+    const blogDropdown = document.getElementById("blog");
+    if (blogDropdown?.open) showListView();
+  });
+
   backBtn.addEventListener("click", () => {
     layoutDebugMark("blog:back-click");
+    if (location.pathname !== "/") history.pushState(null, "", "/");
     showListView();
   });
+
+  window.addEventListener("popstate", async (e) => {
+    const handle = e.state?.blogHandle;
+    if (handle) {
+      const blogDropdown = document.getElementById("blog");
+      if (blogDropdown && typeof blogDropdown.setOpen === "function") {
+        document.dispatchEvent(
+          new CustomEvent("dropdown:close-all", { detail: { exceptId: "blog" } }),
+        );
+        blogDropdown.setOpen(true);
+      }
+      await openPostByHandle(handle);
+    } else {
+      showListView();
+    }
+  });
+
+  // Clear the URL when the blog panel is closed while on an article URL.
+  document.addEventListener("dropdown:state-changed", () => {
+    const blogDropdown = document.getElementById("blog");
+    if (blogDropdown && !blogDropdown.open && location.pathname.startsWith("/notes/")) {
+      history.pushState(null, "", "/");
+    }
+  });
+
+  // Open article on direct URL load (e.g. /notes/:handle).
+  const initMatch = /^\/notes\/([^/]+)\/?$/.exec(location.pathname);
+  if (initMatch) {
+    const handle = decodeURIComponent(initMatch[1]);
+    history.replaceState({ blogHandle: handle }, "", location.pathname + location.search);
+    const blogDropdown = document.getElementById("blog");
+    if (blogDropdown && typeof blogDropdown.setOpen === "function") {
+      document.dispatchEvent(
+        new CustomEvent("dropdown:close-all", { detail: { exceptId: "blog" } }),
+      );
+      blogDropdown.setOpen(true);
+    }
+    openPostByHandle(handle);
+  }
 
   if (yearFilterEl) {
     yearFilterEl.addEventListener("change", () => {
@@ -505,7 +561,8 @@ function initBlogPanel() {
       maxY != null
     ) {
       yearFilterEl.setOptions(buildYearFilterOptions(minY, maxY));
-      yearFilterEl.hidden = false;
+      yearFilterReady = true;
+      yearFilterEl.hidden = !articleRoot.hidden;
       refreshBlogList();
     } else {
       if (yearFilterEl) yearFilterEl.hidden = true;

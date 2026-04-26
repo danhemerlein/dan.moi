@@ -115,27 +115,14 @@ accessible-select.blog-year-filter:not(:defined) {
   margin-top: 0.6rem;
 }
 
-.blog-post-meta--article {
-  margin-top: 0.35rem;
-}
-
 .blog-post__back {
-  align-self: flex-start;
-  margin: 0;
-  padding: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
   border: none;
-  background: none;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 0.95rem;
-  text-decoration: underline;
-  text-underline-offset: 0.12em;
-  color: inherit;
-  opacity: 0.9;
-}
-
-.blog-post__back:hover {
-  opacity: 1;
 }
 
 .blog-post__title {
@@ -202,14 +189,11 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post__body {
-  --blog-post-font-stack:
-    '00Hypertext', system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
-    sans-serif;
-  font-family: var(--blog-post-font-stack);
+  font-family: '00Hypertext';
   font-size: 1rem;
   line-height: 1.45;
   color: var(--color-ink);
-  font-synthesis: none;
+  margin-top: 1.5rem;
 }
 
 /* Loading skeleton: bounded min-height only inside the article scroller (avoids flex min-height:auto → full content height). */

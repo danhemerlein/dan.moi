@@ -47,7 +47,9 @@ const HTML = `
           id="blog-post-back"
           class="blog-post__back"
         >
-          Back
+          <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+            <path d="M0.5625 0.562927L7.31738 7.31781M7.31738 0.562927L0.5625 7.31781" stroke="#2B2B2B" stroke-width="1.12581" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </button>
         <h2 id="blog-post-title" class="blog-post__title"></h2>
         <div id="blog-post-meta" hidden></div>
@@ -58,15 +60,15 @@ const HTML = `
       </div>
     </div>
   </dropdown-panel>
-`;
+`
 
 class BlogIntroSection extends HTMLElement {
   connectedCallback() {
-    if (this.dataset.rendered) return;
-    this.dataset.rendered = "";
-    this.classList.add("blog-intro");
-    this.innerHTML = HTML;
+    if (this.dataset.rendered) return
+    this.dataset.rendered = ''
+    this.classList.add('blog-intro')
+    this.innerHTML = HTML
   }
 }
 
-customElements.define("blog-intro-section", BlogIntroSection);
+customElements.define('blog-intro-section', BlogIntroSection)

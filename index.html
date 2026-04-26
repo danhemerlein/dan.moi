@@ -9,14 +9,14 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
     />
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/fonts.css" />
-    <link rel="stylesheet" href="./css/index.css" />
-    <link rel="stylesheet" href="./css/panel-list.css" />
-    <link rel="stylesheet" href="./css/panel-scroll.css" />
-    <link rel="stylesheet" href="./css/blog.css" />
-    <link rel="stylesheet" href="./css/music-panel.css" />
-    <link rel="stylesheet" href="./css/moodboard-panel.css" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/panel-list.css" />
+    <link rel="stylesheet" href="/css/panel-scroll.css" />
+    <link rel="stylesheet" href="/css/blog.css" />
+    <link rel="stylesheet" href="/css/music-panel.css" />
+    <link rel="stylesheet" href="/css/moodboard-panel.css" />
     <title>dan hemerlein</title>
     <script src="/contentful-env.js"></script>
   </head>
@@ -55,7 +55,11 @@
               <div id="code-projects-list-wrap" class="panel-scroll__viewport">
                 <ul id="code-projects" class="panel-list"></ul>
               </div>
-              <div id="code-project-article" class="panel-scroll__article" hidden>
+              <div
+                id="code-project-article"
+                class="panel-scroll__article"
+                hidden
+              >
                 <button
                   type="button"
                   id="code-project-back"
@@ -64,8 +68,11 @@
                   Back
                 </button>
                 <h2 id="code-project-title" class="blog-post__title"></h2>
-                <div id="code-project-hero" class="code-project__hero" hidden>
-                </div>
+                <div
+                  id="code-project-hero"
+                  class="code-project__hero"
+                  hidden
+                ></div>
                 <article
                   id="code-project-body"
                   class="blog-post__body"
@@ -75,10 +82,7 @@
           </dropdown-panel>
           <dropdown-panel id="makes-music" variant="scroll">
             <div id="music-panel" class="panel-scroll" aria-live="polite">
-              <div
-                id="music-projects-list-wrap"
-                class="panel-scroll__viewport"
-              >
+              <div id="music-projects-list-wrap" class="panel-scroll__viewport">
                 <ul id="music-projects" class="panel-list"></ul>
               </div>
             </div>
@@ -92,28 +96,28 @@
         </div>
         <image-element
           class="hero-image"
-          src="./assets/fonts/temporary-heart.png"
+          src="/assets/fonts/temporary-heart.png"
           alt="temporary heart"
         ></image-element>
         <image-element
           class="image-dock"
-          src="./assets/fonts/temporary-heart.png"
+          src="/assets/fonts/temporary-heart.png"
           alt="temporary heart"
           aria-hidden="true"
         ></image-element>
       </div>
     </main>
-    <script src="./js/layout-debug.js" defer></script>
-    <script src="./js/dropdown.js" defer></script>
-    <script src="./js/accessible-select.js" defer></script>
-    <script type="module" src="./js/blog-intro-section.js"></script>
-    <script src="./js/image.js" defer></script>
-    <script src="./js/dropdown-image.js" defer></script>
-    <script src="./js/contentful-graphql.js" defer></script>
-    <script type="module" src="./js/blog-panel.js"></script>
-    <script type="module" src="./js/code-panel.js"></script>
-    <script type="module" src="./js/music-panel.js"></script>
-    <script type="module" src="./js/moodboard-panel.js"></script>
-    <script src="./js/dev-mode.js" defer></script>
+    <script src="/js/layout-debug.js" defer></script>
+    <script src="/js/dropdown.js" defer></script>
+    <script src="/js/accessible-select.js" defer></script>
+    <script type="module" src="/js/blog-intro-section.js"></script>
+    <script src="/js/image.js" defer></script>
+    <script src="/js/dropdown-image.js" defer></script>
+    <script src="/js/contentful-graphql.js" defer></script>
+    <script type="module" src="/js/blog-panel.js"></script>
+    <script type="module" src="/js/code-panel.js"></script>
+    <script type="module" src="/js/music-panel.js"></script>
+    <script type="module" src="/js/moodboard-panel.js"></script>
+    <script src="/js/dev-mode.js" defer></script>
   </body>
 </html>
