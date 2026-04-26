@@ -1,0 +1,63 @@
+// Dev modes — activated via URL param: ?dev=blog-list or ?dev=blog-article
+// Only runs on localhost. Reload the page to exit.
+(() => {
+  const mode = new URLSearchParams(location.search).get("dev");
+  if (!mode) return;
+
+  const host = location.hostname;
+  if (host !== "localhost" && host !== "127.0.0.1" && host !== "") return;
+
+  function waitForElement(selector, timeout = 8000) {
+    const el = document.querySelector(selector);
+    if (el) return Promise.resolve(el);
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(
+        () => reject(new Error(`[dev-mode] timeout waiting for ${selector}`)),
+        timeout,
+      );
+      const obs = new MutationObserver(() => {
+        const found = document.querySelector(selector);
+        if (found) {
+          clearTimeout(timer);
+          obs.disconnect();
+          resolve(found);
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+    });
+  }
+
+  async function openBlogPanel() {
+    await customElements.whenDefined("dropdown-panel");
+    const panel = await waitForElement("#blog");
+    document.dispatchEvent(
+      new CustomEvent("dropdown:close-all", { detail: { exceptId: "blog" } }),
+    );
+    panel.setOpen(true);
+    return panel;
+  }
+
+  function keepBlogPanelOpen(panel) {
+    document.addEventListener("dropdown:state-changed", () => {
+      if (!panel.open) requestAnimationFrame(() => panel.setOpen(true));
+    });
+  }
+
+  (async () => {
+    try {
+      if (mode === "blog-list" || mode === "blog-article") {
+        const panel = await openBlogPanel();
+        keepBlogPanelOpen(panel);
+
+        if (mode === "blog-article") {
+          const btn = await waitForElement(
+            "#blog-posts [data-handle].panel-list__button",
+          );
+          btn.click();
+        }
+      }
+    } catch (e) {
+      console.warn(e.message);
+    }
+  })();
+})();
