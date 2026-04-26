@@ -1,56 +1,56 @@
-(() => {
-  const CLOSE_EVENT = "dropdown:close-all";
-  const STATE_EVENT = "dropdown:state-changed";
+;(() => {
+  const CLOSE_EVENT = 'dropdown:close-all'
+  const STATE_EVENT = 'dropdown:state-changed'
 
   function syncBodyBackground() {
-    const openPanel = document.querySelector("dropdown-panel[open]");
+    const openPanel = document.querySelector('dropdown-panel[open]')
     if (!openPanel?.id) {
-      document.documentElement.style.removeProperty("--color-surface");
-      return;
+      document.documentElement.style.removeProperty('--color-surface')
+      return
     }
     const trigger = document.querySelector(
       `dropdown-trigger[for="${CSS.escape(openPanel.id)}"]`,
-    );
-    const bodyBg = trigger?.getAttribute("body-bg");
+    )
+    const bodyBg = trigger?.getAttribute('body-bg')
     if (bodyBg) {
-      document.documentElement.style.setProperty("--color-surface", bodyBg);
+      document.documentElement.style.setProperty('--color-surface', bodyBg)
     } else {
-      document.documentElement.style.removeProperty("--color-surface");
+      document.documentElement.style.removeProperty('--color-surface')
     }
   }
 
   function syncAllTriggerBackgrounds() {
-    document.querySelectorAll("dropdown-trigger").forEach((el) => {
-      el.syncOpenStyles?.();
-    });
+    document.querySelectorAll('dropdown-trigger').forEach((el) => {
+      el.syncOpenStyles?.()
+    })
   }
 
   function syncAllTriggerAria() {
-    document.querySelectorAll("dropdown-trigger").forEach((el) => {
-      const targetId = el.getAttribute("for");
-      if (!targetId) return;
-      const panel = document.getElementById(targetId);
-      const button = el.shadowRoot?.querySelector("button");
-      if (!button) return;
-      const isOpen = panel instanceof DropdownPanel && panel.open;
-      button.setAttribute("aria-expanded", String(isOpen));
-    });
+    document.querySelectorAll('dropdown-trigger').forEach((el) => {
+      const targetId = el.getAttribute('for')
+      if (!targetId) return
+      const panel = document.getElementById(targetId)
+      const button = el.shadowRoot?.querySelector('button')
+      if (!button) return
+      const isOpen = panel instanceof DropdownPanel && panel.open
+      button.setAttribute('aria-expanded', String(isOpen))
+    })
   }
 
   function notifyDropdownStateChanged() {
-    syncBodyBackground();
-    syncAllTriggerBackgrounds();
-    syncAllTriggerAria();
+    syncBodyBackground()
+    syncAllTriggerBackgrounds()
+    syncAllTriggerAria()
   }
 
   class DropdownPanel extends HTMLElement {
     static get observedAttributes() {
-      return ["open"];
+      return ['open']
     }
 
     constructor() {
-      super();
-      this.attachShadow({ mode: "open" });
+      super()
+      this.attachShadow({ mode: 'open' })
       this.shadowRoot.innerHTML = `
         <style>
           :host {
@@ -89,6 +89,7 @@
             border: 0;
             background: transparent;
           }
+
           :host([open]) .panel {
             margin-top: 0.75rem;
           }
@@ -106,7 +107,10 @@
               grid-template-rows 260ms ease,
               opacity 180ms ease,
               transform 260ms ease,
-              padding 240ms ease;
+              padding 240ms ease,
+              height 360ms cubic-bezier(0.45, 0, 0.55, 1),
+              max-height 360ms cubic-bezier(0.45, 0, 0.55, 1),
+              min-height 360ms cubic-bezier(0.45, 0, 0.55, 1);
             overflow: hidden;
           }
           .inner .content {
@@ -137,72 +141,72 @@
             </div>
           </div>
         </div>
-      `;
+      `
 
       // Ensure panels are closed immediately (prevents an initial "flash").
-      this.setAttribute("aria-hidden", "true");
-      this.setAttribute("inert", "");
+      this.setAttribute('aria-hidden', 'true')
+      this.setAttribute('inert', '')
     }
 
     connectedCallback() {
       // Default to closed unless explicitly marked `open`.
-      const shouldOpen = this.hasAttribute("open");
-      this.setOpen(shouldOpen);
+      const shouldOpen = this.hasAttribute('open')
+      this.setOpen(shouldOpen)
     }
 
     attributeChangedCallback(name, _oldValue, newValue) {
-      if (name === "open") {
-        this.setOpen(newValue !== null);
+      if (name === 'open') {
+        this.setOpen(newValue !== null)
       }
     }
 
     get open() {
-      return this.hasAttribute("open");
+      return this.hasAttribute('open')
     }
 
     setOpen(isOpen) {
-      const wasOpen = this.hasAttribute("open");
+      const wasOpen = this.hasAttribute('open')
       if (wasOpen === isOpen) {
-        this.setAttribute("aria-hidden", String(!isOpen));
-        this.#syncInert(isOpen);
-        return;
+        this.setAttribute('aria-hidden', String(!isOpen))
+        this.#syncInert(isOpen)
+        return
       }
 
       if (!isOpen && wasOpen && this.contains(document.activeElement)) {
-        const id = this.id;
+        const id = this.id
         if (id) {
           const trigger = document.querySelector(
             `dropdown-trigger[for="${CSS.escape(id)}"]`,
-          );
-          trigger?.shadowRoot?.querySelector("button")?.focus();
+          )
+          trigger?.shadowRoot?.querySelector('button')?.focus()
         }
       }
 
-      if (isOpen) this.setAttribute("open", "");
-      else this.removeAttribute("open");
+      if (isOpen) this.setAttribute('open', '')
+      else this.removeAttribute('open')
 
-      this.setAttribute("aria-hidden", String(!isOpen));
-      this.#syncInert(isOpen);
+      this.setAttribute('aria-hidden', String(!isOpen))
+      this.#syncInert(isOpen)
       this.dispatchEvent(
         new CustomEvent(STATE_EVENT, { bubbles: true, composed: true }),
-      );
+      )
     }
 
     /** aria-hidden alone does not exclude focusables from tab order; inert does. */
     #syncInert(isOpen) {
-      if (isOpen) this.removeAttribute("inert");
-      else this.setAttribute("inert", "");
+      if (isOpen) this.removeAttribute('inert')
+      else this.setAttribute('inert', '')
     }
   }
 
   class DropdownTrigger extends HTMLElement {
     static get observedAttributes() {
-      return ["bg", "bg-open"];
+      return ['bg', 'bg-open']
     }
 
     constructor() {
-      super();
-      this.attachShadow({ mode: "open" });
+      super()
+      this.attachShadow({ mode: 'open' })
       this.shadowRoot.innerHTML = `
         <style>
           :host {
@@ -228,105 +232,102 @@
         <button type="button" part="trigger" aria-expanded="false">
           <slot></slot>
         </button>
-      `;
+      `
     }
 
     connectedCallback() {
-      const button = this.shadowRoot.querySelector("button");
-      const targetId = this.getAttribute("for");
+      const button = this.shadowRoot.querySelector('button')
+      const targetId = this.getAttribute('for')
 
       if (!targetId) {
-        console.warn("[dropdown-trigger] Missing required `for` attribute.");
-        return;
+        console.warn('[dropdown-trigger] Missing required `for` attribute.')
+        return
       }
 
-      button.addEventListener("click", () => {
-        const panel = document.getElementById(targetId);
-        if (!(panel instanceof DropdownPanel)) return;
+      button.addEventListener('click', () => {
+        const panel = document.getElementById(targetId)
+        if (!(panel instanceof DropdownPanel)) return
 
         // Close everything else, then toggle this panel.
         document.dispatchEvent(
           new CustomEvent(CLOSE_EVENT, { detail: { exceptId: targetId } }),
-        );
+        )
 
-        const nextState = !panel.open;
-        panel.setOpen(nextState);
-      });
+        const nextState = !panel.open
+        panel.setOpen(nextState)
+      })
 
-      this.syncOpenStyles();
+      this.syncOpenStyles()
     }
 
     attributeChangedCallback(name, _oldValue, _newValue) {
-      if (name !== "bg" && name !== "bg-open") return;
-      this.syncOpenStyles();
+      if (name !== 'bg' && name !== 'bg-open') return
+      this.syncOpenStyles()
     }
 
     syncOpenStyles() {
-      const targetId = this.getAttribute("for");
-      if (!targetId) return;
-      const panel = document.getElementById(targetId);
-      const isOpen = panel instanceof DropdownPanel && panel.open;
-      const bgOpen = this.getAttribute("bg-open");
-      const bg = this.getAttribute("bg");
+      const targetId = this.getAttribute('for')
+      if (!targetId) return
+      const panel = document.getElementById(targetId)
+      const isOpen = panel instanceof DropdownPanel && panel.open
+      const bgOpen = this.getAttribute('bg-open')
+      const bg = this.getAttribute('bg')
 
       if (isOpen && bgOpen) {
-        this.style.setProperty("--dropdown-trigger-bg", bgOpen);
+        this.style.setProperty('--dropdown-trigger-bg', bgOpen)
       } else if (bg) {
-        this.style.setProperty("--dropdown-trigger-bg", bg);
+        this.style.setProperty('--dropdown-trigger-bg', bg)
       } else {
-        this.style.removeProperty("--dropdown-trigger-bg");
+        this.style.removeProperty('--dropdown-trigger-bg')
       }
 
-      const focusOutline = bgOpen || bg;
+      const focusOutline = bgOpen || bg
       if (focusOutline) {
-        this.style.setProperty(
-          "--dropdown-trigger-focus-outline",
-          focusOutline,
-        );
+        this.style.setProperty('--dropdown-trigger-focus-outline', focusOutline)
       } else {
-        this.style.removeProperty("--dropdown-trigger-focus-outline");
+        this.style.removeProperty('--dropdown-trigger-focus-outline')
       }
     }
   }
 
-  customElements.define("dropdown-panel", DropdownPanel);
-  customElements.define("dropdown-trigger", DropdownTrigger);
+  customElements.define('dropdown-panel', DropdownPanel)
+  customElements.define('dropdown-trigger', DropdownTrigger)
 
-  document.addEventListener(STATE_EVENT, notifyDropdownStateChanged);
+  document.addEventListener(STATE_EVENT, notifyDropdownStateChanged)
 
   // Global close handler: when you open one panel, close the rest.
   document.addEventListener(CLOSE_EVENT, (e) => {
-    const exceptId = e.detail?.exceptId;
-    document.querySelectorAll("dropdown-panel").forEach((panel) => {
-      if (!(panel instanceof DropdownPanel)) return;
-      if (exceptId && panel.id === exceptId) return;
-      panel.setOpen(false);
-    });
-  });
+    const exceptId = e.detail?.exceptId
+    document.querySelectorAll('dropdown-panel').forEach((panel) => {
+      if (!(panel instanceof DropdownPanel)) return
+      if (exceptId && panel.id === exceptId) return
+      panel.setOpen(false)
+    })
+  })
 
   // Close when clicking outside.
-  document.addEventListener("click", (e) => {
-    const path = e.composedPath();
+  document.addEventListener('click', (e) => {
+    const path = e.composedPath()
     const clickedTrigger = path.some(
-      (el) => el instanceof HTMLElement && el.tagName === "DROPDOWN-TRIGGER",
-    );
+      (el) => el instanceof HTMLElement && el.tagName === 'DROPDOWN-TRIGGER',
+    )
     const clickedPanel = path.some(
-      (el) => el instanceof HTMLElement && el.tagName === "DROPDOWN-PANEL",
-    );
+      (el) => el instanceof HTMLElement && el.tagName === 'DROPDOWN-PANEL',
+    )
     if (!clickedTrigger && !clickedPanel) {
-      document.querySelectorAll("dropdown-panel").forEach((panel) => {
-        if (panel instanceof DropdownPanel) panel.setOpen(false);
-      });
+      document.querySelectorAll('dropdown-panel').forEach((panel) => {
+        if (panel instanceof DropdownPanel) panel.setOpen(false)
+      })
     }
-  });
+  })
 
   // Close on Escape.
-  document.addEventListener("keydown", (e) => {
-    if (e.key !== "Escape") return;
-    document.querySelectorAll("dropdown-panel").forEach((panel) => {
-      if (panel instanceof DropdownPanel) panel.setOpen(false);
-    });
-  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return
+    document.querySelectorAll('dropdown-panel').forEach((panel) => {
+      if (panel instanceof DropdownPanel) panel.setOpen(false)
+    })
+  })
 
-  notifyDropdownStateChanged();
-})();
+  notifyDropdownStateChanged()
+})()

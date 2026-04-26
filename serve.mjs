@@ -86,6 +86,13 @@ const server = http.createServer((req, res) => {
 
   fs.stat(filePath, (err, st) => {
     if (err || !st.isFile()) {
+      // SPA fallback: serve index.html for paths with no file extension (e.g. /blog/:handle).
+      if (!path.extname(filePath)) {
+        const indexPath = path.join(ROOT, "index.html");
+        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        fs.createReadStream(indexPath).pipe(res);
+        return;
+      }
       res.writeHead(404).end("Not found");
       return;
     }

@@ -1,7 +1,18 @@
 .blog-intro {
-  margin-bottom: 0.75rem;
   /* In-flow panel: max height + inner scroll so layout doesn’t grow unbounded. */
   --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
+}
+
+dropdown-panel#blog.blog-panel--article {
+  --dropdown-scroll-max-height: calc(100vh - 4rem);
+}
+
+dropdown-panel#blog::part(panel) {
+  transition: margin-top 360ms cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+dropdown-panel#blog.blog-panel--article::part(panel) {
+  margin-top: 0;
 }
 
 /* When the note taker is closed, take #blog-panel out of layout entirely so the
@@ -15,15 +26,23 @@ dropdown-panel#writes-code:not([open]) #code-panel {
   display: none !important;
 }
 
+/* When a blog article is open, remove all other dropdowns from layout so the article
+   panel has maximum vertical space. */
+.blog-article-open dropdown-panel#writes-code,
+.blog-article-open dropdown-panel#makes-music,
+.blog-article-open dropdown-panel#collects-moods {
+  display: none;
+}
+
 .code-project-meta {
   font-size: 0.875rem;
   line-height: 1.35;
   opacity: 0.88;
   font-family:
-    "00Hypertext",
+    '00Hypertext',
     system-ui,
     -apple-system,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     Arial,
     sans-serif;
@@ -52,7 +71,7 @@ dropdown-panel#writes-code:not([open]) #code-panel {
   margin: 0;
   margin-left: auto;
   width: auto;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   font-weight: 400;
   font-style: normal;
   font-size: 0.625rem;
@@ -81,6 +100,7 @@ dropdown-panel#writes-code:not([open]) #code-panel {
 
 .blog-year-filter {
   flex-shrink: 0;
+  margin-top: 0.75rem;
   margin-bottom: 1.5rem;
   width: 100%;
   max-width: 100%;
@@ -98,79 +118,40 @@ accessible-select.blog-year-filter:not(:defined) {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.35rem 0.65rem;
-  font-size: 0.875rem;
-  line-height: 1.35;
-  opacity: 0.88;
+  gap: 0.5rem;
 }
 
-.blog-post-meta__date {
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-  font-style: normal;
-  font-weight: 400;
-}
-
-.blog-post-meta__date + .blog-post-meta__reading::before {
-  content: "·";
-  margin-right: 0.4rem;
-  margin-left: 0.05rem;
-  opacity: 0.75;
-}
-
+.blog-post-meta__date,
 .blog-post-meta__reading {
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: 'Roboto Mono';
   font-style: normal;
   font-weight: 400;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
 .blog-post-meta--list {
   margin-top: 0.6rem;
 }
 
-.blog-post-meta--article {
-  margin-top: 0.35rem;
-}
-
 .blog-post__back {
-  align-self: flex-start;
-  margin: 0;
-  padding: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
   border: none;
-  background: none;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 0.95rem;
-  text-decoration: underline;
-  text-underline-offset: 0.12em;
-  color: inherit;
-  opacity: 0.9;
-}
-
-.blog-post__back:hover {
-  opacity: 1;
 }
 
 .blog-post__title {
   margin: 0;
   font-family:
-    "00Hypertext",
+    '00Hypertext',
     system-ui,
     -apple-system,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     Arial,
     sans-serif;
@@ -228,18 +209,15 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post__body {
-  --blog-post-font-stack:
-    "00Hypertext", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-    sans-serif;
-  font-family: var(--blog-post-font-stack);
+  font-family: '00Hypertext';
   font-size: 1rem;
   line-height: 1.45;
   color: var(--color-ink);
-  font-synthesis: none;
+  margin-top: 1.5rem;
 }
 
 /* Loading skeleton: bounded min-height only inside the article scroller (avoids flex min-height:auto → full content height). */
-.panel-scroll__article .blog-post__body[aria-busy="true"] {
+.panel-scroll__article .blog-post__body[aria-busy='true'] {
   min-height: min(14rem, 45vh);
 }
 
@@ -249,15 +227,15 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post__body i {
-  font-family: "00Hypertext Italic", var(--blog-post-font-stack);
+  font-family: '00Hypertext Italic', var(--blog-post-font-stack);
 }
 
 .blog-post__body b {
-  font-family: "00Hypertext Bold", var(--blog-post-font-stack);
+  font-family: '00Hypertext Bold', var(--blog-post-font-stack);
 }
 
 .blog-post__body :is(b i, i b) {
-  font-family: "00Hypertext Bold Italic", var(--blog-post-font-stack);
+  font-family: '00Hypertext Bold Italic', var(--blog-post-font-stack);
 }
 
 .blog-post__body > *:first-child {
@@ -280,10 +258,10 @@ accessible-select.blog-year-filter:not(:defined) {
 .blog-post__body h6 {
   margin: 1rem 0 0.5rem;
   font-family:
-    "00Hypertext",
+    '00Hypertext',
     system-ui,
     -apple-system,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     Arial,
     sans-serif;

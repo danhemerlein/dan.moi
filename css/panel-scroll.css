@@ -42,13 +42,11 @@
 .panel-scroll__list-footer {
   flex-shrink: 0;
   margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-mint-border);
 }
 
 .panel-scroll__list-footer__status {
   margin: 0;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   font-size: 0.75rem;
   line-height: 1.25rem;
   letter-spacing: -0.01em;
@@ -62,19 +60,18 @@
   gap: 0.75rem;
   flex: 1 1 auto;
   min-height: 0;
+  position: relative;
   overflow-y: scroll;
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  padding: 2rem;
+  background: #f4fff6;
+  border: 1px solid #c4e9ca;
 }
 
 /* Keep chrome from shrinking; main content may scroll inside this column.
    Prose uses .blog-post__body (blog + code detail views). */
 .panel-scroll__article > :not(.blog-post__body) {
   flex-shrink: 0;
-}
-
-.panel-scroll__article .blog-post__body {
-  flex: 1 1 auto;
-  min-height: 0;
 }

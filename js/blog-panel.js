@@ -135,6 +135,10 @@ function initBlogPanel() {
   const titleEl = document.getElementById("blog-post-title");
   const metaEl = document.getElementById("blog-post-meta");
   const bodyEl = document.getElementById("blog-post-body");
+  const introP = document.querySelector("blog-intro-section > p.body-text");
+  const middleLine = document.querySelector(".middle-line");
+  const bottomLine = document.querySelector(".bottom-line");
+  const containerEl = document.querySelector(".container");
 
   if (
     !panel ||
@@ -153,6 +157,9 @@ function initBlogPanel() {
 
   /** Used to paint title + meta immediately when opening from the list (reduces CLS). */
   let blogPostListItems = [];
+  let yearFilterReady = false;
+  let introPExitHandler = null;
+  let bottomLineExitHandler = null;
 
   /**
    * How many posts to show from the top when viewing ALL (grows via scroll / sentinel).
@@ -182,7 +189,7 @@ function initBlogPanel() {
 
     if (total === 0) {
       if (yearStr) {
-        listFooter.hidden = false;
+        listFooter.hidden = !articleRoot.hidden;
         pageStatusEl.textContent = `${formatPostCount(0)} in ${yearStr}`;
       } else {
         listFooter.hidden = true;
@@ -191,7 +198,7 @@ function initBlogPanel() {
       return;
     }
 
-    listFooter.hidden = false;
+    listFooter.hidden = !articleRoot.hidden;
 
     if (yearStr) {
       pageStatusEl.textContent = `${formatPostCount(total)} in ${yearStr}`;
@@ -272,15 +279,65 @@ function initBlogPanel() {
     titleEl.textContent = "";
     metaEl.replaceChildren();
     metaEl.hidden = true;
+    if (yearFilterEl && yearFilterReady) yearFilterEl.hidden = false;
+    if (blogPostListItems.length) refreshBlogList();
     scrollBlogPanelToTop();
+    if (introP) {
+      if (introPExitHandler) {
+        introP.removeEventListener("transitionend", introPExitHandler);
+        introPExitHandler = null;
+      }
+      introP.style.display = "";
+      introP.offsetHeight; // force reflow so the browser sees the off-screen transform before animating back
+      introP.classList.remove("blog-article--exit-up");
+    }
+    middleLine?.classList.remove("blog-article--exit-down");
+    if (bottomLine) {
+      if (bottomLineExitHandler) {
+        bottomLine.removeEventListener("transitionend", bottomLineExitHandler);
+        bottomLineExitHandler = null;
+      }
+      bottomLine.style.display = "";
+      bottomLine.offsetHeight;
+      bottomLine.classList.remove("blog-article--exit-down");
+    }
+    document.getElementById("blog")?.classList.remove("blog-panel--article");
+    containerEl?.classList.remove("blog-article-open");
   }
 
   function showArticleView() {
     layoutDebugMark("blog:show-article-view");
     listWrap.hidden = true;
     articleRoot.hidden = false;
+    if (yearFilterEl) yearFilterEl.hidden = true;
+    if (listFooter) listFooter.hidden = true;
     scrollBlogPanelToTop();
     backBtn.focus({ preventScroll: true });
+    middleLine?.classList.add("blog-article--exit-down");
+    bottomLine?.classList.add("blog-article--exit-down");
+    document.getElementById("blog")?.classList.add("blog-panel--article");
+    containerEl?.classList.add("blog-article-open");
+    if (introP) {
+      if (introPExitHandler) introP.removeEventListener("transitionend", introPExitHandler);
+      introP.classList.add("blog-article--exit-up");
+      introPExitHandler = (e) => {
+        if (e.propertyName !== "transform" || e.target !== introP) return;
+        introP.removeEventListener("transitionend", introPExitHandler);
+        introPExitHandler = null;
+        introP.style.display = "none";
+      };
+      introP.addEventListener("transitionend", introPExitHandler);
+    }
+    if (bottomLine) {
+      if (bottomLineExitHandler) bottomLine.removeEventListener("transitionend", bottomLineExitHandler);
+      bottomLineExitHandler = (e) => {
+        if (e.propertyName !== "transform" || e.target !== bottomLine) return;
+        bottomLine.removeEventListener("transitionend", bottomLineExitHandler);
+        bottomLineExitHandler = null;
+        bottomLine.style.display = "none";
+      };
+      bottomLine.addEventListener("transitionend", bottomLineExitHandler);
+    }
   }
 
   async function openPostByHandle(handle) {
@@ -293,6 +350,11 @@ function initBlogPanel() {
       blogPanelOffsetH: panel.offsetHeight,
     });
     showArticleView();
+
+    const articleUrl = "/notes/" + encodeURIComponent(handle);
+    if (location.pathname !== articleUrl) {
+      history.pushState({ blogHandle: handle }, "", articleUrl);
+    }
 
     bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML;
     bodyEl.setAttribute("aria-busy", "true");
@@ -438,10 +500,77 @@ function initBlogPanel() {
     }
   });
 
+  // Always reset to list view when the blog panel opens.
+  document.addEventListener("dropdown:state-changed", () => {
+    const blogDropdown = document.getElementById("blog");
+    if (blogDropdown?.open) showListView();
+  });
+
   backBtn.addEventListener("click", () => {
     layoutDebugMark("blog:back-click");
+    if (location.pathname !== "/") history.pushState(null, "", "/");
     showListView();
   });
+
+  window.addEventListener("popstate", async (e) => {
+    const handle = e.state?.blogHandle;
+    if (handle) {
+      const blogDropdown = document.getElementById("blog");
+      if (blogDropdown && typeof blogDropdown.setOpen === "function") {
+        document.dispatchEvent(
+          new CustomEvent("dropdown:close-all", { detail: { exceptId: "blog" } }),
+        );
+        blogDropdown.setOpen(true);
+      }
+      await openPostByHandle(handle);
+    } else {
+      showListView();
+    }
+  });
+
+  // Clear the URL when the blog panel is closed while on an article URL.
+  document.addEventListener("dropdown:state-changed", () => {
+    const blogDropdown = document.getElementById("blog");
+    if (blogDropdown && !blogDropdown.open) {
+      if (location.pathname.startsWith("/notes/")) history.pushState(null, "", "/");
+      if (introP) {
+        if (introPExitHandler) {
+          introP.removeEventListener("transitionend", introPExitHandler);
+          introPExitHandler = null;
+        }
+        introP.style.display = "";
+        introP.offsetHeight;
+        introP.classList.remove("blog-article--exit-up");
+      }
+      middleLine?.classList.remove("blog-article--exit-down");
+      if (bottomLine) {
+        if (bottomLineExitHandler) {
+          bottomLine.removeEventListener("transitionend", bottomLineExitHandler);
+          bottomLineExitHandler = null;
+        }
+        bottomLine.style.display = "";
+        bottomLine.offsetHeight;
+        bottomLine.classList.remove("blog-article--exit-down");
+      }
+      blogDropdown.classList.remove("blog-panel--article");
+      containerEl?.classList.remove("blog-article-open");
+    }
+  });
+
+  // Open article on direct URL load (e.g. /notes/:handle).
+  const initMatch = /^\/notes\/([^/]+)\/?$/.exec(location.pathname);
+  if (initMatch) {
+    const handle = decodeURIComponent(initMatch[1]);
+    history.replaceState({ blogHandle: handle }, "", location.pathname + location.search);
+    const blogDropdown = document.getElementById("blog");
+    if (blogDropdown && typeof blogDropdown.setOpen === "function") {
+      document.dispatchEvent(
+        new CustomEvent("dropdown:close-all", { detail: { exceptId: "blog" } }),
+      );
+      blogDropdown.setOpen(true);
+    }
+    openPostByHandle(handle);
+  }
 
   if (yearFilterEl) {
     yearFilterEl.addEventListener("change", () => {
@@ -505,7 +634,8 @@ function initBlogPanel() {
       maxY != null
     ) {
       yearFilterEl.setOptions(buildYearFilterOptions(minY, maxY));
-      yearFilterEl.hidden = false;
+      yearFilterReady = true;
+      yearFilterEl.hidden = !articleRoot.hidden;
       refreshBlogList();
     } else {
       if (yearFilterEl) yearFilterEl.hidden = true;
