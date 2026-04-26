@@ -22,80 +22,12 @@ dropdown-panel#blog:not([open]) #blog-panel {
   display: none !important;
 }
 
-dropdown-panel#writes-code:not([open]) #code-panel {
-  display: none !important;
-}
-
 /* When a blog article is open, remove all other dropdowns from layout so the article
    panel has maximum vertical space. */
 .blog-article-open dropdown-panel#writes-code,
 .blog-article-open dropdown-panel#makes-music,
 .blog-article-open dropdown-panel#collects-moods {
   display: none;
-}
-
-.code-project-meta {
-  font-size: 0.875rem;
-  line-height: 1.35;
-  opacity: 0.88;
-  font-family:
-    '00Hypertext',
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    Arial,
-    sans-serif;
-}
-
-/* Code projects list row: markup order title → year; title left, year right. */
-#code-panel .panel-list__item {
-  background-color: var(--color-lavender-cream);
-  border: 1px solid var(--color-lilac-border);
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 0.75rem;
-  justify-content: flex-start;
-}
-
-#code-panel .panel-list__button,
-#code-panel .panel-list__title-fallback {
-  flex: 1 1 auto;
-  min-width: 0;
-  text-align: left;
-}
-
-#code-panel .code-project-meta--list {
-  flex-shrink: 0;
-  margin: 0;
-  margin-left: auto;
-  width: auto;
-  font-family: 'Roboto Mono', ui-monospace, monospace;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 0.625rem;
-  line-height: 1rem;
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-transform: uppercase;
-  color: var(--color-stone-gray);
-  opacity: 1;
-}
-
-.code-project__hero {
-  flex-shrink: 0;
-}
-
-.code-project__figure {
-  margin: 0 0 0.35rem;
-}
-
-.code-project__figure img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 0.35rem;
-  vertical-align: middle;
 }
 
 .blog-year-filter {
@@ -135,15 +67,6 @@ accessible-select.blog-year-filter:not(:defined) {
   margin-top: 0.6rem;
 }
 
-.blog-post__back {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 0.25rem 0.5rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
 
 .blog-post__title {
   margin: 0;

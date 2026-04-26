@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/panel-list.css" />
     <link rel="stylesheet" href="/css/panel-scroll.css" />
     <link rel="stylesheet" href="/css/blog.css" />
+    <link rel="stylesheet" href="/css/code.css" />
     <link rel="stylesheet" href="/css/music-panel.css" />
     <link rel="stylesheet" href="/css/moodboard-panel.css" />
     <title>dan hemerlein</title>
@@ -51,34 +52,7 @@
             >
           </p>
           <dropdown-panel id="writes-code" variant="scroll">
-            <div id="code-panel" class="panel-scroll" aria-live="polite">
-              <div id="code-projects-list-wrap" class="panel-scroll__viewport">
-                <ul id="code-projects" class="panel-list"></ul>
-              </div>
-              <div
-                id="code-project-article"
-                class="panel-scroll__article"
-                hidden
-              >
-                <button
-                  type="button"
-                  id="code-project-back"
-                  class="blog-post__back"
-                >
-                  Back
-                </button>
-                <h2 id="code-project-title" class="blog-post__title"></h2>
-                <div
-                  id="code-project-hero"
-                  class="code-project__hero"
-                  hidden
-                ></div>
-                <article
-                  id="code-project-body"
-                  class="blog-post__body"
-                ></article>
-              </div>
-            </div>
+            <code-panel></code-panel>
           </dropdown-panel>
           <dropdown-panel id="makes-music" variant="scroll">
             <div id="music-panel" class="panel-scroll" aria-live="polite">

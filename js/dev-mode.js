@@ -1,4 +1,4 @@
-// Dev modes — activated via URL param: ?dev=blog-list or ?dev=blog-article
+// Dev modes — activated via URL param: ?dev-mode=blog-list, blog-article, code-list, or code-project
 // Only runs on localhost. Reload the page to exit.
 (() => {
   const mode = new URLSearchParams(location.search).get("dev-mode");
@@ -34,17 +34,17 @@
     });
   }
 
-  async function openBlogPanel() {
+  async function openPanel(id) {
     await customElements.whenDefined("dropdown-panel");
-    const panel = await waitForElement("#blog");
+    const panel = await waitForElement(`#${id}`);
     document.dispatchEvent(
-      new CustomEvent("dropdown:close-all", { detail: { exceptId: "blog" } }),
+      new CustomEvent("dropdown:close-all", { detail: { exceptId: id } }),
     );
     panel.setOpen(true);
     return panel;
   }
 
-  function keepBlogPanelOpen(panel) {
+  function keepPanelOpen(panel) {
     document.addEventListener("dropdown:state-changed", () => {
       if (!panel.open) requestAnimationFrame(() => panel.setOpen(true));
     });
@@ -53,8 +53,8 @@
   (async () => {
     try {
       if (mode === "blog-list" || mode === "blog-article") {
-        const panel = await openBlogPanel();
-        keepBlogPanelOpen(panel);
+        const panel = await openPanel("blog");
+        keepPanelOpen(panel);
 
         if (mode === "blog-list" && onDirectArticleUrl) {
           // blog-panel.js auto-opened the article from the URL; dismiss it to show the list.
@@ -68,6 +68,16 @@
           btn.click();
         }
         // blog-article + onDirectArticleUrl: article already shown from URL, nothing to do.
+      } else if (mode === "code-list" || mode === "code-project") {
+        const panel = await openPanel("writes-code");
+        keepPanelOpen(panel);
+
+        if (mode === "code-project") {
+          const btn = await waitForElement(
+            "#code-projects [data-id].panel-list__button",
+          );
+          btn.click();
+        }
       }
     } catch (e) {
       console.warn(e.message);

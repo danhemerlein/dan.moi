@@ -1,3 +1,5 @@
+import { CLOSE_SVG } from “./icons.js”;
+
 /**
  * Renders the “note taker” intro line and blog dropdown panel (keeps ids for blog-panel.js).
  */
@@ -45,11 +47,9 @@ const HTML = `
         <button
           type="button"
           id="blog-post-back"
-          class="blog-post__back"
+          class="panel-detail__back"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-            <path d="M0.5625 0.562927L7.31738 7.31781M7.31738 0.562927L0.5625 7.31781" stroke="#2B2B2B" stroke-width="1.12581" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          ${CLOSE_SVG}
         </button>
         <h2 id="blog-post-title" class="blog-post__title"></h2>
         <div id="blog-post-meta" hidden></div>

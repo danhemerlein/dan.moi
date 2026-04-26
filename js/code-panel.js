@@ -3,6 +3,7 @@ import {
   escapeHtml,
   richTextOptions,
 } from "./contentful-rich-text-html.js";
+import { CLOSE_SVG } from "./icons.js";
 
 function layoutDebugMark(name, detail) {
   window.__layoutDebugMark?.(name, detail);
@@ -100,214 +101,231 @@ function renderProjectList(ul, items, emptyMessage = "No projects yet.") {
   });
 }
 
-function initCodePanel() {
-  const panel = document.getElementById("code-panel");
-  const ul = document.getElementById("code-projects");
-  const listWrap = document.getElementById("code-projects-list-wrap");
-  const articleRoot = document.getElementById("code-project-article");
-  const backBtn = document.getElementById("code-project-back");
-  const titleEl = document.getElementById("code-project-title");
-  const heroEl = document.getElementById("code-project-hero");
-  const bodyEl = document.getElementById("code-project-body");
+const PANEL_HTML = `
+  <div id="code-panel" class="panel-scroll" aria-live="polite">
+    <div id="code-projects-list-wrap" class="panel-scroll__viewport">
+      <ul id="code-projects" class="panel-list"></ul>
+    </div>
+    <div id="code-project-article" class="panel-scroll__article" hidden>
+      <button type="button" id="code-project-back" class="panel-detail__back">
+        ${CLOSE_SVG}
+      </button>
+      <h2 id="code-project-title" class="blog-post__title"></h2>
+      <div id="code-project-hero" class="code-project__hero" hidden></div>
+      <article id="code-project-body" class="blog-post__body"></article>
+    </div>
+  </div>
+`;
 
-  if (
-    !panel ||
-    !ul ||
-    !listWrap ||
-    !articleRoot ||
-    !backBtn ||
-    !titleEl ||
-    !heroEl ||
-    !bodyEl
-  ) {
-    return;
+class CodePanel extends HTMLElement {
+  connectedCallback() {
+    if (this.dataset.rendered) return;
+    this.dataset.rendered = "";
+    this.innerHTML = PANEL_HTML;
+    this.#init();
   }
 
-  layoutDebugMark("code:panel-init");
+  #init() {
+    const panel = document.getElementById("code-panel");
+    const ul = document.getElementById("code-projects");
+    const listWrap = document.getElementById("code-projects-list-wrap");
+    const articleRoot = document.getElementById("code-project-article");
+    const backBtn = document.getElementById("code-project-back");
+    const titleEl = document.getElementById("code-project-title");
+    const heroEl = document.getElementById("code-project-hero");
+    const bodyEl = document.getElementById("code-project-body");
 
-  let codeProjectListItems = [];
-
-  function scrollCodePanelToTop() {
-    const writesCodePanel = document.getElementById("writes-code");
-    const scrollEl = writesCodePanel?.shadowRoot?.querySelector(".content");
-    if (scrollEl instanceof HTMLElement) scrollEl.scrollTop = 0;
-    listWrap.scrollTop = 0;
-    articleRoot.scrollTop = 0;
-  }
-
-  function showListView() {
-    layoutDebugMark("code:show-list-view");
-    listWrap.hidden = false;
-    articleRoot.hidden = true;
-    bodyEl.removeAttribute("aria-busy");
-    bodyEl.innerHTML = "";
-    titleEl.textContent = "";
-    heroEl.replaceChildren();
-    heroEl.hidden = true;
-    scrollCodePanelToTop();
-  }
-
-  function showArticleView() {
-    layoutDebugMark("code:show-article-view");
-    listWrap.hidden = true;
-    articleRoot.hidden = false;
-    scrollCodePanelToTop();
-    backBtn.focus({ preventScroll: true });
-  }
-
-  async function openProjectById(id) {
-    if (!id) return;
-
-    layoutDebugMark("code:open-project-start", { id });
-    showArticleView();
-
-    bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML;
-    bodyEl.setAttribute("aria-busy", "true");
-
-    const snapshot = codeProjectListItems.find((i) => i?.sys?.id === id);
-
-    if (snapshot) {
-      titleEl.textContent = snapshot.title?.trim() || "Untitled";
-    } else {
-      titleEl.textContent = "Loading…";
+    if (
+      !panel ||
+      !ul ||
+      !listWrap ||
+      !articleRoot ||
+      !backBtn ||
+      !titleEl ||
+      !heroEl ||
+      !bodyEl
+    ) {
+      return;
     }
 
-    await waitForPaint();
+    layoutDebugMark("code:panel-init");
 
-    const { data, errors } = await window.contentfulRequest(
-      window.GET_CODE_PROJECT_BY_ID_QUERY,
-      { id },
-    );
+    let codeProjectListItems = [];
 
-    layoutDebugMark("code:open-project-fetch-done", {
-      ok: !errors?.length,
-      hasItem: Boolean(data?.codeProjectCollection?.items?.[0]),
+    function scrollCodePanelToTop() {
+      const writesCodePanel = document.getElementById("writes-code");
+      const scrollEl = writesCodePanel?.shadowRoot?.querySelector(".content");
+      if (scrollEl instanceof HTMLElement) scrollEl.scrollTop = 0;
+      listWrap.scrollTop = 0;
+      articleRoot.scrollTop = 0;
+    }
+
+    function showListView() {
+      layoutDebugMark("code:show-list-view");
+      listWrap.hidden = false;
+      articleRoot.hidden = true;
+      bodyEl.removeAttribute("aria-busy");
+      bodyEl.innerHTML = "";
+      titleEl.textContent = "";
+      heroEl.replaceChildren();
+      heroEl.hidden = true;
+      scrollCodePanelToTop();
+    }
+
+    function showArticleView() {
+      layoutDebugMark("code:show-article-view");
+      listWrap.hidden = true;
+      articleRoot.hidden = false;
+      scrollCodePanelToTop();
+      backBtn.focus({ preventScroll: true });
+    }
+
+    async function openProjectById(id) {
+      if (!id) return;
+
+      layoutDebugMark("code:open-project-start", { id });
+      showArticleView();
+
+      bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML;
+      bodyEl.setAttribute("aria-busy", "true");
+
+      const snapshot = codeProjectListItems.find((i) => i?.sys?.id === id);
+
+      if (snapshot) {
+        titleEl.textContent = snapshot.title?.trim() || "Untitled";
+      } else {
+        titleEl.textContent = "Loading…";
+      }
+
+      await waitForPaint();
+
+      const { data, errors } = await window.contentfulRequest(
+        window.GET_CODE_PROJECT_BY_ID_QUERY,
+        { id },
+      );
+
+      layoutDebugMark("code:open-project-fetch-done", {
+        ok: !errors?.length,
+        hasItem: Boolean(data?.codeProjectCollection?.items?.[0]),
+      });
+
+      if (errors?.length) {
+        const first = errors[0]?.message || "Could not load project.";
+        titleEl.textContent = "";
+        bodyEl.removeAttribute("aria-busy");
+        bodyEl.innerHTML = `<p class="blog-post__error">${escapeHtml(first)}</p>`;
+        heroEl.replaceChildren();
+        heroEl.hidden = true;
+        return;
+      }
+
+      const item = data?.codeProjectCollection?.items?.[0];
+      if (!item) {
+        titleEl.textContent = "";
+        bodyEl.removeAttribute("aria-busy");
+        bodyEl.innerHTML =
+          '<p class="blog-post__error">Project not found.</p>';
+        heroEl.replaceChildren();
+        heroEl.hidden = true;
+        return;
+      }
+
+      const t = item.title?.trim() || "Untitled";
+      titleEl.textContent = t;
+
+      heroEl.replaceChildren();
+      const imgFields = item.image;
+      if (imgFields?.url) {
+        const fig = document.createElement("figure");
+        fig.className = "code-project__figure";
+        const img = document.createElement("img");
+        img.src = imgFields.url;
+        img.alt = (imgFields.title || "").trim() || "";
+        img.loading = "lazy";
+        fig.appendChild(img);
+        heroEl.appendChild(fig);
+        heroEl.hidden = false;
+      } else {
+        heroEl.hidden = true;
+      }
+
+      const json = item.description?.json;
+      const links = item.description?.links;
+
+      if (!json) {
+        bodyEl.removeAttribute("aria-busy");
+        bodyEl.innerHTML =
+          '<p class="blog-post__empty">No description for this project yet.</p>';
+        return;
+      }
+
+      try {
+        const html = documentToHtmlString(json, richTextOptions(links));
+        bodyEl.removeAttribute("aria-busy");
+        bodyEl.innerHTML = html;
+        layoutDebugMark("code:article-body-set", { htmlLength: html.length });
+      } catch (e) {
+        console.warn(e);
+        bodyEl.removeAttribute("aria-busy");
+        bodyEl.innerHTML =
+          '<p class="blog-post__error">Could not render this project.</p>';
+      }
+    }
+
+    panel.addEventListener("click", (ev) => {
+      const t = ev.target;
+      if (!(t instanceof HTMLElement)) return;
+
+      const projectBtn = t.closest("[data-id].panel-list__button");
+      if (projectBtn instanceof HTMLElement) {
+        const id = projectBtn.dataset.id?.trim();
+        if (id) {
+          ev.preventDefault();
+          openProjectById(id);
+        }
+        return;
+      }
+
+      const postBtn = t.closest(
+        "[data-handle].blog-post__embed-btn, [data-handle].blog-post__inline-entry, [data-handle].blog-post__embed-inline-btn",
+      );
+      if (postBtn instanceof HTMLElement) {
+        const handle = postBtn.dataset.handle?.trim();
+        if (handle) {
+          ev.preventDefault();
+          window.__openBlogPostByHandle?.(handle);
+        }
+      }
     });
 
-    if (errors?.length) {
-      const first = errors[0]?.message || "Could not load project.";
-      titleEl.textContent = "";
-      bodyEl.removeAttribute("aria-busy");
-      bodyEl.innerHTML = `<p class="blog-post__error">${escapeHtml(first)}</p>`;
-      heroEl.replaceChildren();
-      heroEl.hidden = true;
-      return;
-    }
+    backBtn.addEventListener("click", () => {
+      layoutDebugMark("code:back-click");
+      showListView();
+    });
 
-    const item = data?.codeProjectCollection?.items?.[0];
-    if (!item) {
-      titleEl.textContent = "";
-      bodyEl.removeAttribute("aria-busy");
-      bodyEl.innerHTML =
-        '<p class="blog-post__error">Project not found.</p>';
-      heroEl.replaceChildren();
-      heroEl.hidden = true;
-      return;
-    }
+    (async () => {
+      layoutDebugMark("code:list-fetch-start");
+      setListStatus(
+        ul,
+        "Loading…",
+        "panel-list__status panel-list__status--loading",
+      );
 
-    const t = item.title?.trim() || "Untitled";
-    titleEl.textContent = t;
+      const { items: fetchedItems, errors } =
+        await window.fetchAllCodeProjects();
 
-    heroEl.replaceChildren();
-    const imgFields = item.image;
-    if (imgFields?.url) {
-      const fig = document.createElement("figure");
-      fig.className = "code-project__figure";
-      const img = document.createElement("img");
-      img.src = imgFields.url;
-      img.alt = (imgFields.title || "").trim() || "";
-      img.loading = "lazy";
-      fig.appendChild(img);
-      heroEl.appendChild(fig);
-      heroEl.hidden = false;
-    } else {
-      heroEl.hidden = true;
-    }
+      layoutDebugMark("code:list-fetch-done", { ok: !errors?.length });
 
-    const json = item.description?.json;
-    const links = item.description?.links;
+      if (errors?.length) {
+        const first = errors[0]?.message || "Could not load projects.";
+        setListStatus(ul, first, "panel-list__status panel-list__status--error");
+        return;
+      }
 
-    if (!json) {
-      bodyEl.removeAttribute("aria-busy");
-      bodyEl.innerHTML =
-        '<p class="blog-post__empty">No description for this project yet.</p>';
-      return;
-    }
-
-    try {
-      const html = documentToHtmlString(json, richTextOptions(links));
-      bodyEl.removeAttribute("aria-busy");
-      bodyEl.innerHTML = html;
-      layoutDebugMark("code:article-body-set", { htmlLength: html.length });
-    } catch (e) {
-      console.warn(e);
-      bodyEl.removeAttribute("aria-busy");
-      bodyEl.innerHTML =
-        '<p class="blog-post__error">Could not render this project.</p>';
-    }
+      codeProjectListItems = fetchedItems ?? [];
+      renderProjectList(ul, codeProjectListItems);
+    })();
   }
-
-  panel.addEventListener("click", (ev) => {
-    const t = ev.target;
-    if (!(t instanceof HTMLElement)) return;
-
-    const projectBtn = t.closest("[data-id].panel-list__button");
-    if (projectBtn instanceof HTMLElement) {
-      const id = projectBtn.dataset.id?.trim();
-      if (id) {
-        ev.preventDefault();
-        openProjectById(id);
-      }
-      return;
-    }
-
-    const postBtn = t.closest(
-      "[data-handle].blog-post__embed-btn, [data-handle].blog-post__inline-entry, [data-handle].blog-post__embed-inline-btn",
-    );
-    if (postBtn instanceof HTMLElement) {
-      const handle = postBtn.dataset.handle?.trim();
-      if (handle) {
-        ev.preventDefault();
-        window.__openBlogPostByHandle?.(handle);
-      }
-    }
-  });
-
-  backBtn.addEventListener("click", () => {
-    layoutDebugMark("code:back-click");
-    showListView();
-  });
-
-  (async () => {
-    layoutDebugMark("code:list-fetch-start");
-    setListStatus(
-      ul,
-      "Loading…",
-      "panel-list__status panel-list__status--loading",
-    );
-
-    const { items: fetchedItems, errors } =
-      await window.fetchAllCodeProjects();
-
-    layoutDebugMark("code:list-fetch-done", { ok: !errors?.length });
-
-    if (errors?.length) {
-      const first = errors[0]?.message || "Could not load projects.";
-      setListStatus(ul, first, "panel-list__status panel-list__status--error");
-      return;
-    }
-
-    codeProjectListItems = fetchedItems ?? [];
-    renderProjectList(ul, codeProjectListItems);
-  })();
 }
 
-function boot() {
-  initCodePanel();
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", boot);
-} else {
-  boot();
-}
+customElements.define("code-panel", CodePanel);
