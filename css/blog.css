@@ -1,5 +1,4 @@
 .blog-intro {
-  margin-bottom: 0.75rem;
   /* In-flow panel: max height + inner scroll so layout doesn’t grow unbounded. */
   --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
 }
@@ -20,10 +19,10 @@ dropdown-panel#writes-code:not([open]) #code-panel {
   line-height: 1.35;
   opacity: 0.88;
   font-family:
-    "00Hypertext",
+    '00Hypertext',
     system-ui,
     -apple-system,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     Arial,
     sans-serif;
@@ -52,7 +51,7 @@ dropdown-panel#writes-code:not([open]) #code-panel {
   margin: 0;
   margin-left: auto;
   width: auto;
-  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   font-weight: 400;
   font-style: normal;
   font-size: 0.625rem;
@@ -81,6 +80,7 @@ dropdown-panel#writes-code:not([open]) #code-panel {
 
 .blog-year-filter {
   flex-shrink: 0;
+  margin-top: 0.75rem;
   margin-bottom: 1.5rem;
   width: 100%;
   max-width: 100%;
@@ -98,43 +98,17 @@ accessible-select.blog-year-filter:not(:defined) {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.35rem 0.65rem;
-  font-size: 0.875rem;
-  line-height: 1.35;
-  opacity: 0.88;
+  gap: 0.5rem;
 }
 
-.blog-post-meta__date {
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-  font-style: normal;
-  font-weight: 400;
-}
-
-.blog-post-meta__date + .blog-post-meta__reading::before {
-  content: "·";
-  margin-right: 0.4rem;
-  margin-left: 0.05rem;
-  opacity: 0.75;
-}
-
+.blog-post-meta__date,
 .blog-post-meta__reading {
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: 'Roboto Mono';
   font-style: normal;
   font-weight: 400;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
 .blog-post-meta--list {
@@ -167,10 +141,10 @@ accessible-select.blog-year-filter:not(:defined) {
 .blog-post__title {
   margin: 0;
   font-family:
-    "00Hypertext",
+    '00Hypertext',
     system-ui,
     -apple-system,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     Arial,
     sans-serif;
@@ -229,7 +203,7 @@ accessible-select.blog-year-filter:not(:defined) {
 
 .blog-post__body {
   --blog-post-font-stack:
-    "00Hypertext", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    '00Hypertext', system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
     sans-serif;
   font-family: var(--blog-post-font-stack);
   font-size: 1rem;
@@ -239,7 +213,7 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 /* Loading skeleton: bounded min-height only inside the article scroller (avoids flex min-height:auto → full content height). */
-.panel-scroll__article .blog-post__body[aria-busy="true"] {
+.panel-scroll__article .blog-post__body[aria-busy='true'] {
   min-height: min(14rem, 45vh);
 }
 
@@ -249,15 +223,15 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post__body i {
-  font-family: "00Hypertext Italic", var(--blog-post-font-stack);
+  font-family: '00Hypertext Italic', var(--blog-post-font-stack);
 }
 
 .blog-post__body b {
-  font-family: "00Hypertext Bold", var(--blog-post-font-stack);
+  font-family: '00Hypertext Bold', var(--blog-post-font-stack);
 }
 
 .blog-post__body :is(b i, i b) {
-  font-family: "00Hypertext Bold Italic", var(--blog-post-font-stack);
+  font-family: '00Hypertext Bold Italic', var(--blog-post-font-stack);
 }
 
 .blog-post__body > *:first-child {
@@ -280,10 +254,10 @@ accessible-select.blog-year-filter:not(:defined) {
 .blog-post__body h6 {
   margin: 1rem 0 0.5rem;
   font-family:
-    "00Hypertext",
+    '00Hypertext',
     system-ui,
     -apple-system,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     Arial,
     sans-serif;

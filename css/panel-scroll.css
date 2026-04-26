@@ -42,8 +42,6 @@
 .panel-scroll__list-footer {
   flex-shrink: 0;
   margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-mint-border);
 }
 
 .panel-scroll__list-footer__status {

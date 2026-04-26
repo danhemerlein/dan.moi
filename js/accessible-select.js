@@ -89,6 +89,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transform: rotate(180deg);
             transition: transform 0.25s ease-in-out;
           }
           .chevron svg {
@@ -96,9 +97,11 @@
             width: 1rem;
             height: 1rem;
           }
+
           .trigger[aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
+            transform: rotate(0deg);
           }
+
           .listbox {
             position: absolute;
             top: calc(100% + 0.25rem);
@@ -127,7 +130,7 @@
             min-height: var(--accessible-select-option-height);
             display: flex;
             align-items: center;
-            
+
             cursor: pointer;
           }
           .option__label {
