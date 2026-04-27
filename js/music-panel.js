@@ -69,11 +69,11 @@ function formatReleaseLabel(raw) {
     const mon = MONTH_ABBREV_EN[d.getMonth()];
     const day = d.getDate();
     const year = d.getFullYear();
-    display = `${mon} ${day}, ${year}`;
+    display = `${mon} ${day} ${year}`;
   } else {
     display = s;
   }
-  return abbreviateEnglishMonthNames(display);
+  return abbreviateEnglishMonthNames(display).replace(/,/g, "");
 }
 
 function formatCredits(item) {
@@ -81,7 +81,7 @@ function formatCredits(item) {
   if (item.performed) parts.push("Performed");
   if (item.produced) parts.push("Produced");
   if (item.wrote) parts.push("Wrote");
-  return parts.length ? parts.join(" · ") : null;
+  return parts.length ? parts : null;
 }
 
 function artistNameOnly(item) {
@@ -130,28 +130,33 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
     const headline = document.createElement("div");
     headline.className = "music-project__headline";
 
+    const titleGroup = document.createElement("div");
+    titleGroup.className = "music-project__title-group";
+
     const titleEl = document.createElement("p");
     titleEl.className = "music-project__title";
     titleEl.textContent = title;
-    headline.appendChild(titleEl);
+    titleGroup.appendChild(titleEl);
 
     const dateStr = formatReleaseLabel(item.releaseDate);
     if (dateStr) {
       const dateEl = document.createElement("p");
       dateEl.className = "music-project__date";
       dateEl.textContent = dateStr;
-      headline.appendChild(dateEl);
+      titleGroup.appendChild(dateEl);
     }
 
-    column.appendChild(headline);
+    headline.appendChild(titleGroup);
 
     const artistName = artistNameOnly(item);
     if (artistName) {
       const meta = document.createElement("p");
       meta.className = "music-project__meta";
       meta.textContent = artistName;
-      column.appendChild(meta);
+      headline.appendChild(meta);
     }
+
+    column.appendChild(headline);
 
     const credits = formatCredits(item);
     const linkParts = [];
@@ -190,7 +195,12 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
       if (credits) {
         const cred = document.createElement("p");
         cred.className = "music-project__credits";
-        cred.textContent = credits;
+        for (const part of credits) {
+          const span = document.createElement("span");
+          span.className = "music-project__credit";
+          span.textContent = part;
+          cred.appendChild(span);
+        }
         footer.appendChild(cred);
       }
 
