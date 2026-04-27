@@ -302,7 +302,7 @@ function initBlogPanel() {
       bottomLine.classList.remove("blog-article--exit-down");
     }
     document.getElementById("blog")?.classList.remove("blog-panel--article");
-    containerEl?.classList.remove("blog-article-open");
+    containerEl?.classList.remove("article-open");
   }
 
   function showArticleView() {
@@ -316,7 +316,7 @@ function initBlogPanel() {
     middleLine?.classList.add("blog-article--exit-down");
     bottomLine?.classList.add("blog-article--exit-down");
     document.getElementById("blog")?.classList.add("blog-panel--article");
-    containerEl?.classList.add("blog-article-open");
+    containerEl?.classList.add("article-open");
     if (introP) {
       if (introPExitHandler) introP.removeEventListener("transitionend", introPExitHandler);
       introP.classList.add("blog-article--exit-up");
@@ -553,7 +553,7 @@ function initBlogPanel() {
         bottomLine.classList.remove("blog-article--exit-down");
       }
       blogDropdown.classList.remove("blog-panel--article");
-      containerEl?.classList.remove("blog-article-open");
+      containerEl?.classList.remove("article-open");
     }
   });
 

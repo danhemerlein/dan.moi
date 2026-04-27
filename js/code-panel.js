@@ -150,7 +150,14 @@ class CodePanel extends HTMLElement {
 
     layoutDebugMark('code:panel-init')
 
+    const introP = document.querySelector('blog-intro-section > p.body-text')
+    const middleLine = document.querySelector('.middle-line')
+    const bottomLine = document.querySelector('.bottom-line')
+    const containerEl = document.querySelector('.container')
+
     let codeProjectListItems = []
+    let introPExitHandler = null
+    let bottomLineExitHandler = null
 
     function scrollCodePanelToTop() {
       const writesCodePanel = document.getElementById('writes-code')
@@ -172,6 +179,27 @@ class CodePanel extends HTMLElement {
       heroEl.replaceChildren()
       heroEl.hidden = true
       scrollCodePanelToTop()
+      if (introP) {
+        if (introPExitHandler) {
+          introP.removeEventListener('transitionend', introPExitHandler)
+          introPExitHandler = null
+        }
+        introP.style.display = ''
+        introP.offsetHeight
+        introP.classList.remove('blog-article--exit-up')
+      }
+      middleLine?.classList.remove('blog-article--exit-down')
+      if (bottomLine) {
+        if (bottomLineExitHandler) {
+          bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
+          bottomLineExitHandler = null
+        }
+        bottomLine.style.display = ''
+        bottomLine.offsetHeight
+        bottomLine.classList.remove('blog-article--exit-down')
+      }
+      document.getElementById('writes-code')?.classList.remove('code-panel--article')
+      containerEl?.classList.remove('article-open')
     }
 
     function showArticleView() {
@@ -180,6 +208,31 @@ class CodePanel extends HTMLElement {
       articleRoot.hidden = false
       scrollCodePanelToTop()
       backBtn.focus({ preventScroll: true })
+      middleLine?.classList.add('blog-article--exit-down')
+      bottomLine?.classList.add('blog-article--exit-down')
+      document.getElementById('writes-code')?.classList.add('code-panel--article')
+      containerEl?.classList.add('article-open')
+      if (introP) {
+        if (introPExitHandler) introP.removeEventListener('transitionend', introPExitHandler)
+        introP.classList.add('blog-article--exit-up')
+        introPExitHandler = (e) => {
+          if (e.propertyName !== 'transform' || e.target !== introP) return
+          introP.removeEventListener('transitionend', introPExitHandler)
+          introPExitHandler = null
+          introP.style.display = 'none'
+        }
+        introP.addEventListener('transitionend', introPExitHandler)
+      }
+      if (bottomLine) {
+        if (bottomLineExitHandler) bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
+        bottomLineExitHandler = (e) => {
+          if (e.propertyName !== 'transform' || e.target !== bottomLine) return
+          bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
+          bottomLineExitHandler = null
+          bottomLine.style.display = 'none'
+        }
+        bottomLine.addEventListener('transitionend', bottomLineExitHandler)
+      }
     }
 
     async function openProjectById(id) {
@@ -315,6 +368,38 @@ class CodePanel extends HTMLElement {
     backBtn.addEventListener('click', () => {
       layoutDebugMark('code:back-click')
       showListView()
+    })
+
+    document.addEventListener('dropdown:state-changed', () => {
+      const codeDropdown = document.getElementById('writes-code')
+      if (codeDropdown?.open) showListView()
+    })
+
+    document.addEventListener('dropdown:state-changed', () => {
+      const codeDropdown = document.getElementById('writes-code')
+      if (codeDropdown && !codeDropdown.open) {
+        if (introP) {
+          if (introPExitHandler) {
+            introP.removeEventListener('transitionend', introPExitHandler)
+            introPExitHandler = null
+          }
+          introP.style.display = ''
+          introP.offsetHeight
+          introP.classList.remove('blog-article--exit-up')
+        }
+        middleLine?.classList.remove('blog-article--exit-down')
+        if (bottomLine) {
+          if (bottomLineExitHandler) {
+            bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
+            bottomLineExitHandler = null
+          }
+          bottomLine.style.display = ''
+          bottomLine.offsetHeight
+          bottomLine.classList.remove('blog-article--exit-down')
+        }
+        codeDropdown.classList.remove('code-panel--article')
+        containerEl?.classList.remove('article-open')
+      }
     })
     ;(async () => {
       layoutDebugMark('code:list-fetch-start')

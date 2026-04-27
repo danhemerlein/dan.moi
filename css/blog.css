@@ -22,11 +22,27 @@ dropdown-panel#blog:not([open]) #blog-panel {
   display: none !important;
 }
 
-/* When a blog article is open, remove all other dropdowns from layout so the article
-   panel has maximum vertical space. */
-.blog-article-open dropdown-panel#writes-code,
-.blog-article-open dropdown-panel#makes-music,
-.blog-article-open dropdown-panel#collects-moods {
+/* When any article is open, hide all non-active dropdowns for maximum vertical space. */
+.article-open dropdown-panel#blog:not([open]),
+.article-open dropdown-panel#writes-code:not([open]),
+.article-open dropdown-panel#makes-music,
+.article-open dropdown-panel#collects-moods {
+  display: none;
+}
+
+/* Intro paragraph hidden whenever any article is open. */
+.article-open blog-intro-section > p.body-text {
+  display: none;
+}
+
+/* Middle line hidden once it has exited. */
+.article-open .middle-line.blog-article--exit-down {
+  display: none;
+}
+
+/* blog-intro-section hidden entirely when a code article is open.
+   When a blog article is open it must stay visible — it contains the blog panel. */
+.article-open:has(dropdown-panel#writes-code[open]) blog-intro-section {
   display: none;
 }
 

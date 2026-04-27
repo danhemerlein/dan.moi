@@ -11,6 +11,10 @@
   gap: 0.75rem;
 }
 
+.article-open .panel-list {
+  margin-top: 0;
+}
+
 .panel-list__item {
   background-color: var(--color-mint-cream);
   padding: 1rem;
