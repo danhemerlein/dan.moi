@@ -1,0 +1,85 @@
+dropdown-panel#writes-code:not([open]) #code-panel {
+  display: none !important;
+}
+
+/* Host must participate in flex + min-height: 0 so the inner .panel-scroll
+   gets a bounded height and vertical scroll works (same pattern as moodboard-panel). */
+code-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.code-project-meta {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-family: 'Roboto Mono';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-stone-gray);
+}
+
+/* Code projects list row: markup order title → year; title left, year right. */
+#code-panel .panel-list__item {
+  background-color: var(--color-lavender-cream);
+  border: 1px solid var(--color-lilac-border);
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+#code-panel .panel-list__item button {
+  padding: 1rem;
+  padding-right: 0;
+}
+
+#code-panel .panel-list__item .code-project-meta.code-project-meta--list {
+  padding-right: 1rem;
+}
+
+#code-panel .panel-list__button,
+#code-panel .panel-list__title-fallback {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+#code-panel .code-project-meta--list {
+  flex-shrink: 0;
+  margin: 0;
+  margin-left: auto;
+  width: auto;
+  font-family: 'Roboto Mono';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-stone-gray);
+}
+
+.code-project__hero {
+  margin-top: 1.5rem;
+  display: flex;
+  width: 100%;
+}
+
+.code-project__figure {
+  width: 100%;
+}
+
+.code-project__figure img {
+  margin: 0 auto;
+  height: auto;
+  max-width: 50%;
+  display: block;
+}

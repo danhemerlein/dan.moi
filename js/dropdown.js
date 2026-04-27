@@ -83,7 +83,6 @@
             overscroll-behavior: contain;
           }
           .panel {
-            border-radius: 0.875rem;
             overflow: hidden;
             margin-top: 0;
             border: 0;
