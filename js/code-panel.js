@@ -1,19 +1,16 @@
-import { documentToHtmlString } from "https://esm.sh/@contentful/rich-text-html-renderer@16.3.0";
-import {
-  escapeHtml,
-  richTextOptions,
-} from "./contentful-rich-text-html.js";
-import { CLOSE_SVG } from "./icons.js";
+import { documentToHtmlString } from 'https://esm.sh/@contentful/rich-text-html-renderer@16.3.0'
+import { escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
+import { CLOSE_SVG } from './icons.js'
 
 function layoutDebugMark(name, detail) {
-  window.__layoutDebugMark?.(name, detail);
+  window.__layoutDebugMark?.(name, detail)
 }
 
 /** Ensures at least one paint before continuing (skeleton visible on fast/cached fetches). */
 function waitForPaint() {
   return new Promise((resolve) => {
-    requestAnimationFrame(() => requestAnimationFrame(resolve));
-  });
+    requestAnimationFrame(() => requestAnimationFrame(resolve))
+  })
 }
 
 const ARTICLE_BODY_SKELETON_HTML = `
@@ -23,82 +20,82 @@ const ARTICLE_BODY_SKELETON_HTML = `
   <div class="blog-post__skeleton-line"></div>
   <div class="blog-post__skeleton-line"></div>
   <div class="blog-post__skeleton-line blog-post__skeleton-line--sm"></div>
-</div>`;
+</div>`
 
 /**
  * Renders a single year or a year range from Contentful timeline / launch data.
  * Handles ISO Date strings, and plain text that includes months or ranges (e.g. "Jan 2020 – Dec 2022").
  */
 function formatTimelineLabel(raw) {
-  if (raw == null) return null;
-  const s = String(raw).trim();
-  if (!s) return null;
+  if (raw == null) return null
+  const s = String(raw).trim()
+  if (!s) return null
 
-  const fourDigitYears = s.match(/\b(19\d{2}|20\d{2})\b/g);
+  const fourDigitYears = s.match(/\b(19\d{2}|20\d{2})\b/g)
   if (fourDigitYears?.length) {
-    const years = [...new Set(fourDigitYears.map(Number))].sort((a, b) => a - b);
-    if (years.length === 1) return String(years[0]);
-    return `${years[0]}–${years[years.length - 1]}`;
+    const years = [...new Set(fourDigitYears.map(Number))].sort((a, b) => a - b)
+    if (years.length === 1) return String(years[0])
+    return `${years[0]}–${years[years.length - 1]}`
   }
 
-  const t = Date.parse(s);
+  const t = Date.parse(s)
   if (!Number.isNaN(t)) {
-    return String(new Date(t).getUTCFullYear());
+    return String(new Date(t).getUTCFullYear())
   }
 
-  return null;
+  return null
 }
 
-function setListStatus(ul, text, className = "panel-list__status") {
-  ul.replaceChildren();
-  const li = document.createElement("li");
-  li.className = className;
-  li.textContent = text;
-  ul.appendChild(li);
+function setListStatus(ul, text, className = 'panel-list__status') {
+  ul.replaceChildren()
+  const li = document.createElement('li')
+  li.className = className
+  li.textContent = text
+  ul.appendChild(li)
 }
 
-function renderProjectList(ul, items, emptyMessage = "No projects yet.") {
-  ul.replaceChildren();
-  const fragment = document.createDocumentFragment();
+function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
+  ul.replaceChildren()
+  const fragment = document.createDocumentFragment()
   for (const item of items) {
-    if (!item) continue;
-    const id = item.sys?.id?.trim();
-    const title = item.title?.trim() || "Untitled";
-    const li = document.createElement("li");
-    li.className = "panel-list__item";
+    if (!item) continue
+    const id = item.sys?.id?.trim()
+    const title = item.title?.trim() || 'Untitled'
+    const li = document.createElement('li')
+    li.className = 'panel-list__item'
 
-    const yearStr = formatTimelineLabel(item.timelineLaunchDate);
+    const yearStr = formatTimelineLabel(item.timelineLaunchDate)
 
     if (id) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "panel-list__button";
-      btn.dataset.id = id;
-      btn.textContent = title;
-      li.appendChild(btn);
+      const btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'panel-list__button'
+      btn.dataset.id = id
+      btn.textContent = title
+      li.appendChild(btn)
     } else {
-      const titleOnly = document.createElement("span");
-      titleOnly.className = "panel-list__title-fallback";
-      titleOnly.textContent = title;
-      li.appendChild(titleOnly);
+      const titleOnly = document.createElement('span')
+      titleOnly.className = 'panel-list__title-fallback'
+      titleOnly.textContent = title
+      li.appendChild(titleOnly)
     }
 
     if (yearStr) {
-      const meta = document.createElement("p");
-      meta.className = "code-project-meta code-project-meta--list";
-      meta.textContent = yearStr;
-      li.appendChild(meta);
+      const meta = document.createElement('p')
+      meta.className = 'code-project-meta code-project-meta--list'
+      meta.textContent = yearStr
+      li.appendChild(meta)
     }
 
-    fragment.appendChild(li);
+    fragment.appendChild(li)
   }
-  ul.appendChild(fragment);
+  ul.appendChild(fragment)
   if (!ul.children.length) {
-    setListStatus(ul, emptyMessage);
+    setListStatus(ul, emptyMessage)
   }
-  layoutDebugMark("code:list-rendered", {
+  layoutDebugMark('code:list-rendered', {
     itemCount: items.filter(Boolean).length,
-  });
+  })
 }
 
 const PANEL_HTML = `
@@ -111,29 +108,31 @@ const PANEL_HTML = `
         ${CLOSE_SVG}
       </button>
       <h2 id="code-project-title" class="blog-post__title"></h2>
+      <p id="code-project-timeline" class="code-project-meta" hidden></p>
       <div id="code-project-hero" class="code-project__hero" hidden></div>
       <article id="code-project-body" class="blog-post__body"></article>
     </div>
   </div>
-`;
+`
 
 class CodePanel extends HTMLElement {
   connectedCallback() {
-    if (this.dataset.rendered) return;
-    this.dataset.rendered = "";
-    this.innerHTML = PANEL_HTML;
-    this.#init();
+    if (this.dataset.rendered) return
+    this.dataset.rendered = ''
+    this.innerHTML = PANEL_HTML
+    this.#init()
   }
 
   #init() {
-    const panel = document.getElementById("code-panel");
-    const ul = document.getElementById("code-projects");
-    const listWrap = document.getElementById("code-projects-list-wrap");
-    const articleRoot = document.getElementById("code-project-article");
-    const backBtn = document.getElementById("code-project-back");
-    const titleEl = document.getElementById("code-project-title");
-    const heroEl = document.getElementById("code-project-hero");
-    const bodyEl = document.getElementById("code-project-body");
+    const panel = document.getElementById('code-panel')
+    const ul = document.getElementById('code-projects')
+    const listWrap = document.getElementById('code-projects-list-wrap')
+    const articleRoot = document.getElementById('code-project-article')
+    const backBtn = document.getElementById('code-project-back')
+    const titleEl = document.getElementById('code-project-title')
+    const timelineEl = document.getElementById('code-project-timeline')
+    const heroEl = document.getElementById('code-project-hero')
+    const bodyEl = document.getElementById('code-project-body')
 
     if (
       !panel ||
@@ -142,190 +141,204 @@ class CodePanel extends HTMLElement {
       !articleRoot ||
       !backBtn ||
       !titleEl ||
+      !timelineEl ||
       !heroEl ||
       !bodyEl
     ) {
-      return;
+      return
     }
 
-    layoutDebugMark("code:panel-init");
+    layoutDebugMark('code:panel-init')
 
-    let codeProjectListItems = [];
+    let codeProjectListItems = []
 
     function scrollCodePanelToTop() {
-      const writesCodePanel = document.getElementById("writes-code");
-      const scrollEl = writesCodePanel?.shadowRoot?.querySelector(".content");
-      if (scrollEl instanceof HTMLElement) scrollEl.scrollTop = 0;
-      listWrap.scrollTop = 0;
-      articleRoot.scrollTop = 0;
+      const writesCodePanel = document.getElementById('writes-code')
+      const scrollEl = writesCodePanel?.shadowRoot?.querySelector('.content')
+      if (scrollEl instanceof HTMLElement) scrollEl.scrollTop = 0
+      listWrap.scrollTop = 0
+      articleRoot.scrollTop = 0
     }
 
     function showListView() {
-      layoutDebugMark("code:show-list-view");
-      listWrap.hidden = false;
-      articleRoot.hidden = true;
-      bodyEl.removeAttribute("aria-busy");
-      bodyEl.innerHTML = "";
-      titleEl.textContent = "";
-      heroEl.replaceChildren();
-      heroEl.hidden = true;
-      scrollCodePanelToTop();
+      layoutDebugMark('code:show-list-view')
+      listWrap.hidden = false
+      articleRoot.hidden = true
+      bodyEl.removeAttribute('aria-busy')
+      bodyEl.innerHTML = ''
+      titleEl.textContent = ''
+      timelineEl.textContent = ''
+      timelineEl.hidden = true
+      heroEl.replaceChildren()
+      heroEl.hidden = true
+      scrollCodePanelToTop()
     }
 
     function showArticleView() {
-      layoutDebugMark("code:show-article-view");
-      listWrap.hidden = true;
-      articleRoot.hidden = false;
-      scrollCodePanelToTop();
-      backBtn.focus({ preventScroll: true });
+      layoutDebugMark('code:show-article-view')
+      listWrap.hidden = true
+      articleRoot.hidden = false
+      scrollCodePanelToTop()
+      backBtn.focus({ preventScroll: true })
     }
 
     async function openProjectById(id) {
-      if (!id) return;
+      if (!id) return
 
-      layoutDebugMark("code:open-project-start", { id });
-      showArticleView();
+      layoutDebugMark('code:open-project-start', { id })
+      showArticleView()
 
-      bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML;
-      bodyEl.setAttribute("aria-busy", "true");
+      bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML
+      bodyEl.setAttribute('aria-busy', 'true')
 
-      const snapshot = codeProjectListItems.find((i) => i?.sys?.id === id);
+      const snapshot = codeProjectListItems.find((i) => i?.sys?.id === id)
 
       if (snapshot) {
-        titleEl.textContent = snapshot.title?.trim() || "Untitled";
+        titleEl.textContent = snapshot.title?.trim() || 'Untitled'
       } else {
-        titleEl.textContent = "Loading…";
+        titleEl.textContent = 'Loading…'
       }
 
-      await waitForPaint();
+      await waitForPaint()
 
       const { data, errors } = await window.contentfulRequest(
         window.GET_CODE_PROJECT_BY_ID_QUERY,
         { id },
-      );
+      )
 
-      layoutDebugMark("code:open-project-fetch-done", {
+      layoutDebugMark('code:open-project-fetch-done', {
         ok: !errors?.length,
         hasItem: Boolean(data?.codeProjectCollection?.items?.[0]),
-      });
+      })
 
       if (errors?.length) {
-        const first = errors[0]?.message || "Could not load project.";
-        titleEl.textContent = "";
-        bodyEl.removeAttribute("aria-busy");
-        bodyEl.innerHTML = `<p class="blog-post__error">${escapeHtml(first)}</p>`;
-        heroEl.replaceChildren();
-        heroEl.hidden = true;
-        return;
+        const first = errors[0]?.message || 'Could not load project.'
+        titleEl.textContent = ''
+        timelineEl.textContent = ''
+        timelineEl.hidden = true
+        bodyEl.removeAttribute('aria-busy')
+        bodyEl.innerHTML = `<p class="blog-post__error">${escapeHtml(first)}</p>`
+        heroEl.replaceChildren()
+        heroEl.hidden = true
+        return
       }
 
-      const item = data?.codeProjectCollection?.items?.[0];
+      const item = data?.codeProjectCollection?.items?.[0]
       if (!item) {
-        titleEl.textContent = "";
-        bodyEl.removeAttribute("aria-busy");
-        bodyEl.innerHTML =
-          '<p class="blog-post__error">Project not found.</p>';
-        heroEl.replaceChildren();
-        heroEl.hidden = true;
-        return;
+        titleEl.textContent = ''
+        timelineEl.textContent = ''
+        timelineEl.hidden = true
+        bodyEl.removeAttribute('aria-busy')
+        bodyEl.innerHTML = '<p class="blog-post__error">Project not found.</p>'
+        heroEl.replaceChildren()
+        heroEl.hidden = true
+        return
       }
 
-      const t = item.title?.trim() || "Untitled";
-      titleEl.textContent = t;
+      const t = item.title?.trim() || 'Untitled'
+      titleEl.textContent = t
 
-      heroEl.replaceChildren();
-      const imgFields = item.image;
-      if (imgFields?.url) {
-        const fig = document.createElement("figure");
-        fig.className = "code-project__figure";
-        const img = document.createElement("img");
-        img.src = imgFields.url;
-        img.alt = (imgFields.title || "").trim() || "";
-        img.loading = "lazy";
-        fig.appendChild(img);
-        heroEl.appendChild(fig);
-        heroEl.hidden = false;
+      const yearStr = formatTimelineLabel(item.timelineLaunchDate)
+      if (yearStr) {
+        timelineEl.textContent = yearStr
+        timelineEl.hidden = false
       } else {
-        heroEl.hidden = true;
+        timelineEl.textContent = ''
+        timelineEl.hidden = true
       }
 
-      const json = item.description?.json;
-      const links = item.description?.links;
+      heroEl.replaceChildren()
+      const imgFields = item.image
+      if (imgFields?.url) {
+        const fig = document.createElement('figure')
+        fig.className = 'code-project__figure'
+        const img = document.createElement('img')
+        img.src = imgFields.url
+        img.alt = (imgFields.title || '').trim() || ''
+        img.loading = 'lazy'
+        fig.appendChild(img)
+        heroEl.appendChild(fig)
+        heroEl.hidden = false
+      } else {
+        heroEl.hidden = true
+      }
+
+      const json = item.description?.json
+      const links = item.description?.links
 
       if (!json) {
-        bodyEl.removeAttribute("aria-busy");
+        bodyEl.removeAttribute('aria-busy')
         bodyEl.innerHTML =
-          '<p class="blog-post__empty">No description for this project yet.</p>';
-        return;
+          '<p class="blog-post__empty">No description for this project yet.</p>'
+        return
       }
 
       try {
-        const html = documentToHtmlString(json, richTextOptions(links));
-        bodyEl.removeAttribute("aria-busy");
-        bodyEl.innerHTML = html;
-        layoutDebugMark("code:article-body-set", { htmlLength: html.length });
+        const html = documentToHtmlString(json, richTextOptions(links))
+        bodyEl.removeAttribute('aria-busy')
+        bodyEl.innerHTML = html
+        layoutDebugMark('code:article-body-set', { htmlLength: html.length })
       } catch (e) {
-        console.warn(e);
-        bodyEl.removeAttribute("aria-busy");
+        console.warn(e)
+        bodyEl.removeAttribute('aria-busy')
         bodyEl.innerHTML =
-          '<p class="blog-post__error">Could not render this project.</p>';
+          '<p class="blog-post__error">Could not render this project.</p>'
       }
     }
 
-    panel.addEventListener("click", (ev) => {
-      const t = ev.target;
-      if (!(t instanceof HTMLElement)) return;
+    panel.addEventListener('click', (ev) => {
+      const t = ev.target
+      if (!(t instanceof HTMLElement)) return
 
-      const projectBtn = t.closest("[data-id].panel-list__button");
+      const projectBtn = t.closest('[data-id].panel-list__button')
       if (projectBtn instanceof HTMLElement) {
-        const id = projectBtn.dataset.id?.trim();
+        const id = projectBtn.dataset.id?.trim()
         if (id) {
-          ev.preventDefault();
-          openProjectById(id);
+          ev.preventDefault()
+          openProjectById(id)
         }
-        return;
+        return
       }
 
       const postBtn = t.closest(
-        "[data-handle].blog-post__embed-btn, [data-handle].blog-post__inline-entry, [data-handle].blog-post__embed-inline-btn",
-      );
+        '[data-handle].blog-post__embed-btn, [data-handle].blog-post__inline-entry, [data-handle].blog-post__embed-inline-btn',
+      )
       if (postBtn instanceof HTMLElement) {
-        const handle = postBtn.dataset.handle?.trim();
+        const handle = postBtn.dataset.handle?.trim()
         if (handle) {
-          ev.preventDefault();
-          window.__openBlogPostByHandle?.(handle);
+          ev.preventDefault()
+          window.__openBlogPostByHandle?.(handle)
         }
       }
-    });
+    })
 
-    backBtn.addEventListener("click", () => {
-      layoutDebugMark("code:back-click");
-      showListView();
-    });
-
-    (async () => {
-      layoutDebugMark("code:list-fetch-start");
+    backBtn.addEventListener('click', () => {
+      layoutDebugMark('code:back-click')
+      showListView()
+    })
+    ;(async () => {
+      layoutDebugMark('code:list-fetch-start')
       setListStatus(
         ul,
-        "Loading…",
-        "panel-list__status panel-list__status--loading",
-      );
+        'Loading…',
+        'panel-list__status panel-list__status--loading',
+      )
 
       const { items: fetchedItems, errors } =
-        await window.fetchAllCodeProjects();
+        await window.fetchAllCodeProjects()
 
-      layoutDebugMark("code:list-fetch-done", { ok: !errors?.length });
+      layoutDebugMark('code:list-fetch-done', { ok: !errors?.length })
 
       if (errors?.length) {
-        const first = errors[0]?.message || "Could not load projects.";
-        setListStatus(ul, first, "panel-list__status panel-list__status--error");
-        return;
+        const first = errors[0]?.message || 'Could not load projects.'
+        setListStatus(ul, first, 'panel-list__status panel-list__status--error')
+        return
       }
 
-      codeProjectListItems = fetchedItems ?? [];
-      renderProjectList(ul, codeProjectListItems);
-    })();
+      codeProjectListItems = fetchedItems ?? []
+      renderProjectList(ul, codeProjectListItems)
+    })()
   }
 }
 
-customElements.define("code-panel", CodePanel);
+customElements.define('code-panel', CodePanel)

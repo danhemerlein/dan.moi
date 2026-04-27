@@ -2,9 +2,28 @@ dropdown-panel#writes-code:not([open]) #code-panel {
   display: none !important;
 }
 
+/* Host must participate in flex + min-height: 0 so the inner .panel-scroll
+   gets a bounded height and vertical scroll works (same pattern as moodboard-panel). */
+code-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 .code-project-meta {
   font-size: 1rem;
-  font-family: '00Hypertext';
+  margin-top: 0.5rem;
+  font-family: 'Roboto Mono';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-stone-gray);
 }
 
 /* Code projects list row: markup order title → year; title left, year right. */
@@ -49,16 +68,18 @@ dropdown-panel#writes-code:not([open]) #code-panel {
 }
 
 .code-project__hero {
-  flex-shrink: 0;
+  margin-top: 1.5rem;
+  display: flex;
+  width: 100%;
 }
 
 .code-project__figure {
-  margin: 0 0 0.35rem;
+  width: 100%;
 }
 
 .code-project__figure img {
-  max-width: 100%;
+  margin: 0 auto;
   height: auto;
-  border-radius: 0.35rem;
-  vertical-align: middle;
+  max-width: 50%;
+  display: block;
 }

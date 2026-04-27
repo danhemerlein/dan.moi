@@ -1,4 +1,4 @@
-import { CLOSE_SVG } from “./icons.js”;
+import { CLOSE_SVG } from "./icons.js";
 
 /**
  * Renders the “note taker” intro line and blog dropdown panel (keeps ids for blog-panel.js).
