@@ -1,4 +1,4 @@
-// Dev modes — activated via URL param: ?dev-mode=blog-list, blog-article, code-list, or code-project
+// Dev modes — activated via URL param: ?dev-mode=blog-list, blog-article, code-list, code-project, or music-list
 // Only runs on localhost. Reload the page to exit.
 (() => {
   const mode = new URLSearchParams(location.search).get("dev-mode");
@@ -78,6 +78,9 @@
           );
           btn.click();
         }
+      } else if (mode === "music-list") {
+        const panel = await openPanel("makes-music");
+        keepPanelOpen(panel);
       }
     } catch (e) {
       console.warn(e.message);
