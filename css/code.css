@@ -2,6 +2,15 @@ dropdown-panel#writes-code:not([open]) #code-panel {
   display: none !important;
 }
 
+dropdown-panel#writes-code.code-panel--article {
+  --dropdown-scroll-max-height: calc(100vh - 4rem);
+}
+
+dropdown-panel#writes-code.code-panel--article::part(panel) {
+  margin-top: 0;
+}
+
+
 /* Host must participate in flex + min-height: 0 so the inner .panel-scroll
    gets a bounded height and vertical scroll works (same pattern as moodboard-panel). */
 code-panel {

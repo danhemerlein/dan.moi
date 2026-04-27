@@ -65,7 +65,7 @@ body {
   transition: padding-top 360ms cubic-bezier(0.45, 0, 0.55, 1);
 }
 
-.container.blog-article-open {
+.container.article-open {
   padding-top: 2rem;
 }
 
