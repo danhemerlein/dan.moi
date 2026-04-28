@@ -16,6 +16,7 @@ Serves on port 3333 by default (override with `PORT` env var). Open `http://loca
 - `?dev-mode=code-list` — "Writes Code" panel opens and stays open; won't close on outside clicks
 - `?dev-mode=code-project` — "Writes Code" panel opens and the first project loads automatically
 - `?dev-mode=music-list` — "Makes Music" panel opens and stays open; won't close on outside clicks
+- `?dev-mode=moodboard-list` — "Collects Moods" panel opens and stays open; won't close on outside clicks
 
 **No build step, no package manager.** This is a vanilla JS project — no npm, no bundler, no transpilation.
 
