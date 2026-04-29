@@ -68,7 +68,7 @@
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: 2rem;
+  padding: 2rem 1rem;
   border-radius: 0.875rem;
 }
 
@@ -100,4 +100,10 @@
    Prose uses .blog-post__body (blog + code detail views). */
 .panel-scroll__article > :not(.blog-post__body) {
   flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .panel-scroll__article {
+    padding: 2rem;
+  }
 }

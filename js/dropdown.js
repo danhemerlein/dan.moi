@@ -214,13 +214,18 @@
           button {
             background-color: var(--dropdown-trigger-bg, transparent);
             border: 0;
-            padding: 4px 6px;
+            padding: 2px 3px;
             border-radius: 8px;
             margin: 0;
             font: inherit;
             color: inherit;
             cursor: pointer;
             transition: background-color 260ms ease;
+          }
+          @media (min-width: 768px) {
+            button {
+              padding: 4px 6px;
+            }
           }
           button:focus-visible {
             outline: 0.125rem solid

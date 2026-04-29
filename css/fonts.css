@@ -86,7 +86,7 @@ body {
   font-family: "00Hypertext";
   font-style: normal;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1.2;
   letter-spacing: -0.03em;
   color: var(--color-ink);
@@ -109,4 +109,10 @@ body {
   letter-spacing: var(--type-roboto-mono-12-letter-spacing);
   text-transform: uppercase;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  .body-text {
+    font-size: 1.5rem;
+  }
 }
