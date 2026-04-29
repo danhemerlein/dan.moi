@@ -68,12 +68,14 @@ class MoodboardPanel extends HTMLElement {
   #mql = null;
   #onMql = null;
   #initialized = false;
+  #onDropdownState = null;
 
   connectedCallback() {
     if (this.#initialized) return;
     this.#initialized = true;
     this.innerHTML = PANEL_HTML;
     this.#bind();
+    this.#bindDropdownEvents();
     this.#loadInitial();
   }
 
@@ -85,6 +87,59 @@ class MoodboardPanel extends HTMLElement {
     }
     this.#mql = null;
     this.#onMql = null;
+    if (this.#onDropdownState) {
+      document.removeEventListener("dropdown:state-changed", this.#onDropdownState);
+      this.#onDropdownState = null;
+    }
+  }
+
+  #bindDropdownEvents() {
+    const blogIntroSection = document.querySelector("blog-intro-section");
+    const middleLine = document.querySelector(".middle-line");
+    const bottomLine = document.querySelector(".bottom-line");
+    const containerEl = document.querySelector(".container");
+
+    const COLLAPSE_TRANSITION = "height 320ms cubic-bezier(0.45, 0, 0.55, 1)";
+
+    function collapseEl(el) {
+      if (!el) return;
+      const h = el.offsetHeight;
+      if (!h) return;
+      el.style.overflow = "hidden";
+      el.style.marginTop = "0";
+      el.style.height = h + "px";
+      el.offsetHeight;
+      el.style.transition = COLLAPSE_TRANSITION;
+      el.offsetHeight;
+      el.style.height = "0";
+    }
+
+    function expandEl(el) {
+      if (!el) return;
+      el.style.transition = "";
+      el.style.height = "";
+      el.style.overflow = "";
+      el.style.marginTop = "";
+    }
+
+    this.#onDropdownState = () => {
+      const moodboardDropdown = document.getElementById("collects-moods");
+      if (!moodboardDropdown) return;
+
+      if (moodboardDropdown.open) {
+        containerEl?.classList.add("moodboard-open");
+        collapseEl(blogIntroSection);
+        collapseEl(middleLine);
+        collapseEl(bottomLine);
+      } else {
+        expandEl(blogIntroSection);
+        expandEl(middleLine);
+        expandEl(bottomLine);
+        containerEl?.classList.remove("moodboard-open");
+      }
+    };
+
+    document.addEventListener("dropdown:state-changed", this.#onDropdownState);
   }
 
   #bind() {

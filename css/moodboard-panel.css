@@ -3,6 +3,21 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
   display: none !important;
 }
 
+/* Full-height panel when moodboard is open. */
+.moodboard-open dropdown-panel#collects-moods {
+  --dropdown-scroll-max-height: calc(100vh - 10rem);
+}
+
+.moodboard-open .paragraph-container {
+  width: 100%;
+}
+
+/* Remove gap between trigger and panel when moodboard is open. */
+.moodboard-open dropdown-panel#collects-moods::part(panel) {
+  margin-top: 0;
+}
+
+
 /*
   Match code/music panels: they are direct .panel-scroll children of the dropdown slot.
   Moodboard wraps the same structure in <moodboard-panel>; the host must participate in
