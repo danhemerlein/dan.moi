@@ -49,7 +49,7 @@ dropdown-panel#blog:not([open]) #blog-panel {
 .blog-year-filter {
   flex-shrink: 0;
   margin-top: 0.375rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: .75rem;
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -66,7 +66,7 @@ accessible-select.blog-year-filter:not(:defined) {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .blog-post-meta__date,
@@ -80,20 +80,13 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post-meta--list {
-  margin-top: 0.6rem;
+  margin-top: 0.5rem;
 }
 
 
 .blog-post__title {
   margin: 0;
-  font-family:
-    '00Hypertext',
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: '00Hypertext';
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25;
@@ -196,14 +189,7 @@ accessible-select.blog-year-filter:not(:defined) {
 .blog-post__body h5,
 .blog-post__body h6 {
   margin: 1rem 0 0.5rem;
-  font-family:
-    '00Hypertext',
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: '00Hypertext';
   font-weight: 400;
   line-height: 1.2;
 }
@@ -328,11 +314,12 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post-meta--article {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 @media (min-width: 768px) {
   .blog-year-filter {
     margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
   }
 }
