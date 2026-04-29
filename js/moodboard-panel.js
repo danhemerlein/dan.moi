@@ -94,62 +94,47 @@ class MoodboardPanel extends HTMLElement {
   }
 
   #bindDropdownEvents() {
-    const introP = document.querySelector("blog-intro-section > p.body-text");
+    const blogIntroSection = document.querySelector("blog-intro-section");
     const middleLine = document.querySelector(".middle-line");
     const bottomLine = document.querySelector(".bottom-line");
     const containerEl = document.querySelector(".container");
-    let introPExitHandler = null;
-    let bottomLineExitHandler = null;
+
+    const COLLAPSE_TRANSITION = "height 320ms cubic-bezier(0.45, 0, 0.55, 1)";
+
+    function collapseEl(el) {
+      if (!el) return;
+      const h = el.offsetHeight;
+      if (!h) return;
+      el.style.overflow = "hidden";
+      el.style.marginTop = "0";
+      el.style.height = h + "px";
+      el.offsetHeight;
+      el.style.transition = COLLAPSE_TRANSITION;
+      el.offsetHeight;
+      el.style.height = "0";
+    }
+
+    function expandEl(el) {
+      if (!el) return;
+      el.style.transition = "";
+      el.style.height = "";
+      el.style.overflow = "";
+      el.style.marginTop = "";
+    }
 
     this.#onDropdownState = () => {
       const moodboardDropdown = document.getElementById("collects-moods");
       if (!moodboardDropdown) return;
 
       if (moodboardDropdown.open) {
-        middleLine?.classList.add("blog-article--exit-down");
-        bottomLine?.classList.add("blog-article--exit-down");
         containerEl?.classList.add("moodboard-open");
-        if (introP) {
-          if (introPExitHandler) introP.removeEventListener("transitionend", introPExitHandler);
-          introP.classList.add("blog-article--exit-up");
-          introPExitHandler = (e) => {
-            if (e.propertyName !== "transform" || e.target !== introP) return;
-            introP.removeEventListener("transitionend", introPExitHandler);
-            introPExitHandler = null;
-            introP.style.display = "none";
-          };
-          introP.addEventListener("transitionend", introPExitHandler);
-        }
-        if (bottomLine) {
-          if (bottomLineExitHandler) bottomLine.removeEventListener("transitionend", bottomLineExitHandler);
-          bottomLineExitHandler = (e) => {
-            if (e.propertyName !== "transform" || e.target !== bottomLine) return;
-            bottomLine.removeEventListener("transitionend", bottomLineExitHandler);
-            bottomLineExitHandler = null;
-            bottomLine.style.display = "none";
-          };
-          bottomLine.addEventListener("transitionend", bottomLineExitHandler);
-        }
+        collapseEl(blogIntroSection);
+        collapseEl(middleLine);
+        collapseEl(bottomLine);
       } else {
-        if (introP) {
-          if (introPExitHandler) {
-            introP.removeEventListener("transitionend", introPExitHandler);
-            introPExitHandler = null;
-          }
-          introP.style.display = "";
-          introP.offsetHeight;
-          introP.classList.remove("blog-article--exit-up");
-        }
-        middleLine?.classList.remove("blog-article--exit-down");
-        if (bottomLine) {
-          if (bottomLineExitHandler) {
-            bottomLine.removeEventListener("transitionend", bottomLineExitHandler);
-            bottomLineExitHandler = null;
-          }
-          bottomLine.style.display = "";
-          bottomLine.offsetHeight;
-          bottomLine.classList.remove("blog-article--exit-down");
-        }
+        expandEl(blogIntroSection);
+        expandEl(middleLine);
+        expandEl(bottomLine);
         containerEl?.classList.remove("moodboard-open");
       }
     };

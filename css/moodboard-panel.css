@@ -17,17 +17,6 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
   margin-top: 0;
 }
 
-/* When moodboard is open, hide other closed dropdowns for maximum vertical space. */
-.moodboard-open dropdown-panel#blog:not([open]),
-.moodboard-open dropdown-panel#writes-code:not([open]),
-.moodboard-open dropdown-panel#makes-music:not([open]) {
-  display: none;
-}
-
-/* Middle line hidden once it has exited. */
-.moodboard-open .middle-line.blog-article--exit-down {
-  display: none;
-}
 
 /*
   Match code/music panels: they are direct .panel-scroll children of the dropdown slot.
