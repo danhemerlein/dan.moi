@@ -10,6 +10,13 @@
     return Boolean(document.querySelector("dropdown-panel[open]"));
   }
 
+  function isMobileArticleOpen() {
+    return (
+      window.matchMedia("(max-width: 767px)").matches &&
+      Boolean(document.querySelector(".container.article-open"))
+    );
+  }
+
   function getElements() {
     const hero = document.querySelector("image-element.hero-image");
     const dock = document.querySelector("image-element.image-dock");
@@ -145,7 +152,7 @@
     if (!els) return;
 
     const gen = ++generation;
-    if (anyPanelOpen()) runOpen(els, gen);
+    if (anyPanelOpen() && !isMobileArticleOpen()) runOpen(els, gen);
     else runClose(els, gen);
   }
 
@@ -155,4 +162,13 @@
   }
 
   document.addEventListener(STATE_EVENT, onStateChanged);
+
+  // On mobile, animate the dock away when an article/project opens inside an already-open panel.
+  const container = document.querySelector(".container");
+  if (container) {
+    new MutationObserver(() => onStateChanged()).observe(container, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
 })();

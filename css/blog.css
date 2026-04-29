@@ -327,6 +327,10 @@ accessible-select.blog-year-filter:not(:defined) {
   color: var(--color-ink);
 }
 
+.blog-post-meta--article {
+  margin-top: 1rem;
+}
+
 @media (min-width: 768px) {
   .blog-year-filter {
     margin-top: 0.75rem;
