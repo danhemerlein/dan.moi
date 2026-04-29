@@ -22,7 +22,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   width: 80px;
   height: 80px;
   overflow: hidden;
-  border: 1px solid var(--color-ink-10);
+  align-self: center;
 }
 
 .music-project__art {
@@ -53,15 +53,15 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 .music-project__title {
   margin: 0;
   font-family: '00Hypertext';
-  font-size: 1.125rem;
-  line-height: 1.3;
+  font-size: 1rem;
   font-weight: 400;
   color: inherit;
 }
 
-.music-project__date {
+.music-project__title-group .music-project__date {
   margin: 0;
   margin-left: auto;
+  text-align: right;
   color: var(--color-stone-gray);
   font-family: 'Roboto Mono';
   font-style: normal;
@@ -71,7 +71,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 }
 
 .music-project__meta {
-  margin: 4px 0 0 0;
+  margin: 0.25rem 0 0 0;
   color: var(--color-stone-gray);
   font-family: '00Hypertext';
   font-style: normal;
@@ -81,11 +81,13 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 
 .music-project__footer {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
 .music-project__credits {
   margin: 0;
+  margin-top: 0.5rem;
   font-family: '00Hypertext';
   display: flex;
   gap: 0.25rem;
@@ -107,6 +109,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
+  margin-top: 0.5rem;
 }
 
 .music-project__link {
@@ -118,4 +121,23 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 
 .music-project__link:hover {
   color: var(--color-ink);
+}
+
+@media (min-width: 768px) {
+  .music-project__media {
+    align-self: stretch;
+  }
+
+  .music-project__footer {
+    flex-direction: row;
+  }
+
+  .music-project__credits,
+  .music-project__links {
+    margin-top: 0;
+  }
+
+  .music-project__title {
+    font-size: 1.125rem;
+  }
 }
