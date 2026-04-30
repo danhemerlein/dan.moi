@@ -63,7 +63,6 @@ body {
   padding-bottom: 0;
   padding-left: 1rem;
   padding-right: 1rem;
-  box-sizing: border-box;
   transition:
     padding-top 360ms cubic-bezier(0.45, 0, 0.55, 1),
     padding-bottom 360ms cubic-bezier(0.45, 0, 0.55, 1),
@@ -78,8 +77,8 @@ body {
 .container.moodboard-open {
   padding-top: 8rem;
   padding-bottom: 2rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .paragraph-container {
@@ -188,6 +187,11 @@ blog-intro-section > p.body-text,
   .container {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .container.moodboard-open {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   image-element.hero-image {
