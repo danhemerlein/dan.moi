@@ -8,13 +8,28 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   border: 1px solid #cad9eb;
 }
 
-/* One row: fixed square artwork beside text — nothing wraps under the image */
+/* Mobile: stack top (image + text) above bottom (date + links + credits) */
 .music-project__shell {
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  flex-direction: column;
   gap: 0.75rem;
   min-width: 0;
+}
+
+.music-project__top {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.music-project__top-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.music-project__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .music-project__media {
@@ -22,7 +37,6 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   width: 80px;
   height: 80px;
   overflow: hidden;
-  border: 1px solid var(--color-ink-10);
 }
 
 .music-project__art {
@@ -30,18 +44,6 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.music-project__column {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.music-project__headline {
-  display: flex;
-  flex-direction: column;
 }
 
 .music-project__title-group {
@@ -53,15 +55,13 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 .music-project__title {
   margin: 0;
   font-family: '00Hypertext';
-  font-size: 1.125rem;
-  line-height: 1.3;
+  font-size: 1.5rem;
   font-weight: 400;
-  color: inherit;
+
 }
 
 .music-project__date {
   margin: 0;
-  margin-left: auto;
   color: var(--color-stone-gray);
   font-family: 'Roboto Mono';
   font-style: normal;
@@ -70,18 +70,24 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   text-transform: uppercase;
 }
 
+/* Desktop date sits right-aligned beside the title */
+.music-project__title-group .music-project__date {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* Desktop date hidden on mobile; mobile date shown */
+.music-project__date--desktop {
+  display: none;
+}
+
 .music-project__meta {
-  margin: 4px 0 0 0;
+  margin: 0.25rem 0 0 0;
   color: var(--color-stone-gray);
   font-family: '00Hypertext';
   font-style: normal;
   font-weight: 400;
-  font-size: 1rem;
-}
-
-.music-project__footer {
-  display: flex;
-  justify-content: space-between;
+  font-size: 1.125rem;
 }
 
 .music-project__credits {
@@ -118,4 +124,55 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 
 .music-project__link:hover {
   color: var(--color-ink);
+}
+
+/* Desktop: 2-column grid (image | content). top dissolves via display:contents
+   so media and top-text participate directly in the grid. */
+@media (min-width: 768px) {
+  .music-project__shell {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    column-gap: 0.75rem;
+  }
+
+  .music-project__top {
+    display: contents;
+  }
+
+  .music-project__media {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    align-self: stretch;
+    height: auto;
+  }
+
+  .music-project__top-text {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .music-project__bottom {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+  }
+
+  .music-project__date--desktop {
+    display: block;
+  }
+
+  .music-project__date--mobile {
+    display: none;
+  }
+
+  .music-project__title {
+    font-size: 1.125rem;
+  }
 }
