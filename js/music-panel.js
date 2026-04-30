@@ -110,6 +110,10 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
     const shell = document.createElement("div");
     shell.className = "music-project__shell";
 
+    // --- TOP: artwork + title/meta ---
+    const top = document.createElement("div");
+    top.className = "music-project__top";
+
     const art = item.artwork;
     if (art?.url) {
       const media = document.createElement("div");
@@ -121,14 +125,11 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
       img.loading = "lazy";
       img.decoding = "async";
       media.appendChild(img);
-      shell.appendChild(media);
+      top.appendChild(media);
     }
 
-    const column = document.createElement("div");
-    column.className = "music-project__column";
-
-    const headline = document.createElement("div");
-    headline.className = "music-project__headline";
+    const topText = document.createElement("div");
+    topText.className = "music-project__top-text";
 
     const titleGroup = document.createElement("div");
     titleGroup.className = "music-project__title-group";
@@ -140,24 +141,26 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
 
     const dateStr = formatReleaseLabel(item.releaseDate);
     if (dateStr) {
-      const dateEl = document.createElement("p");
-      dateEl.className = "music-project__date";
-      dateEl.textContent = dateStr;
-      titleGroup.appendChild(dateEl);
+      const dateDesktop = document.createElement("p");
+      dateDesktop.className = "music-project__date music-project__date--desktop";
+      dateDesktop.textContent = dateStr;
+      titleGroup.appendChild(dateDesktop);
     }
 
-    headline.appendChild(titleGroup);
+    topText.appendChild(titleGroup);
 
     const artistName = artistNameOnly(item);
     if (artistName) {
       const meta = document.createElement("p");
       meta.className = "music-project__meta";
       meta.textContent = artistName;
-      headline.appendChild(meta);
+      topText.appendChild(meta);
     }
 
-    column.appendChild(headline);
+    top.appendChild(topText);
+    shell.appendChild(top);
 
+    // --- BOTTOM: date (mobile) + links + credits ---
     const credits = formatCredits(item);
     const linkParts = [];
     for (const [key, label] of STREAMING_LINKS) {
@@ -166,9 +169,16 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
       if (href) linkParts.push({ href, label });
     }
 
-    if (credits || linkParts.length) {
-      const footer = document.createElement("div");
-      footer.className = "music-project__footer";
+    if (dateStr || credits || linkParts.length) {
+      const bottom = document.createElement("div");
+      bottom.className = "music-project__bottom";
+
+      if (dateStr) {
+        const dateMobile = document.createElement("p");
+        dateMobile.className = "music-project__date music-project__date--mobile";
+        dateMobile.textContent = dateStr;
+        bottom.appendChild(dateMobile);
+      }
 
       if (linkParts.length) {
         const linksWrap = document.createElement("div");
@@ -189,7 +199,7 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
           a.textContent = part.label;
           linksWrap.appendChild(a);
         });
-        footer.appendChild(linksWrap);
+        bottom.appendChild(linksWrap);
       }
 
       if (credits) {
@@ -201,15 +211,13 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
           span.textContent = part;
           cred.appendChild(span);
         }
-        footer.appendChild(cred);
+        bottom.appendChild(cred);
       }
 
-      column.appendChild(footer);
+      shell.appendChild(bottom);
     }
 
-    shell.appendChild(column);
     li.appendChild(shell);
-
     fragment.appendChild(li);
   }
 
