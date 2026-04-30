@@ -8,6 +8,12 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
   --dropdown-scroll-max-height: calc(100vh - 10rem);
 }
 
+@media (max-width: 767px) {
+  .moodboard-open dropdown-panel#collects-moods {
+    --dropdown-scroll-max-height: calc(100vh - 8rem);
+  }
+}
+
 .moodboard-open .paragraph-container {
   width: 100%;
 }
@@ -48,7 +54,7 @@ moodboard-panel #moodboard-panel.panel-scroll {
 .moodboard-panel__gallery {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0;
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -91,4 +97,20 @@ moodboard-panel #moodboard-panel.panel-scroll {
 .moodboard-panel__status--error {
   color: var(--color-ink, inherit);
   opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .moodboard-panel__gallery {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  #moodboard-scroll-wrap {
+    scroll-snap-type: y mandatory;
+  }
+
+  .moodboard-panel__gallery > .moodboard-panel__img {
+    scroll-snap-align: start;
+  }
 }
