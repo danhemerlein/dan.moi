@@ -30,7 +30,7 @@ function buildPairs(items) {
 
 function createMoodboardImage(src, alt, loading) {
   const el = document.createElement("image-element");
-  el.className = "moodboard-panel__img";
+  el.className = "moodboard-panel__img w-full max-w-full min-w-0";
   el.setAttribute("src", src);
   el.setAttribute("alt", alt);
   if (loading === "lazy") el.setAttribute("loading", "lazy");
@@ -46,9 +46,9 @@ function insertSmallScreenSentinel(gallery, sentinel, index, length) {
 }
 
 const PANEL_HTML = `
-  <div id="moodboard-panel" class="panel-scroll moodboard-panel" aria-live="polite">
+  <div id="moodboard-panel" class="panel-scroll moodboard-panel flex-1 min-h-0" aria-live="polite">
     <div id="moodboard-scroll-wrap" class="panel-scroll__viewport">
-      <div id="moodboard-gallery" class="moodboard-panel__gallery"></div>
+      <div id="moodboard-gallery" class="moodboard-panel__gallery flex flex-col gap-0 lg-gap-2 w-full max-w-full min-w-0"></div>
       <div
         id="moodboard-load-sentinel"
         class="panel-scroll__load-sentinel"
@@ -73,6 +73,7 @@ class MoodboardPanel extends HTMLElement {
   connectedCallback() {
     if (this.#initialized) return;
     this.#initialized = true;
+    this.classList.add('flex', 'flex-col', 'flex-1', 'min-h-0', 'min-w-0', 'w-full', 'max-w-full', 'overflow-hidden')
     this.innerHTML = PANEL_HTML;
     this.#bind();
     this.#bindDropdownEvents();
@@ -174,12 +175,12 @@ class MoodboardPanel extends HTMLElement {
     if (!gallery) return;
 
     gallery.innerHTML =
-      '<p class="moodboard-panel__status moodboard-panel__status--loading">Loading…</p>';
+      '<p class="moodboard-panel__status moodboard-panel__status--loading m-0">Loading…</p>';
 
     const { moodboard, errors } = await window.fetchMoodboardInitial();
     if (errors?.length) {
       const msg = errors[0]?.message || "Could not load moodboard.";
-      gallery.innerHTML = `<p class="moodboard-panel__status moodboard-panel__status--error">${escapeHtml(msg)}</p>`;
+      gallery.innerHTML = `<p class="moodboard-panel__status moodboard-panel__status--error m-0">${escapeHtml(msg)}</p>`;
       return;
     }
 
@@ -190,7 +191,7 @@ class MoodboardPanel extends HTMLElement {
 
     if (!this.#items.length) {
       gallery.innerHTML =
-        '<p class="moodboard-panel__status">No images yet.</p>';
+        '<p class="moodboard-panel__status m-0">No images yet.</p>';
       return;
     }
 
@@ -244,7 +245,7 @@ class MoodboardPanel extends HTMLElement {
       const rows = buildPairs(this.#items);
       rows.forEach((group, rowIndex) => {
         const row = document.createElement("div");
-        row.className = "moodboard-panel__row";
+        row.className = "moodboard-panel__row flex flex-row flex-nowrap gap-2 w-full min-w-0";
         const loading = rowIndex > 7 ? "lazy" : "eager";
         for (const image of group) {
           const src = contentfulImageSrc(image.url);

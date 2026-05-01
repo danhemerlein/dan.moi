@@ -23,60 +23,16 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
   margin-top: 0;
 }
 
-
-/*
-  Match code/music panels: they are direct .panel-scroll children of the dropdown slot.
-  Moodboard wraps the same structure in <moodboard-panel>; the host must participate in
-  flex + min-height: 0 so the inner .panel-scroll__viewport gets a bounded height and
-  vertical scroll works.
-*/
-moodboard-panel {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  min-width: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-moodboard-panel #moodboard-panel.panel-scroll {
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
 .moodboard-panel__lede {
   flex-shrink: 0;
   margin: 0 0 1rem;
 }
 
-.moodboard-panel__gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-}
-
-.moodboard-panel__row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 0.5rem;
-  width: 100%;
-  min-width: 0;
-}
-
 .moodboard-panel__row .moodboard-panel__img {
   flex: 1 1 50%;
-  min-width: 0;
 }
 
 .moodboard-panel__gallery > .moodboard-panel__img {
-  width: 100%;
-  max-width: 100%;
   align-self: stretch;
 }
 
@@ -85,7 +41,6 @@ moodboard-panel #moodboard-panel.panel-scroll {
 }
 
 .moodboard-panel__status {
-  margin: 0;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   line-height: 1.25rem;
@@ -97,12 +52,6 @@ moodboard-panel #moodboard-panel.panel-scroll {
 .moodboard-panel__status--error {
   color: var(--color-ink, inherit);
   opacity: 1;
-}
-
-@media (min-width: 768px) {
-  .moodboard-panel__gallery {
-    gap: 0.5rem;
-  }
 }
 
 @media (max-width: 767px) {
