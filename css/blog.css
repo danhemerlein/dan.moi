@@ -1,4 +1,15 @@
-.blog-intro {
+blog-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+dropdown-panel#blog {
   /* In-flow panel: max height + inner scroll so layout doesn’t grow unbounded. */
   --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
 }
@@ -31,7 +42,7 @@ dropdown-panel#blog:not([open]) #blog-panel {
 }
 
 /* Intro paragraph hidden whenever any article is open. */
-.article-open blog-intro-section > p.body-text {
+.article-open .intro-line {
   display: none;
 }
 
@@ -40,9 +51,10 @@ dropdown-panel#blog:not([open]) #blog-panel {
   display: none;
 }
 
-/* blog-intro-section hidden entirely when a code article is open.
-   When a blog article is open it must stay visible — it contains the blog panel. */
-.article-open:has(dropdown-panel#writes-code[open]) blog-intro-section {
+/* Both hidden when a code article is open.
+   When a blog article is open they must stay visible. */
+.article-open:has(dropdown-panel#writes-code[open]) .intro-line,
+.article-open:has(dropdown-panel#writes-code[open]) dropdown-panel#blog {
   display: none;
 }
 

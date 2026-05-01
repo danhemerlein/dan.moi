@@ -150,7 +150,7 @@ class CodePanel extends HTMLElement {
 
     layoutDebugMark('code:panel-init')
 
-    const introP = document.querySelector('blog-intro-section > p.body-text')
+    const introP = document.querySelector('.intro-line')
     const middleLine = document.querySelector('.middle-line')
     const bottomLine = document.querySelector('.bottom-line')
     const containerEl = document.querySelector('.container')
