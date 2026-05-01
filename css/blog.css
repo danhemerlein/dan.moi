@@ -71,10 +71,10 @@ accessible-select.blog-year-filter:not(:defined) {
 
 .blog-post-meta__date,
 .blog-post-meta__reading {
-  font-family: 'Roboto Mono';
+  font-family: var(--font-mono);
   font-style: normal;
   font-weight: 400;
-  color: #6b6b6b;
+  color: var(--color-stone-gray);
   text-transform: uppercase;
   font-size: 0.75rem;
 }
@@ -86,7 +86,7 @@ accessible-select.blog-year-filter:not(:defined) {
 
 .blog-post__title {
   margin: 0;
-  font-family: '00Hypertext';
+  font-family: var(--font-hypertext);
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25;
@@ -141,7 +141,7 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post__body {
-  font-family: '00Hypertext';
+  font-family: var(--font-hypertext);
   font-size: 1rem;
   line-height: 1.45;
   color: var(--color-ink);
@@ -159,15 +159,15 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post__body i {
-  font-family: '00Hypertext Italic', var(--blog-post-font-stack);
+  font-family: var(--font-hypertext-italic);
 }
 
 .blog-post__body b {
-  font-family: '00Hypertext Bold', var(--blog-post-font-stack);
+  font-family: var(--font-hypertext-bold);
 }
 
 .blog-post__body :is(b i, i b) {
-  font-family: '00Hypertext Bold Italic', var(--blog-post-font-stack);
+  font-family: var(--font-hypertext-bold-italic);
 }
 
 .blog-post__body > *:first-child {
@@ -189,7 +189,7 @@ accessible-select.blog-year-filter:not(:defined) {
 .blog-post__body h5,
 .blog-post__body h6 {
   margin: 1rem 0 0.5rem;
-  font-family: '00Hypertext';
+  font-family: var(--font-hypertext);
   font-weight: 400;
   line-height: 1.2;
 }
@@ -245,7 +245,7 @@ accessible-select.blog-year-filter:not(:defined) {
 }
 
 .blog-post__body code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono-system);
   font-size: 0.92em;
 }
 

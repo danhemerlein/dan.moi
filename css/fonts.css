@@ -69,35 +69,35 @@
   font-display: swap;
 }
 
+:root {
+  --font-hypertext: "00Hypertext", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-hypertext-italic: "00Hypertext Italic", var(--font-hypertext);
+  --font-hypertext-bold: "00Hypertext Bold", var(--font-hypertext);
+  --font-hypertext-bold-italic: "00Hypertext Bold Italic", var(--font-hypertext);
+  --font-mono: "Roboto Mono", ui-monospace, monospace;
+  --font-mono-system: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Tokens: Roboto Mono / 12px / -1% letter-spacing / uppercase / centered */
+  --type-roboto-mono-12-font-family: var(--font-mono);
+  --type-roboto-mono-12-font-size: 12px;
+  --type-roboto-mono-12-line-height: 16px;
+  --type-roboto-mono-12-letter-spacing: -0.01em;
+}
+
 html,
 body {
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: var(--font-hypertext);
 }
 
 /* Utility typography class: 00 Hypertext / Non-Commercial / Regular */
 .body-text {
-  font-family: "00Hypertext";
+  font-family: var(--font-hypertext);
   font-style: normal;
   font-weight: 400;
   font-size: 1.25rem;
   line-height: 1.2;
   letter-spacing: -0.03em;
   color: var(--color-ink);
-}
-
-/* Tokens + utility: Roboto Mono / 12px / -1% letter-spacing / uppercase / centered */
-:root {
-  --type-roboto-mono-12-font-family: "Roboto Mono", ui-monospace, monospace;
-  --type-roboto-mono-12-font-size: 12px;
-  --type-roboto-mono-12-line-height: 16px;
-  --type-roboto-mono-12-letter-spacing: -0.01em;
 }
 
 .type-roboto-mono-12-caps {
