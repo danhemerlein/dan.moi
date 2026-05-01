@@ -22,10 +22,14 @@
 
   --color-mint-cream: #f4fff6;
   --color-mint-border: #c4e9ca;
+  --color-mint-active: #ddf0e0;
 
   --color-lavender-cream: #fefbff;
   --color-lilac-border: #edd7f8;
   --color-stone-gray: #6b6b6b;
+  --color-azure-cream: #f9fbff;
+  --color-sky-border: #cad9eb;
+  --color-gray-light: #f1f1f1;
 
   /* Ink at opacity (base rgb matches --color-ink) */
   --color-ink-6: rgba(27, 27, 27, 0.06);

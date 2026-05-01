@@ -35,14 +35,7 @@
   background: none;
   cursor: pointer;
   text-align: left;
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: var(--font-hypertext);
   font-style: normal;
   font-weight: 400;
   font-size: 1rem;
@@ -53,14 +46,7 @@
 
 .panel-list__title-fallback {
   display: block;
-  font-family:
-    "00Hypertext",
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: var(--font-hypertext);
   font-size: 1.125rem;
   line-height: 1.3;
   color: inherit;

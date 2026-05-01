@@ -1,11 +1,22 @@
 /* Makes music panel — list only */
+music-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 dropdown-panel#makes-music:not([open]) #music-panel {
   display: none !important;
 }
 
 #music-panel .panel-list__item.music-project {
-  background-color: #f9fbff;
-  border: 1px solid #cad9eb;
+  background-color: var(--color-azure-cream);
+  border: 1px solid var(--color-sky-border);
 }
 
 /* Mobile: stack top (image + text) above bottom (date + links + credits) */
@@ -54,7 +65,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 
 .music-project__title {
   margin: 0;
-  font-family: '00Hypertext';
+  font-family: var(--font-hypertext);
   font-size: 1.5rem;
   font-weight: 400;
 
@@ -63,7 +74,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 .music-project__date {
   margin: 0;
   color: var(--color-stone-gray);
-  font-family: 'Roboto Mono';
+  font-family: var(--font-mono);
   font-style: normal;
   font-weight: 400;
   font-size: 0.75rem;
@@ -84,7 +95,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 .music-project__meta {
   margin: 0.25rem 0 0 0;
   color: var(--color-stone-gray);
-  font-family: '00Hypertext';
+  font-family: var(--font-hypertext);
   font-style: normal;
   font-weight: 400;
   font-size: 1.125rem;
@@ -92,16 +103,16 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 
 .music-project__credits {
   margin: 0;
-  font-family: '00Hypertext';
+  font-family: var(--font-hypertext);
   display: flex;
   gap: 0.25rem;
 }
 
 .music-project__credit {
-  background-color: #f1f1f1;
+  background-color: var(--color-gray-light);
   border-radius: 6px;
   padding: 0.5rem;
-  font-family: 'Roboto Mono';
+  font-family: var(--font-mono);
   font-style: normal;
   font-weight: 400;
   font-size: 0.75rem;
@@ -116,7 +127,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 }
 
 .music-project__link {
-  font-family: '00Hypertext';
+  font-family: var(--font-hypertext);
   text-transform: lowercase;
   font-size: 1rem;
   color: var(--color-ink);

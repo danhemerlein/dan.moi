@@ -94,7 +94,7 @@ class MoodboardPanel extends HTMLElement {
   }
 
   #bindDropdownEvents() {
-    const blogIntroSection = document.querySelector("blog-intro-section");
+    const blogIntroLine = document.querySelector(".intro-line");
     const middleLine = document.querySelector(".middle-line");
     const bottomLine = document.querySelector(".bottom-line");
     const containerEl = document.querySelector(".container");
@@ -128,11 +128,11 @@ class MoodboardPanel extends HTMLElement {
 
       if (moodboardDropdown.open) {
         containerEl?.classList.add("moodboard-open");
-        collapseEl(blogIntroSection);
+        collapseEl(blogIntroLine);
         collapseEl(middleLine);
         collapseEl(bottomLine);
       } else {
-        expandEl(blogIntroSection);
+        expandEl(blogIntroLine);
         expandEl(middleLine);
         expandEl(bottomLine);
         containerEl?.classList.remove("moodboard-open");

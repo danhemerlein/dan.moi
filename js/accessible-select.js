@@ -28,14 +28,7 @@
             max-width: 100%;
             box-sizing: border-box;
             --accessible-select-option-height: 2.625rem;
-            font-family:
-              "00Hypertext",
-              system-ui,
-              -apple-system,
-              "Segoe UI",
-              Roboto,
-              Arial,
-              sans-serif;
+            font-family: var(--font-hypertext);
           }
           :host([hidden]) {
             display: none !important;
@@ -52,15 +45,11 @@
             gap: 0.25rem;
             margin: 0;
             padding: 0.25rem 0.375rem;
-            border: 1px solid var(--accessible-select-border, var(--color-mint-border, #c4e9ca));
+            border: 1px solid var(--accessible-select-border, var(--color-mint-border));
             border-radius: 0.375rem;
-            background: var(--accessible-select-bg, var(--color-mint-cream, #f4fff6));
-            color: var(--accessible-select-ink, var(--color-ink, #1b1b1b));
-            font-family: var(
-              --type-roboto-mono-12-font-family,
-              ui-monospace,
-              monospace
-            );
+            background: var(--accessible-select-bg, var(--color-mint-cream));
+            color: var(--accessible-select-ink, var(--color-ink));
+            font-family: var(--type-roboto-mono-12-font-family);
             font-style: normal;
             font-weight: 400;
             font-size: var(--type-roboto-mono-12-font-size, 0.75rem);
@@ -78,7 +67,7 @@
           .trigger:focus-visible {
             outline: none;
             box-shadow: inset 0 0 0 0.125rem
-              var(--accessible-select-focus, var(--color-lime, #0ff536));
+              var(--accessible-select-focus, var(--color-lime));
           }
           .trigger-label {
             flex: 1 1 auto;
@@ -113,7 +102,7 @@
             list-style: none;
             border: 1px solid var(--color-mint-border);
             border-radius: 0.5rem;
-            background: var(--accessible-select-bg, var(--color-mint-cream, #f4fff6));
+            background: var(--accessible-select-bg, var(--color-mint-cream));
             box-shadow: 0.125rem 0.125rem 0.25rem 0 rgba(63, 92, 68, 0.25);
             max-height: calc(4 * var(--accessible-select-option-height));
             overflow-y: auto;
@@ -135,11 +124,7 @@
           }
           .option__label {
             margin: 0;
-            font-family: var(
-              --type-roboto-mono-12-font-family,
-              ui-monospace,
-              monospace
-            );
+            font-family: var(--type-roboto-mono-12-font-family);
             font-style: normal;
             font-weight: 400;
             font-size: var(--type-roboto-mono-12-font-size, 0.75rem);
@@ -147,13 +132,13 @@
             letter-spacing: var(--type-roboto-mono-12-letter-spacing, -0.01em);
             text-transform: uppercase;
             text-align: center;
-            color: var(--accessible-select-ink, var(--color-ink, #1b1b1b));
+            color: var(--accessible-select-ink, var(--color-ink));
           }
           .option[aria-selected="true"],
           .option:hover,
           .option:focus-visible,
           .option:focus {
-            background: var(--accessible-select-selected-bg, #ddf0e0);
+            background: var(--accessible-select-selected-bg, var(--color-mint-active));
             border-radius: 0.125rem;
           }
           .option:focus,
@@ -164,7 +149,7 @@
         <div class="wrap" part="wrap">
           <button type="button" class="trigger" part="trigger" id="${this._btnId}" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="${this._listboxId}">
             <span class="trigger-label" part="value"></span>
-            <span class="chevron" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="none"><path d="M12 10L8 6L4 10" stroke="#1E1E1E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="chevron" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="none"><path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
           <div class="listbox" id="${this._listboxId}" role="listbox" tabindex="-1" hidden part="listbox" aria-labelledby="${this._btnId}"></div>
         </div>

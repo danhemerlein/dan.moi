@@ -10,7 +10,6 @@ const STREAMING_LINKS = [
   ["soundcloud", "SoundCloud"],
 ];
 
-/** English three-letter month labels (Jan–Dec). */
 const MONTH_ABBREV_EN = [
   "Jan",
   "Feb",
@@ -26,7 +25,6 @@ const MONTH_ABBREV_EN = [
   "Dec",
 ];
 
-/** Full English month names → 3-letter abbrev (handles unparsed CMS text & Safari Date.parse gaps). */
 const FULL_MONTH_TO_ABBREV_EN = [
   ["January", "Jan"],
   ["February", "Feb"],
@@ -89,7 +87,6 @@ function artistNameOnly(item) {
   return artist || null;
 }
 
-/** Only allow http(s) links in the list (Contentful text fields). */
 function safeStreamingHref(raw) {
   const u = String(raw ?? "").trim();
   if (!u) return null;
@@ -110,7 +107,6 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
     const shell = document.createElement("div");
     shell.className = "music-project__shell";
 
-    // --- TOP: artwork + title/meta ---
     const top = document.createElement("div");
     top.className = "music-project__top";
 
@@ -160,7 +156,6 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
     top.appendChild(topText);
     shell.appendChild(top);
 
-    // --- BOTTOM: date (mobile) + links + credits ---
     const credits = formatCredits(item);
     const linkParts = [];
     for (const [key, label] of STREAMING_LINKS) {
@@ -227,40 +222,42 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
   }
 }
 
-function initMusicPanel() {
-  const ul = document.getElementById("music-projects");
-  if (!ul) return;
+const PANEL_HTML = `
+  <div id="music-panel" class="panel-scroll" aria-live="polite">
+    <div id="music-projects-list-wrap" class="panel-scroll__viewport">
+      <ul id="music-projects" class="panel-list"></ul>
+    </div>
+  </div>
+`;
 
-  (async () => {
-    setListStatus(
-      ul,
-      "Loading…",
-      "panel-list__status panel-list__status--loading",
-    );
+class MusicPanel extends HTMLElement {
+  #initialized = false;
 
-    const { items: fetchedItems, errors } =
-      await window.fetchAllMusicProjects();
+  connectedCallback() {
+    if (this.#initialized) return;
+    this.#initialized = true;
+    this.innerHTML = PANEL_HTML;
+    this.#init();
+  }
 
-    if (errors?.length) {
-      const first = errors[0]?.message || "Could not load music projects.";
-      setListStatus(
-        ul,
-        first,
-        "panel-list__status panel-list__status--error",
-      );
-      return;
-    }
+  #init() {
+    const ul = this.querySelector("#music-projects");
+    if (!ul) return;
 
-    renderMusicList(ul, fetchedItems ?? []);
-  })();
+    (async () => {
+      setListStatus(ul, "Loading…", "panel-list__status panel-list__status--loading");
+
+      const { items: fetchedItems, errors } = await window.fetchAllMusicProjects();
+
+      if (errors?.length) {
+        const first = errors[0]?.message || "Could not load music projects.";
+        setListStatus(ul, first, "panel-list__status panel-list__status--error");
+        return;
+      }
+
+      renderMusicList(ul, fetchedItems ?? []);
+    })();
+  }
 }
 
-function boot() {
-  initMusicPanel();
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", boot);
-} else {
-  boot();
-}
+customElements.define("music-panel", MusicPanel);

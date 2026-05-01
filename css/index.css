@@ -28,6 +28,11 @@ moodboard-panel:not(:defined) {
   max-width: 100%;
 }
 
+blog-panel:not(:defined) {
+  display: block;
+  min-height: 0;
+}
+
 body {
   min-height: 100vh;
   height: 100vh;
@@ -165,7 +170,7 @@ image-element.image-dock.image-dock--exit {
 }
 
 /* Text elements that slide away when a blog article is open. */
-blog-intro-section > p.body-text,
+.intro-line,
 .middle-line,
 .bottom-line {
   transition:
@@ -213,7 +218,7 @@ blog-intro-section > p.body-text,
     transition-timing-function: linear !important;
   }
 
-  blog-intro-section > p.body-text,
+  .intro-line,
   .middle-line,
   .bottom-line {
     transition-duration: 0.01ms !important;

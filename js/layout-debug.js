@@ -221,7 +221,7 @@
   function logLayoutSnapshot(label) {
     const sel = [
       [".paragraph-container", "paragraph-container"],
-      [".blog-intro", "blog-intro"],
+      [".intro-line", "intro-line"],
       ["#blog", "#blog"],
       ["#blog-panel", "#blog-panel"],
       ["#blog-post-article", "#blog-post-article"],
@@ -230,7 +230,7 @@
     const out = { label };
     const deltaKeys = [
       "paragraph-container",
-      "blog-intro",
+      "intro-line",
       "#blog",
       "#blog-panel",
     ];
@@ -377,7 +377,7 @@
 
   function startObservers() {
     observeResize(".paragraph-container", ".paragraph-container");
-    observeResize(".blog-intro", ".blog-intro");
+    observeResize(".intro-line", ".intro-line");
     observeResize("#blog-panel", "#blog-panel");
     observeResize("#blog-post-article", "#blog-post-article");
     observeResize("#blog-post-body", "#blog-post-body");
@@ -390,9 +390,9 @@
     if (pc) {
       log("paragraph-container initial rect", rectSummary(pc));
     }
-    const bi = document.querySelector(".blog-intro");
+    const bi = document.querySelector(".intro-line");
     if (bi) {
-      log("blog-intro initial rect", rectSummary(bi));
+      log("intro-line initial rect", rectSummary(bi));
     }
 
     let frame = 0;
@@ -400,11 +400,11 @@
     function sampleFrame() {
       frame += 1;
       const pc = document.querySelector(".paragraph-container");
-      const bi = document.querySelector(".blog-intro");
+      const bi = document.querySelector(".intro-line");
       if (frame <= maxFrames) {
         if (frame === 1 || frame === 30 || frame === 60 || frame === 120) {
           if (pc) log("rAF sample frame " + frame + " .paragraph-container", rectSummary(pc));
-          if (bi) log("rAF sample frame " + frame + " .blog-intro", rectSummary(bi));
+          if (bi) log("rAF sample frame " + frame + " .intro-line", rectSummary(bi));
         }
       }
       if (frame < maxFrames) requestAnimationFrame(sampleFrame);
