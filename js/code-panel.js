@@ -62,27 +62,27 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
     const id = item.sys?.id?.trim()
     const title = item.title?.trim() || 'Untitled'
     const li = document.createElement('li')
-    li.className = 'panel-list__item'
+    li.className = 'panel-list__item flex flex-row items-baseline gap-3 p-0'
 
     const yearStr = formatTimelineLabel(item.timelineLaunchDate)
 
     if (id) {
       const btn = document.createElement('button')
       btn.type = 'button'
-      btn.className = 'panel-list__button'
+      btn.className = 'panel-list__button flex-1 min-w-0 text-left'
       btn.dataset.id = id
       btn.textContent = title
       li.appendChild(btn)
     } else {
       const titleOnly = document.createElement('span')
-      titleOnly.className = 'panel-list__title-fallback'
+      titleOnly.className = 'panel-list__title-fallback flex-1 min-w-0 text-left'
       titleOnly.textContent = title
       li.appendChild(titleOnly)
     }
 
     if (yearStr) {
       const meta = document.createElement('p')
-      meta.className = 'code-project-meta code-project-meta--list'
+      meta.className = 'code-project-meta code-project-meta--list flex-shrink-0 m-0 ml-auto'
       meta.textContent = yearStr
       li.appendChild(meta)
     }
@@ -109,7 +109,7 @@ const PANEL_HTML = `
       </button>
       <h2 id="code-project-title" class="blog-post__title"></h2>
       <p id="code-project-timeline" class="code-project-meta" hidden></p>
-      <div id="code-project-hero" class="code-project__hero" hidden></div>
+      <div id="code-project-hero" class="code-project__hero flex w-full" hidden></div>
       <article id="code-project-body" class="blog-post__body"></article>
     </div>
   </div>
@@ -119,6 +119,7 @@ class CodePanel extends HTMLElement {
   connectedCallback() {
     if (this.dataset.rendered) return
     this.dataset.rendered = ''
+    this.classList.add('flex', 'flex-col', 'flex-1', 'min-h-0', 'min-w-0', 'w-full', 'max-w-full', 'overflow-hidden')
     this.innerHTML = PANEL_HTML
     this.#init()
   }
@@ -304,11 +305,12 @@ class CodePanel extends HTMLElement {
       const imgFields = item.image
       if (imgFields?.url) {
         const fig = document.createElement('figure')
-        fig.className = 'code-project__figure'
+        fig.className = 'code-project__figure w-full'
         const img = document.createElement('img')
         img.src = imgFields.url
         img.alt = (imgFields.title || '').trim() || ''
         img.loading = 'lazy'
+        img.className = 'block mx-auto h-auto'
         fig.appendChild(img)
         heroEl.appendChild(fig)
         heroEl.hidden = false
