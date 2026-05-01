@@ -105,17 +105,17 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
     li.className = "panel-list__item music-project";
 
     const shell = document.createElement("div");
-    shell.className = "music-project__shell";
+    shell.className = "music-project__shell flex flex-col gap-3 min-w-0";
 
     const top = document.createElement("div");
-    top.className = "music-project__top";
+    top.className = "music-project__top flex gap-3";
 
     const art = item.artwork;
     if (art?.url) {
       const media = document.createElement("div");
-      media.className = "music-project__media";
+      media.className = "music-project__media flex-shrink-0 overflow-hidden";
       const img = document.createElement("img");
-      img.className = "music-project__art";
+      img.className = "music-project__art block w-full";
       img.src = art.url;
       img.alt = (art.title || "").trim() || "";
       img.loading = "lazy";
@@ -125,20 +125,20 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
     }
 
     const topText = document.createElement("div");
-    topText.className = "music-project__top-text";
+    topText.className = "music-project__top-text flex flex-col";
 
     const titleGroup = document.createElement("div");
-    titleGroup.className = "music-project__title-group";
+    titleGroup.className = "music-project__title-group flex items-center";
 
     const titleEl = document.createElement("p");
-    titleEl.className = "music-project__title";
+    titleEl.className = "music-project__title m-0 font-normal";
     titleEl.textContent = title;
     titleGroup.appendChild(titleEl);
 
     const dateStr = formatReleaseLabel(item.releaseDate);
     if (dateStr) {
       const dateDesktop = document.createElement("p");
-      dateDesktop.className = "music-project__date music-project__date--desktop";
+      dateDesktop.className = "music-project__date music-project__date--desktop hidden lg-block m-0 not-italic font-normal uppercase ml-auto text-right";
       dateDesktop.textContent = dateStr;
       titleGroup.appendChild(dateDesktop);
     }
@@ -148,7 +148,7 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
     const artistName = artistNameOnly(item);
     if (artistName) {
       const meta = document.createElement("p");
-      meta.className = "music-project__meta";
+      meta.className = "music-project__meta not-italic font-normal";
       meta.textContent = artistName;
       topText.appendChild(meta);
     }
@@ -166,18 +166,18 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
 
     if (dateStr || credits || linkParts.length) {
       const bottom = document.createElement("div");
-      bottom.className = "music-project__bottom";
+      bottom.className = "music-project__bottom flex flex-col gap-2 lg-flex-row";
 
       if (dateStr) {
         const dateMobile = document.createElement("p");
-        dateMobile.className = "music-project__date music-project__date--mobile";
+        dateMobile.className = "music-project__date music-project__date--mobile m-0 not-italic font-normal uppercase lg-hidden";
         dateMobile.textContent = dateStr;
         bottom.appendChild(dateMobile);
       }
 
       if (linkParts.length) {
         const linksWrap = document.createElement("div");
-        linksWrap.className = "music-project__links";
+        linksWrap.className = "music-project__links flex flex-wrap items-center";
         linkParts.forEach((part, i) => {
           if (i > 0) {
             const sep = document.createElement("span");
@@ -187,7 +187,7 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
             linksWrap.appendChild(sep);
           }
           const a = document.createElement("a");
-          a.className = "music-project__link";
+          a.className = "music-project__link lowercase";
           a.href = part.href;
           a.target = "_blank";
           a.rel = "noopener noreferrer";
@@ -199,10 +199,10 @@ function renderMusicList(ul, items, emptyMessage = "No music projects yet.") {
 
       if (credits) {
         const cred = document.createElement("p");
-        cred.className = "music-project__credits";
+        cred.className = "music-project__credits m-0 flex gap-1";
         for (const part of credits) {
           const span = document.createElement("span");
-          span.className = "music-project__credit";
+          span.className = "music-project__credit not-italic font-normal uppercase";
           span.textContent = part;
           cred.appendChild(span);
         }
@@ -236,6 +236,7 @@ class MusicPanel extends HTMLElement {
   connectedCallback() {
     if (this.#initialized) return;
     this.#initialized = true;
+    this.classList.add('flex', 'flex-col', 'flex-1', 'min-h-0', 'min-w-0', 'w-full', 'max-w-full', 'overflow-hidden')
     this.innerHTML = PANEL_HTML;
     this.#init();
   }
