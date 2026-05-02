@@ -50,18 +50,7 @@ Rich text from Contentful is rendered via `@contentful/rich-text-html-renderer` 
 
 Each component has its own CSS file in `css/`. `css/reset.css` establishes global CSS custom properties (`--color-*`) and base resets. Naming follows BEM-like conventions: `.panel-list__item`, `.blog-post__body`.
 
-**Breakpoints:**
-- Mobile: anything under 767px wide
-- Desktop: 768px and above (`@media (min-width: 768px)`)
-
-**CSS files are mobile-first:** base styles (no media query) target mobile; desktop overrides go at the bottom of the file inside `@media (min-width: 768px)` blocks.
-
-**CSS rules (enforced):**
-- Use relative units (`rem`, `em`, `%`, `vw`, `vh`, `clamp()`) — `px` is only acceptable for `1px` hairline borders
-- Do not add `box-sizing: border-box` anywhere — the global reset in `css/reset.css` already sets it for all elements
-- Never add `text-decoration` to `.panel-list__button`
-- Prefer unitless values for `line-height` and `font-weight`
-- If a `px` exception is truly necessary, add a comment explaining why
+For full CSS rules and conventions, use the `/css` skill.
 
 ### Accessibility
 

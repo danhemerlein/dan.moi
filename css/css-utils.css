@@ -135,6 +135,10 @@
   pointer-events: none;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
 }

@@ -90,7 +90,7 @@ function renderPostList(ul, items, emptyMessage = 'No posts yet.') {
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className =
-        'panel-list__button block w-full m-0 p-0 font-style-normal font-normal text-left'
+        'panel-list__button cursor-pointer block w-full m-0 p-0 font-style-normal font-normal text-left'
       btn.dataset.handle = handle
       btn.textContent = title
       li.appendChild(btn)
@@ -151,7 +151,7 @@ const PANEL_HTML = `
       <button
         type="button"
         id="blog-post-back"
-        class="panel-detail__back"
+        class="panel-detail__back cursor-pointer"
       >
         ${CLOSE_SVG}
       </button>

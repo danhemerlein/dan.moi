@@ -62,7 +62,7 @@ export function richTextOptions(links) {
         if (!id) return next(node.content);
         const entry = entryMap.get(id);
         if (entry?.handle) {
-          return `<button type="button" class="blog-post__inline-entry" data-handle="${escapeHtml(entry.handle)}">${next(node.content)}</button>`;
+          return `<button type="button" class="blog-post__inline-entry cursor-pointer" data-handle="${escapeHtml(entry.handle)}">${next(node.content)}</button>`;
         }
         return `<span class="blog-post__inline-entry-fallback">${next(node.content)}</span>`;
       },

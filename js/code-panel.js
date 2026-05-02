@@ -70,7 +70,7 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className =
-        'panel-list__button block w-full m-0 p-0 font-style-normal font-normal text-left flex-1 min-w-0'
+        'panel-list__button cursor-pointer block w-full m-0 p-0 font-style-normal font-normal text-left flex-1 min-w-0'
       btn.dataset.id = id
       btn.textContent = title
       li.appendChild(btn)
@@ -107,7 +107,7 @@ const PANEL_HTML = `
       <ul id="code-projects" class="panel-list list-none m-0 p-0 flex flex-col gap-3"></ul>
     </div>
     <div id="code-project-article" class="panel-scroll__article flex flex-col flex-1 min-h-0" hidden>
-      <button type="button" id="code-project-back" class="panel-detail__back">
+      <button type="button" id="code-project-back" class="panel-detail__back cursor-pointer">
         ${CLOSE_SVG}
       </button>
       <h2 id="code-project-title" class="blog-post__title"></h2>

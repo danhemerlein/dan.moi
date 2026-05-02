@@ -302,7 +302,6 @@ accessible-select.blog-year-filter:not(:defined) {
   padding: 0;
   border: none;
   background: none;
-  cursor: pointer;
   font: inherit;
   color: inherit;
   text-decoration: underline;
