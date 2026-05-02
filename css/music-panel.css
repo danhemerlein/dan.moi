@@ -14,7 +14,6 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 }
 
 .music-project__art {
-  height: 100%;
   object-fit: cover;
 }
 

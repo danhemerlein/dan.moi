@@ -62,6 +62,10 @@
   height: auto;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .w-auto {
   width: auto;
 }
