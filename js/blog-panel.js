@@ -207,6 +207,9 @@ class BlogPanel extends HTMLElement {
     let thumbH = 0
     let cachedTrackStart = 0
     let cachedTrackEnd = 0
+    let thumbCurrentPos = 0
+    let thumbTargetPos = 0
+    let thumbRafId = null
 
     // Reflow-safe: reads layout only here, never inside the scroll handler.
     function recomputeTrack() {
@@ -219,10 +222,23 @@ class BlogPanel extends HTMLElement {
       cachedTrackEnd = articleRoot.clientHeight - thumbH - bottomPad
     }
 
+    function tickThumb() {
+      thumbCurrentPos += (thumbTargetPos - thumbCurrentPos) * 0.12
+      scrollbarThumb.style.transform = `translateY(${Math.round(thumbCurrentPos)}px)`
+      if (Math.abs(thumbTargetPos - thumbCurrentPos) > 0.5) {
+        thumbRafId = requestAnimationFrame(tickThumb)
+      } else {
+        thumbCurrentPos = thumbTargetPos
+        scrollbarThumb.style.transform = `translateY(${Math.round(thumbCurrentPos)}px)`
+        thumbRafId = null
+      }
+    }
+
     function updateScrollbar() {
       if (!scrollbarThumb) return
       if (articleWrap.hidden) {
         if (scrollbarThumb.style.display !== 'none') scrollbarThumb.style.display = 'none'
+        if (thumbRafId !== null) { cancelAnimationFrame(thumbRafId); thumbRafId = null }
         return
       }
       const { scrollTop, scrollHeight, clientHeight } = articleRoot
@@ -238,9 +254,14 @@ class BlogPanel extends HTMLElement {
       const maxScroll = scrollHeight - clientHeight
       const fraction = maxScroll > 0 ? Math.max(0, Math.min(1, scrollTop / maxScroll)) : 0
       const range = Math.max(0, cachedTrackEnd - cachedTrackStart)
-      const viewportPos = cachedTrackStart + fraction * range
-      // thumb is outside the scroll container — no scrollTop compensation needed
-      scrollbarThumb.style.transform = `translateY(${Math.round(viewportPos)}px)`
+      thumbTargetPos = cachedTrackStart + fraction * range
+      if (wasHidden) {
+        // snap to position on first show — no glide from zero
+        thumbCurrentPos = thumbTargetPos
+        scrollbarThumb.style.transform = `translateY(${Math.round(thumbCurrentPos)}px)`
+      } else if (thumbRafId === null) {
+        thumbRafId = requestAnimationFrame(tickThumb)
+      }
     }
 
     articleRoot.addEventListener('scroll', updateScrollbar, { passive: true })
