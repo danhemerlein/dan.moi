@@ -101,7 +101,7 @@ body {
 }
 
 .middle-line {
-  margin-top: 0.75rem;
+  margin-top: 0.3rem;
   /* Match blog intro: cap scroll height for writes-code / other dropdowns here */
   --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
 }
@@ -112,7 +112,7 @@ body {
 
 .middle-line-mobile-margin {
   display: inline-block;
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
 }
 
 /* Hero (bottom) ↔ dock (top-left) when any dropdown is open.
@@ -187,6 +187,10 @@ image-element.image-dock.image-dock--exit {
 }
 
 @media (min-width: 768px) {
+  .middle-line {
+    margin-top: 0.75rem;
+  }
+
   .container {
     padding-left: 0;
     padding-right: 0;
