@@ -175,12 +175,12 @@ class MoodboardPanel extends HTMLElement {
     if (!gallery) return;
 
     gallery.innerHTML =
-      '<p class="moodboard-panel__status moodboard-panel__status--loading m-0">Loading…</p>';
+      '<p class="moodboard-panel__status moodboard-panel__status--loading uppercase m-0">Loading…</p>';
 
     const { moodboard, errors } = await window.fetchMoodboardInitial();
     if (errors?.length) {
       const msg = errors[0]?.message || "Could not load moodboard.";
-      gallery.innerHTML = `<p class="moodboard-panel__status moodboard-panel__status--error m-0">${escapeHtml(msg)}</p>`;
+      gallery.innerHTML = `<p class="moodboard-panel__status moodboard-panel__status--error uppercase m-0">${escapeHtml(msg)}</p>`;
       return;
     }
 
@@ -191,7 +191,7 @@ class MoodboardPanel extends HTMLElement {
 
     if (!this.#items.length) {
       gallery.innerHTML =
-        '<p class="moodboard-panel__status m-0">No images yet.</p>';
+        '<p class="moodboard-panel__status uppercase m-0">No images yet.</p>';
       return;
     }
 

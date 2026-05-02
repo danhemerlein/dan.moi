@@ -82,7 +82,7 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
 
     if (yearStr) {
       const meta = document.createElement('p')
-      meta.className = 'code-project-meta code-project-meta--list flex-shrink-0 m-0 ml-auto'
+      meta.className = 'code-project-meta code-project-meta--list font-normal uppercase flex-shrink-0 m-0 ml-auto'
       meta.textContent = yearStr
       li.appendChild(meta)
     }
@@ -108,7 +108,7 @@ const PANEL_HTML = `
         ${CLOSE_SVG}
       </button>
       <h2 id="code-project-title" class="blog-post__title"></h2>
-      <p id="code-project-timeline" class="code-project-meta" hidden></p>
+      <p id="code-project-timeline" class="code-project-meta font-normal uppercase" hidden></p>
       <div id="code-project-hero" class="code-project__hero flex w-full" hidden></div>
       <article id="code-project-body" class="blog-post__body"></article>
     </div>

@@ -13,10 +13,7 @@ dropdown-panel#writes-code.code-panel--article::part(panel) {
 .code-project-meta {
   margin-top: 0.5rem;
   font-family: var(--font-mono);
-  font-weight: 400;
-  font-style: normal;
   font-size: 0.75rem;
-  text-transform: uppercase;
   color: var(--color-stone-gray);
 }
 
