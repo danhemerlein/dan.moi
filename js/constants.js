@@ -21,32 +21,21 @@ export const STREAMING_LINKS = [
   ['soundcloud', 'SoundCloud'],
 ]
 
-export const MONTH_ABBREV_EN = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+const MONTH_DATA = [
+  { full: 'January',   abbr: 'Jan' },
+  { full: 'February',  abbr: 'Feb' },
+  { full: 'March',     abbr: 'Mar' },
+  { full: 'April',     abbr: 'Apr' },
+  { full: 'May',       abbr: 'May' },
+  { full: 'June',      abbr: 'Jun' },
+  { full: 'July',      abbr: 'Jul' },
+  { full: 'August',    abbr: 'Aug' },
+  { full: 'September', abbr: 'Sep' },
+  { full: 'October',   abbr: 'Oct' },
+  { full: 'November',  abbr: 'Nov' },
+  { full: 'December',  abbr: 'Dec' },
 ]
 
-export const FULL_MONTH_TO_ABBREV_EN = [
-  ['January', 'Jan'],
-  ['February', 'Feb'],
-  ['March', 'Mar'],
-  ['April', 'Apr'],
-  ['May', 'May'],
-  ['June', 'Jun'],
-  ['July', 'Jul'],
-  ['August', 'Aug'],
-  ['September', 'Sep'],
-  ['October', 'Oct'],
-  ['November', 'Nov'],
-  ['December', 'Dec'],
-]
+export const MONTHS = MONTH_DATA.map(m => m.full)
+export const MONTH_ABBREV_EN = MONTH_DATA.map(m => m.abbr)
+export const FULL_MONTH_TO_ABBREV_EN = MONTH_DATA.map(m => [m.full, m.abbr])

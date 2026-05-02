@@ -245,6 +245,16 @@ class CodePanel extends HTMLElement {
       }
     }
 
+    function showProjectError(message) {
+      titleEl.textContent = ''
+      timelineEl.textContent = ''
+      timelineEl.hidden = true
+      bodyEl.removeAttribute('aria-busy')
+      bodyEl.innerHTML = `<p class="article-error m-0">${escapeHtml(message)}</p>`
+      heroEl.replaceChildren()
+      heroEl.hidden = true
+    }
+
     async function openProjectById(id) {
       if (!id) return
 
@@ -275,26 +285,13 @@ class CodePanel extends HTMLElement {
       })
 
       if (errors?.length) {
-        const first = errors[0]?.message || 'Could not load project.'
-        titleEl.textContent = ''
-        timelineEl.textContent = ''
-        timelineEl.hidden = true
-        bodyEl.removeAttribute('aria-busy')
-        bodyEl.innerHTML = `<p class="article-error m-0">${escapeHtml(first)}</p>`
-        heroEl.replaceChildren()
-        heroEl.hidden = true
+        showProjectError(errors[0]?.message || 'Could not load project.')
         return
       }
 
       const item = data?.codeProjectCollection?.items?.[0]
       if (!item) {
-        titleEl.textContent = ''
-        timelineEl.textContent = ''
-        timelineEl.hidden = true
-        bodyEl.removeAttribute('aria-busy')
-        bodyEl.innerHTML = '<p class="article-error m-0">Project not found.</p>'
-        heroEl.replaceChildren()
-        heroEl.hidden = true
+        showProjectError('Project not found.')
         return
       }
 

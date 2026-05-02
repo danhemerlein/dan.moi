@@ -54,6 +54,14 @@
   align-items: center;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
 .m-0 {
   margin: 0;
 }

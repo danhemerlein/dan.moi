@@ -1,17 +1,4 @@
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import { MONTHS } from './constants.js'
 
 function getNumberWithOrdinal(n) {
   const s = ["th", "st", "nd", "rd"];

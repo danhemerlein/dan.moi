@@ -13,14 +13,6 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   height: 5rem;
 }
 
-.music-project__art {
-  object-fit: cover;
-}
-
-.music-project__title-group {
-  justify-content: space-between;
-}
-
 .music-project__title {
   font-family: var(--font-hypertext);
   font-size: 1.5rem;
