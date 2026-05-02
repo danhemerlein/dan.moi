@@ -1,4 +1,4 @@
-export function initScrollbar({ articleWrap, articleRoot, bodyEl, trackStartEl }) {
+export function initScrollbar({ articleWrap, articleRoot, bodyEl, trackStartEl, lerpFactor = 0.12 }) {
   const scrollbarThumb = articleWrap.querySelector('.panel-scroll__custom-bar-thumb')
   if (!scrollbarThumb) return { updateScrollbar: () => {} }
 
@@ -22,7 +22,7 @@ export function initScrollbar({ articleWrap, articleRoot, bodyEl, trackStartEl }
   }
 
   function tickThumb() {
-    thumbCurrentPos += (thumbTargetPos - thumbCurrentPos) * 0.12
+    thumbCurrentPos += (thumbTargetPos - thumbCurrentPos) * lerpFactor
     scrollbarThumb.style.transform = `translateY(${Math.round(thumbCurrentPos)}px)`
     if (Math.abs(thumbTargetPos - thumbCurrentPos) > 0.5) {
       thumbRafId = requestAnimationFrame(tickThumb)
@@ -70,6 +70,7 @@ export function initScrollbar({ articleWrap, articleRoot, bodyEl, trackStartEl }
   })
   ro.observe(articleRoot)
   ro.observe(bodyEl)
+  if (trackStartEl) ro.observe(trackStartEl)
 
   return { updateScrollbar }
 }

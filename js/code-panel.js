@@ -160,7 +160,7 @@ class CodePanel extends HTMLElement {
 
     layoutDebugMark('code:panel-init')
 
-    const { updateScrollbar } = initScrollbar({ articleWrap, articleRoot, bodyEl, trackStartEl: heroEl })
+    const { updateScrollbar } = initScrollbar({ articleWrap, articleRoot, bodyEl, trackStartEl: heroEl, lerpFactor: 0.06 })
 
     const introP = document.querySelector('.intro-line')
     const middleLine = document.querySelector('.middle-line')
