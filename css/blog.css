@@ -70,7 +70,7 @@ dropdown-panel#blog:not([open]) #blog-panel {
 accessible-select.blog-year-filter:not(:defined) {
   display: block;
   min-height: 2.75rem;
-  margin-bottom: 28px;
+  margin-bottom: 1.75rem;
 }
 
 /* Publication date + reading time (list row + article under title) */
@@ -110,7 +110,6 @@ accessible-select.blog-year-filter:not(:defined) {
   gap: 0.75rem;
   padding: 0.25rem 0 1rem;
   min-height: 12rem;
-  pointer-events: none;
 }
 
 .blog-post__skeleton-line {

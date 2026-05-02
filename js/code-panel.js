@@ -14,7 +14,7 @@ function waitForPaint() {
 }
 
 const ARTICLE_BODY_SKELETON_HTML = `
-<div class="blog-post__skeleton" aria-hidden="true">
+<div class="blog-post__skeleton pointer-events-none" aria-hidden="true">
   <div class="blog-post__skeleton-line blog-post__skeleton-line--lg"></div>
   <div class="blog-post__skeleton-line"></div>
   <div class="blog-post__skeleton-line"></div>
@@ -46,7 +46,7 @@ function formatTimelineLabel(raw) {
   return null
 }
 
-function setListStatus(ul, text, className = 'panel-list__status') {
+function setListStatus(ul, text, className = 'm-0') {
   ul.replaceChildren()
   const li = document.createElement('li')
   li.className = className
@@ -62,27 +62,30 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
     const id = item.sys?.id?.trim()
     const title = item.title?.trim() || 'Untitled'
     const li = document.createElement('li')
-    li.className = 'panel-list__item'
+    li.className = 'panel-list__item flex flex-row items-baseline gap-3 p-0'
 
     const yearStr = formatTimelineLabel(item.timelineLaunchDate)
 
     if (id) {
       const btn = document.createElement('button')
       btn.type = 'button'
-      btn.className = 'panel-list__button'
+      btn.className =
+        'panel-list__button block w-full m-0 p-0 font-style-normal font-normal text-left flex-1 min-w-0'
       btn.dataset.id = id
       btn.textContent = title
       li.appendChild(btn)
     } else {
       const titleOnly = document.createElement('span')
-      titleOnly.className = 'panel-list__title-fallback'
+      titleOnly.className =
+        'panel-list__title-fallback block flex-1 min-w-0 text-left'
       titleOnly.textContent = title
       li.appendChild(titleOnly)
     }
 
     if (yearStr) {
       const meta = document.createElement('p')
-      meta.className = 'code-project-meta code-project-meta--list'
+      meta.className =
+        'code-project-meta code-project-meta--list font-normal uppercase flex-shrink-0 m-0 ml-auto'
       meta.textContent = yearStr
       li.appendChild(meta)
     }
@@ -99,17 +102,17 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
 }
 
 const PANEL_HTML = `
-  <div id="code-panel" class="panel-scroll" aria-live="polite">
+  <div id="code-panel" class="panel-scroll flex flex-1 flex-col gap-0 w-full max-w-full min-w-0 min-h-0 overflow-hidden" aria-live="polite">
     <div id="code-projects-list-wrap" class="panel-scroll__viewport">
-      <ul id="code-projects" class="panel-list"></ul>
+      <ul id="code-projects" class="panel-list list-none m-0 p-0 flex flex-col gap-3"></ul>
     </div>
-    <div id="code-project-article" class="panel-scroll__article" hidden>
+    <div id="code-project-article" class="panel-scroll__article flex flex-col flex-1 min-h-0" hidden>
       <button type="button" id="code-project-back" class="panel-detail__back">
         ${CLOSE_SVG}
       </button>
       <h2 id="code-project-title" class="blog-post__title"></h2>
-      <p id="code-project-timeline" class="code-project-meta" hidden></p>
-      <div id="code-project-hero" class="code-project__hero" hidden></div>
+      <p id="code-project-timeline" class="code-project-meta font-normal uppercase" hidden></p>
+      <div id="code-project-hero" class="code-project__hero flex w-full" hidden></div>
       <article id="code-project-body" class="blog-post__body"></article>
     </div>
   </div>
@@ -119,6 +122,16 @@ class CodePanel extends HTMLElement {
   connectedCallback() {
     if (this.dataset.rendered) return
     this.dataset.rendered = ''
+    this.classList.add(
+      'flex',
+      'flex-col',
+      'flex-1',
+      'min-h-0',
+      'min-w-0',
+      'w-full',
+      'max-w-full',
+      'overflow-hidden',
+    )
     this.innerHTML = PANEL_HTML
     this.#init()
   }
@@ -198,7 +211,9 @@ class CodePanel extends HTMLElement {
         bottomLine.offsetHeight
         bottomLine.classList.remove('blog-article--exit-down')
       }
-      document.getElementById('writes-code')?.classList.remove('code-panel--article')
+      document
+        .getElementById('writes-code')
+        ?.classList.remove('code-panel--article')
       containerEl?.classList.remove('article-open')
     }
 
@@ -210,10 +225,13 @@ class CodePanel extends HTMLElement {
       backBtn.focus({ preventScroll: true })
       middleLine?.classList.add('blog-article--exit-down')
       bottomLine?.classList.add('blog-article--exit-down')
-      document.getElementById('writes-code')?.classList.add('code-panel--article')
+      document
+        .getElementById('writes-code')
+        ?.classList.add('code-panel--article')
       containerEl?.classList.add('article-open')
       if (introP) {
-        if (introPExitHandler) introP.removeEventListener('transitionend', introPExitHandler)
+        if (introPExitHandler)
+          introP.removeEventListener('transitionend', introPExitHandler)
         introP.classList.add('blog-article--exit-up')
         introPExitHandler = (e) => {
           if (e.propertyName !== 'transform' || e.target !== introP) return
@@ -224,7 +242,8 @@ class CodePanel extends HTMLElement {
         introP.addEventListener('transitionend', introPExitHandler)
       }
       if (bottomLine) {
-        if (bottomLineExitHandler) bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
+        if (bottomLineExitHandler)
+          bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
         bottomLineExitHandler = (e) => {
           if (e.propertyName !== 'transform' || e.target !== bottomLine) return
           bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
@@ -304,11 +323,12 @@ class CodePanel extends HTMLElement {
       const imgFields = item.image
       if (imgFields?.url) {
         const fig = document.createElement('figure')
-        fig.className = 'code-project__figure'
+        fig.className = 'code-project__figure w-full'
         const img = document.createElement('img')
         img.src = imgFields.url
         img.alt = (imgFields.title || '').trim() || ''
         img.loading = 'lazy'
+        img.className = 'block mx-auto h-auto'
         fig.appendChild(img)
         heroEl.appendChild(fig)
         heroEl.hidden = false
@@ -390,7 +410,10 @@ class CodePanel extends HTMLElement {
         middleLine?.classList.remove('blog-article--exit-down')
         if (bottomLine) {
           if (bottomLineExitHandler) {
-            bottomLine.removeEventListener('transitionend', bottomLineExitHandler)
+            bottomLine.removeEventListener(
+              'transitionend',
+              bottomLineExitHandler,
+            )
             bottomLineExitHandler = null
           }
           bottomLine.style.display = ''
@@ -403,11 +426,7 @@ class CodePanel extends HTMLElement {
     })
     ;(async () => {
       layoutDebugMark('code:list-fetch-start')
-      setListStatus(
-        ul,
-        'Loading…',
-        'panel-list__status panel-list__status--loading',
-      )
+      setListStatus(ul, 'Loading…', 'm-0')
 
       const { items: fetchedItems, errors } =
         await window.fetchAllCodeProjects()
@@ -416,7 +435,7 @@ class CodePanel extends HTMLElement {
 
       if (errors?.length) {
         const first = errors[0]?.message || 'Could not load projects.'
-        setListStatus(ul, first, 'panel-list__status panel-list__status--error')
+        setListStatus(ul, first, 'font-style-normal m-0')
         return
       }
 
