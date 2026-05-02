@@ -1,6 +1,6 @@
 import { documentToHtmlString } from 'https://esm.sh/@contentful/rich-text-html-renderer@16.3.0'
 import { escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
-import { CLOSE_SVG } from './icons.js'
+import { CLOSE_SVG, ARTICLE_BODY_SKELETON_HTML } from './constants.js'
 
 function layoutDebugMark(name, detail) {
   window.__layoutDebugMark?.(name, detail)
@@ -12,15 +12,6 @@ function waitForPaint() {
     requestAnimationFrame(() => requestAnimationFrame(resolve))
   })
 }
-
-const ARTICLE_BODY_SKELETON_HTML = `
-<div class="blog-post__skeleton pointer-events-none" aria-hidden="true">
-  <div class="blog-post__skeleton-line blog-post__skeleton-line--lg"></div>
-  <div class="blog-post__skeleton-line"></div>
-  <div class="blog-post__skeleton-line"></div>
-  <div class="blog-post__skeleton-line"></div>
-  <div class="blog-post__skeleton-line blog-post__skeleton-line--sm"></div>
-</div>`
 
 /**
  * Renders a single year or a year range from Contentful timeline / launch data.
@@ -70,7 +61,7 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className =
-        'panel-list__button block w-full m-0 p-0 font-style-normal font-normal text-left flex-1 min-w-0'
+        'panel-list__button cursor-pointer block w-full m-0 p-0 font-style-normal font-normal text-left flex-1 min-w-0'
       btn.dataset.id = id
       btn.textContent = title
       li.appendChild(btn)
@@ -103,17 +94,17 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
 
 const PANEL_HTML = `
   <div id="code-panel" class="panel-scroll flex flex-1 flex-col gap-0 w-full max-w-full min-w-0 min-h-0 overflow-hidden" aria-live="polite">
-    <div id="code-projects-list-wrap" class="panel-scroll__viewport">
-      <ul id="code-projects" class="panel-list list-none m-0 p-0 flex flex-col gap-3"></ul>
+    <div id="code-projects-list-wrap" class="panel-scroll__viewport flex-1 min-h-0">
+      <ul id="code-projects" class="panel-list mt-2 list-none m-0 p-0 flex flex-col gap-3"></ul>
     </div>
     <div id="code-project-article" class="panel-scroll__article flex flex-col flex-1 min-h-0" hidden>
-      <button type="button" id="code-project-back" class="panel-detail__back">
+      <button type="button" id="code-project-back" class="panel-detail__back cursor-pointer">
         ${CLOSE_SVG}
       </button>
-      <h2 id="code-project-title" class="blog-post__title"></h2>
-      <p id="code-project-timeline" class="code-project-meta font-normal uppercase" hidden></p>
+      <h2 id="code-project-title" class="article-title"></h2>
+      <p id="code-project-timeline" class="code-project-meta mt-2 font-normal uppercase" hidden></p>
       <div id="code-project-hero" class="code-project__hero flex w-full" hidden></div>
-      <article id="code-project-body" class="blog-post__body"></article>
+      <article id="code-project-body" class="article-body"></article>
     </div>
   </div>
 `
@@ -289,7 +280,7 @@ class CodePanel extends HTMLElement {
         timelineEl.textContent = ''
         timelineEl.hidden = true
         bodyEl.removeAttribute('aria-busy')
-        bodyEl.innerHTML = `<p class="blog-post__error">${escapeHtml(first)}</p>`
+        bodyEl.innerHTML = `<p class="article-error m-0">${escapeHtml(first)}</p>`
         heroEl.replaceChildren()
         heroEl.hidden = true
         return
@@ -301,7 +292,7 @@ class CodePanel extends HTMLElement {
         timelineEl.textContent = ''
         timelineEl.hidden = true
         bodyEl.removeAttribute('aria-busy')
-        bodyEl.innerHTML = '<p class="blog-post__error">Project not found.</p>'
+        bodyEl.innerHTML = '<p class="article-error m-0">Project not found.</p>'
         heroEl.replaceChildren()
         heroEl.hidden = true
         return
@@ -342,7 +333,7 @@ class CodePanel extends HTMLElement {
       if (!json) {
         bodyEl.removeAttribute('aria-busy')
         bodyEl.innerHTML =
-          '<p class="blog-post__empty">No description for this project yet.</p>'
+          '<p class="article-empty m-0">No description for this project yet.</p>'
         return
       }
 
@@ -355,7 +346,7 @@ class CodePanel extends HTMLElement {
         console.warn(e)
         bodyEl.removeAttribute('aria-busy')
         bodyEl.innerHTML =
-          '<p class="blog-post__error">Could not render this project.</p>'
+          '<p class="article-error m-0">Could not render this project.</p>'
       }
     }
 
@@ -374,7 +365,7 @@ class CodePanel extends HTMLElement {
       }
 
       const postBtn = t.closest(
-        '[data-handle].blog-post__embed-btn, [data-handle].blog-post__inline-entry, [data-handle].blog-post__embed-inline-btn',
+        '[data-handle].rich-text-embed-btn, [data-handle].rich-text-inline-entry, [data-handle].rich-text-embed-inline-btn',
       )
       if (postBtn instanceof HTMLElement) {
         const handle = postBtn.dataset.handle?.trim()

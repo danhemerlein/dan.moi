@@ -47,7 +47,7 @@ function insertSmallScreenSentinel(gallery, sentinel, index, length) {
 
 const PANEL_HTML = `
   <div id="moodboard-panel" class="panel-scroll moodboard-panel flex flex-1 flex-col gap-0 w-full max-w-full min-w-0 min-h-0 overflow-hidden" aria-live="polite">
-    <div id="moodboard-scroll-wrap" class="panel-scroll__viewport">
+    <div id="moodboard-scroll-wrap" class="panel-scroll__viewport flex-1 min-h-0">
       <div id="moodboard-gallery" class="moodboard-panel__gallery flex flex-col gap-0 lg-gap-2 w-full max-w-full min-w-0"></div>
       <div
         id="moodboard-load-sentinel"

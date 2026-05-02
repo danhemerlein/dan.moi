@@ -1,5 +1,2 @@
-.cursor/
 .env
 pr-description.md
-# Optional local Contentful config for static hosting (copy from js/contentful-config.example.js).
-js/contentful-config.local.js

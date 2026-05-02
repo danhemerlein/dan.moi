@@ -38,6 +38,10 @@
   gap: 0.75rem;
 }
 
+.gap-4 {
+  gap: 1rem;
+}
+
 .flex-nowrap {
   flex-wrap: nowrap;
 }
@@ -52,6 +56,10 @@
 
 .m-0 {
   margin: 0;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
 }
 
 .p-0 {
@@ -99,6 +107,14 @@
   overflow: hidden;
 }
 
+.rounded-sm {
+  border-radius: 0.35rem;
+}
+
+.align-middle {
+  vertical-align: middle;
+}
+
 .text-left {
   text-align: left;
 }
@@ -133,6 +149,10 @@
 
 .pointer-events-none {
   pointer-events: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .hidden {

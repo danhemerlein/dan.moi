@@ -4,8 +4,6 @@
 
 
 .panel-scroll__viewport {
-  flex: 1 1 auto;
-  min-height: 0;
   overflow-y: scroll;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -69,12 +67,11 @@
   padding: 0.25rem 0.5rem;
   background: transparent;
   border: none;
-  cursor: pointer;
 }
 
 /* Keep chrome from shrinking; main content may scroll inside this column.
-   Prose uses .blog-post__body (blog + code detail views). */
-.panel-scroll__article > :not(.blog-post__body) {
+   Prose uses .article-body (blog + code detail views). */
+.panel-scroll__article > :not(.article-body) {
   flex-shrink: 0;
 }
 

@@ -11,7 +11,6 @@ dropdown-panel#writes-code.code-panel--article::part(panel) {
 }
 
 .code-project-meta {
-  margin-top: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-stone-gray);

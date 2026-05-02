@@ -1,9 +1,6 @@
 /* Shared selectable list rows inside dropdown panels (blog posts, code projects, …).
    Override --color-mint-cream / --color-mint-border on a parent when needed. Defaults: reset.css. */
 
-.panel-list {
-  margin-top: 0.5rem;
-}
 
 .article-open .panel-list {
   margin-top: 0;
@@ -23,7 +20,6 @@
 .panel-list__button {
   border: none;
   background: none;
-  cursor: pointer;
   font-family: var(--font-hypertext);
   font-size: 1rem;
   line-height: 1.3;
