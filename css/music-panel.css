@@ -9,8 +9,8 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 }
 
 .music-project__media {
-  width: 80px;
-  height: 80px;
+  width: 5rem;
+  height: 5rem;
 }
 
 .music-project__art {
@@ -46,14 +46,14 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 
 .music-project__credit {
   background-color: var(--color-gray-light);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   padding: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
 
 .music-project__links {
-  gap: 10px; /* px intentional — not a standard spacing step */
+  gap: 0.625rem;
 }
 
 .music-project__link {
@@ -71,7 +71,7 @@ dropdown-panel#makes-music:not([open]) #music-panel {
 @media (min-width: 768px) {
   .music-project__shell {
     display: grid;
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 5rem 1fr;
     column-gap: 0.75rem;
   }
 

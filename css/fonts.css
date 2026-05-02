@@ -79,8 +79,8 @@
 
   /* Tokens: Roboto Mono / 12px / -1% letter-spacing / uppercase / centered */
   --type-roboto-mono-12-font-family: var(--font-mono);
-  --type-roboto-mono-12-font-size: 12px;
-  --type-roboto-mono-12-line-height: 16px;
+  --type-roboto-mono-12-font-size: 0.75rem;
+  --type-roboto-mono-12-line-height: 1rem;
   --type-roboto-mono-12-letter-spacing: -0.01em;
 }
 

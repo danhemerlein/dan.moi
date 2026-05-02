@@ -88,8 +88,8 @@
 
 .panel-detail__back {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0.625rem;
+  right: 0.625rem;
   padding: 0.25rem 0.5rem;
   background: transparent;
   border: none;
