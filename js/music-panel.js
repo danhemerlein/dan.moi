@@ -75,7 +75,7 @@ function renderMusicList(ul, items, emptyMessage = 'No music projects yet.') {
       const media = document.createElement('div')
       media.className = 'music-project__media flex-shrink-0 overflow-hidden'
       const img = document.createElement('img')
-      img.className = 'music-project__art block w-full h-full'
+      img.className = 'music-project__art object-cover block w-full h-full'
       img.src = art.url
       img.alt = (art.title || '').trim() || ''
       img.loading = 'lazy'
@@ -85,10 +85,10 @@ function renderMusicList(ul, items, emptyMessage = 'No music projects yet.') {
     }
 
     const topText = document.createElement('div')
-    topText.className = 'music-project__top-text flex flex-col'
+    topText.className = 'music-project__top-text flex flex-col justify-between'
 
     const titleGroup = document.createElement('div')
-    titleGroup.className = 'music-project__title-group flex items-center'
+    titleGroup.className = 'music-project__title-group flex items-center justify-between'
 
     const titleEl = document.createElement('p')
     titleEl.className = 'music-project__title m-0 font-normal'
@@ -127,7 +127,7 @@ function renderMusicList(ul, items, emptyMessage = 'No music projects yet.') {
 
     if (dateStr || credits || linkParts.length) {
       const bottom = document.createElement('div')
-      bottom.className = 'music-project__bottom flex flex-col gap-2 lg-flex-row'
+      bottom.className = 'music-project__bottom flex flex-col gap-2 lg-flex-row justify-between'
 
       if (dateStr) {
         const dateMobile = document.createElement('p')
