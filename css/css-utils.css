@@ -115,7 +115,7 @@
   text-transform: uppercase;
 }
 
-.not-italic {
+.font-style-normal {
   font-style: normal;
 }
 
@@ -125,6 +125,10 @@
 
 .block {
   display: block;
+}
+
+.list-none {
+  list-style: none;
 }
 
 .hidden {
