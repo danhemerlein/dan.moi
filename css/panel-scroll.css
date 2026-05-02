@@ -2,7 +2,6 @@
    list and article views scroll inside so height doesn’t track full content height.
    Pair with panel-list.css for list rows. */
 
-
 .panel-scroll__viewport {
   overflow-y: scroll;
   scrollbar-width: none;
@@ -15,6 +14,7 @@
 }
 
 .panel-scroll__viewport[hidden],
+.panel-scroll__article-wrap[hidden],
 .panel-scroll__article[hidden] {
   display: none !important;
 }
@@ -62,17 +62,38 @@
 
 .panel-detail__back {
   position: absolute;
-  top: 0.625rem;
-  right: 0.625rem;
-  padding: 0.25rem 0.5rem;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.5rem;
   background: transparent;
   border: none;
+  color: inherit;
+}
+
+.panel-detail__back svg {
+  width: 0.75rem;
+  height: 0.75rem;
 }
 
 /* Keep chrome from shrinking; main content may scroll inside this column.
    Prose uses .article-body (blog + code detail views). */
 .panel-scroll__article > :not(.article-body) {
   flex-shrink: 0;
+}
+
+.panel-scroll__custom-bar-thumb {
+  position: absolute;
+  right: 0.375rem;
+  top: 0;
+  width: 0.5rem;
+  height: 6.375rem; /* 102px — designer-specified fixed thumb height */
+  border-radius: 1.5rem;
+  background-color: var(--color-sage);
+  border: 1px solid var(--color-sage-border);
+  pointer-events: none;
+  display: none;
+  z-index: 2;
+  will-change: transform;
 }
 
 @media (min-width: 768px) {
