@@ -242,7 +242,7 @@
           w: el.offsetWidth,
           h: el.offsetHeight,
         };
-        const sk = el.querySelector?.(".blog-post__skeleton");
+        const sk = el.querySelector?.(".content-skeleton");
         if (sk) {
           out[key + "SkeletonRect"] = rectSummary(sk);
         }

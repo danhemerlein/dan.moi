@@ -1,44 +1,4 @@
-const STREAMING_LINKS = [
-  ['spotify', 'Spotify'],
-  ['bandcamp', 'Bandcamp'],
-  ['apple', 'Apple Music'],
-  ['tidal', 'Tidal'],
-  ['amazon', 'Amazon'],
-  ['deezer', 'Deezer'],
-  ['napster', 'Napster'],
-  ['googlePlay', 'Google Play'],
-  ['soundcloud', 'SoundCloud'],
-]
-
-const MONTH_ABBREV_EN = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-]
-
-const FULL_MONTH_TO_ABBREV_EN = [
-  ['January', 'Jan'],
-  ['February', 'Feb'],
-  ['March', 'Mar'],
-  ['April', 'Apr'],
-  ['May', 'May'],
-  ['June', 'Jun'],
-  ['July', 'Jul'],
-  ['August', 'Aug'],
-  ['September', 'Sep'],
-  ['October', 'Oct'],
-  ['November', 'Nov'],
-  ['December', 'Dec'],
-]
+import { STREAMING_LINKS, MONTH_ABBREV_EN, FULL_MONTH_TO_ABBREV_EN } from './constants.js'
 
 function abbreviateEnglishMonthNames(str) {
   let out = str
@@ -227,8 +187,8 @@ function renderMusicList(ul, items, emptyMessage = 'No music projects yet.') {
 
 const PANEL_HTML = `
   <div id="music-panel" class="panel-scroll flex flex-1 flex-col gap-0 w-full max-w-full min-w-0 min-h-0 overflow-hidden" aria-live="polite">
-    <div id="music-projects-list-wrap" class="panel-scroll__viewport">
-      <ul id="music-projects" class="panel-list m-0 p-0 flex flex-col gap-3"></ul>
+    <div id="music-projects-list-wrap" class="panel-scroll__viewport flex-1 min-h-0">
+      <ul id="music-projects" class="panel-list mt-2 m-0 p-0 flex flex-col gap-3"></ul>
     </div>
   </div>
 `

@@ -1,0 +1,43 @@
+.content-skeleton {
+  padding: 0.25rem 0 1rem;
+  min-height: 12rem;
+}
+
+.content-skeleton__line {
+  height: 0.85rem;
+  border-radius: 0.25rem;
+  background: linear-gradient(
+    90deg,
+    var(--color-ink-10) 0%,
+    var(--color-ink-18) 50%,
+    var(--color-ink-10) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.15s ease-in-out infinite;
+}
+
+.content-skeleton__line--lg {
+  height: 1.15rem;
+  width: 78%;
+}
+
+.content-skeleton__line--sm {
+  width: 42%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content-skeleton__line {
+    animation: none;
+    background: var(--color-ink-14);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}

@@ -84,16 +84,16 @@ export function createBlogPostMetaElement({
   variant,
 }) {
   const meta = document.createElement("div");
-  meta.className = "blog-post-meta";
+  meta.className = "blog-post-meta flex flex-wrap items-baseline gap-4";
   if (variant === "list" || variant === "article") {
-    meta.classList.add(`blog-post-meta--${variant}`);
+    meta.classList.add(`blog-post-meta--${variant}`, 'mt-2')
   }
 
   if (published) {
     const readable = createReadableDateFromContentful(published);
     if (readable) {
       const timeEl = document.createElement("time");
-      timeEl.className = "blog-post-meta__date";
+      timeEl.className = "blog-post-meta__date font-style-normal font-normal uppercase";
       timeEl.dateTime = published;
       timeEl.textContent = readable;
       meta.appendChild(timeEl);
@@ -102,7 +102,7 @@ export function createBlogPostMetaElement({
 
   const minutes = readingTimeMinutesFromRichText(contentJson);
   const readEl = document.createElement("span");
-  readEl.className = "blog-post-meta__reading";
+  readEl.className = "blog-post-meta__reading font-style-normal font-normal uppercase";
   readEl.textContent = formatReadingTimeLabel(minutes);
   meta.appendChild(readEl);
 

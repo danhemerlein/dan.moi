@@ -1,90 +1,90 @@
 import {
   BLOCKS,
   INLINES,
-} from "https://esm.sh/@contentful/rich-text-types@16.0.0";
+} from 'https://esm.sh/@contentful/rich-text-types@16.0.0'
 
 export function escapeHtml(s) {
   return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
 }
 
 export function buildAssetEntryMaps(links) {
-  const assets = new Map();
+  const assets = new Map()
   for (const a of links?.assets?.block ?? []) {
-    if (a?.sys?.id) assets.set(a.sys.id, a);
+    if (a?.sys?.id) assets.set(a.sys.id, a)
   }
-  const entries = new Map();
+  const entries = new Map()
   for (const e of links?.entries?.block ?? []) {
-    if (e?.sys?.id) entries.set(e.sys.id, e);
+    if (e?.sys?.id) entries.set(e.sys.id, e)
   }
-  return { assets, entries };
+  return { assets, entries }
 }
 
 export function richTextOptions(links) {
-  const { assets: assetMap, entries: entryMap } = buildAssetEntryMaps(links);
+  const { assets: assetMap, entries: entryMap } = buildAssetEntryMaps(links)
 
   return {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const id = node?.data?.target?.sys?.id;
-        if (!id) return "";
-        const asset = assetMap.get(id);
-        if (!asset?.url) return "";
-        const alt = escapeHtml(asset.title || asset.description || "");
+        const id = node?.data?.target?.sys?.id
+        if (!id) return ''
+        const asset = assetMap.get(id)
+        if (!asset?.url) return ''
+        const alt = escapeHtml(asset.title || asset.description || '')
         const w =
           asset.width != null
             ? ` width="${escapeHtml(String(asset.width))}"`
-            : "";
+            : ''
         const h =
           asset.height != null
             ? ` height="${escapeHtml(String(asset.height))}"`
-            : "";
-        return `<figure class="blog-post__figure"><img src="${escapeHtml(asset.url)}" alt="${alt}"${w}${h} loading="lazy" /></figure>`;
+            : ''
+        return `<figure class="blog-post__figure"><img src="${escapeHtml(asset.url)}" alt="${alt}"${w}${h} loading="lazy" class="max-w-full h-auto rounded-sm align-middle" /></figure>`
       },
       [BLOCKS.EMBEDDED_ENTRY]: (node, next) => {
-        const id = node?.data?.target?.sys?.id;
-        if (!id) return "";
-        const entry = entryMap.get(id);
+        const id = node?.data?.target?.sys?.id
+        if (!id) return ''
+        const entry = entryMap.get(id)
         if (entry?.handle) {
-          const label = escapeHtml((entry.title || "Post").trim());
-          return `<p class="blog-post__embed"><button type="button" class="blog-post__embed-btn" data-handle="${escapeHtml(entry.handle)}">${label}</button></p>`;
+          const label = escapeHtml((entry.title || 'Post').trim())
+          return `<p class="rich-text-embed"><button type="button" class="rich-text-embed-btn" data-handle="${escapeHtml(entry.handle)}">${label}</button></p>`
         }
         if (node.content?.length) {
-          return `<div class="blog-post__embed-fallback">${next(node.content)}</div>`;
+          return `<div class="rich-text-embed-fallback">${next(node.content)}</div>`
         }
-        return "";
+        return ''
       },
       [INLINES.ENTRY_HYPERLINK]: (node, next) => {
-        const id = node?.data?.target?.sys?.id;
-        if (!id) return next(node.content);
-        const entry = entryMap.get(id);
+        const id = node?.data?.target?.sys?.id
+        if (!id) return next(node.content)
+        const entry = entryMap.get(id)
         if (entry?.handle) {
-          return `<button type="button" class="blog-post__inline-entry cursor-pointer" data-handle="${escapeHtml(entry.handle)}">${next(node.content)}</button>`;
+          return `<button type="button" class="rich-text-inline-entry cursor-pointer" data-handle="${escapeHtml(entry.handle)}">${next(node.content)}</button>`
         }
-        return `<span class="blog-post__inline-entry-fallback">${next(node.content)}</span>`;
+        return `<span class="rich-text-inline-entry-fallback">${next(node.content)}</span>`
       },
       [INLINES.ASSET_HYPERLINK]: (node, next) => {
-        const id = node?.data?.target?.sys?.id;
-        if (!id) return next(node.content);
-        const asset = assetMap.get(id);
+        const id = node?.data?.target?.sys?.id
+        if (!id) return next(node.content)
+        const asset = assetMap.get(id)
         if (asset?.url) {
-          return `<a href="${escapeHtml(asset.url)}" class="blog-post__asset-link">${next(node.content)}</a>`;
+          return `<a href="${escapeHtml(asset.url)}">${next(node.content)}</a>`
         }
-        return next(node.content);
+        return next(node.content)
       },
       [INLINES.EMBEDDED_ENTRY]: (node) => {
-        const id = node?.data?.target?.sys?.id;
-        if (!id) return "";
-        const entry = entryMap.get(id);
+        const id = node?.data?.target?.sys?.id
+        if (!id) return ''
+        const entry = entryMap.get(id)
         if (entry?.handle) {
-          const label = escapeHtml((entry.title || "Post").trim());
-          return `<button type="button" class="blog-post__embed-inline-btn" data-handle="${escapeHtml(entry.handle)}">${label}</button>`;
+          const label = escapeHtml((entry.title || 'Post').trim())
+          return `<button type="button" class="rich-text-embed-inline-btn" data-handle="${escapeHtml(entry.handle)}">${label}</button>`
         }
-        return "";
+        return ''
       },
     },
-  };
+  }
 }

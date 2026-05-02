@@ -1,7 +1,7 @@
 import { documentToHtmlString } from 'https://esm.sh/@contentful/rich-text-html-renderer@16.3.0'
 import { escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
 import { createBlogPostMetaElement } from './blog-utils.js'
-import { CLOSE_SVG } from './icons.js'
+import { CLOSE_SVG, ARTICLE_BODY_SKELETON_HTML } from './constants.js'
 
 function layoutDebugMark(name, detail) {
   window.__layoutDebugMark?.(name, detail)
@@ -16,15 +16,6 @@ function waitForPaint() {
     requestAnimationFrame(() => requestAnimationFrame(resolve))
   })
 }
-
-const ARTICLE_BODY_SKELETON_HTML = `
-<div class="blog-post__skeleton pointer-events-none" aria-hidden="true">
-  <div class="blog-post__skeleton-line blog-post__skeleton-line--lg"></div>
-  <div class="blog-post__skeleton-line"></div>
-  <div class="blog-post__skeleton-line"></div>
-  <div class="blog-post__skeleton-line"></div>
-  <div class="blog-post__skeleton-line blog-post__skeleton-line--sm"></div>
-</div>`
 
 function getYearFromPublished(published) {
   if (!published) return null
@@ -123,13 +114,13 @@ const PANEL_HTML = `
   <div id="blog-panel" class="panel-scroll flex flex-1 flex-col gap-0 w-full max-w-full min-w-0 min-h-0 overflow-hidden" aria-live="polite">
     <accessible-select
       id="blog-year-filter"
-      class="blog-year-filter type-roboto-mono-12-caps"
+      class="blog-year-filter flex-shrink-0 w-full max-w-full min-w-0 type-roboto-mono-12-caps"
       hidden
       placeholder="YEAR"
       aria-label="Filter posts by year published"
     ></accessible-select>
-    <div id="blog-posts-list-wrap" class="panel-scroll__viewport">
-      <ul id="blog-posts" class="panel-list list-none m-0 p-0 flex flex-col gap-3"></ul>
+    <div id="blog-posts-list-wrap" class="panel-scroll__viewport flex-1 min-h-0">
+      <ul id="blog-posts" class="panel-list mt-2 list-none m-0 p-0 flex flex-col gap-3"></ul>
       <div
         id="blog-posts-load-sentinel"
         class="panel-scroll__load-sentinel flex-shrink-0 w-full m-0 p-0 pointer-events-none"
@@ -155,11 +146,11 @@ const PANEL_HTML = `
       >
         ${CLOSE_SVG}
       </button>
-      <h2 id="blog-post-title" class="blog-post__title"></h2>
+      <h2 id="blog-post-title" class="article-title"></h2>
       <div id="blog-post-meta" hidden></div>
       <article
         id="blog-post-body"
-        class="blog-post__body"
+        class="article-body"
       ></article>
     </div>
   </div>
@@ -447,7 +438,7 @@ class BlogPanel extends HTMLElement {
         const first = errors[0]?.message || 'Could not load post.'
         titleEl.textContent = ''
         bodyEl.removeAttribute('aria-busy')
-        bodyEl.innerHTML = `<p class="blog-post__error">${escapeHtml(first)}</p>`
+        bodyEl.innerHTML = `<p class="article-error m-0">${escapeHtml(first)}</p>`
         metaEl.replaceChildren()
         metaEl.hidden = true
         return
@@ -457,7 +448,7 @@ class BlogPanel extends HTMLElement {
       if (!item) {
         titleEl.textContent = ''
         bodyEl.removeAttribute('aria-busy')
-        bodyEl.innerHTML = '<p class="blog-post__error">Post not found.</p>'
+        bodyEl.innerHTML = '<p class="article-error m-0">Post not found.</p>'
         metaEl.replaceChildren()
         metaEl.hidden = true
         return
@@ -481,7 +472,7 @@ class BlogPanel extends HTMLElement {
       if (!json) {
         bodyEl.removeAttribute('aria-busy')
         bodyEl.innerHTML =
-          '<p class="blog-post__empty">No content for this post yet.</p>'
+          '<p class="article-empty m-0">No content for this post yet.</p>'
         return
       }
 
@@ -505,7 +496,7 @@ class BlogPanel extends HTMLElement {
         console.warn(e)
         bodyEl.removeAttribute('aria-busy')
         bodyEl.innerHTML =
-          '<p class="blog-post__error">Could not render this post.</p>'
+          '<p class="article-error m-0">Could not render this post.</p>'
       }
     }
 
@@ -532,7 +523,7 @@ class BlogPanel extends HTMLElement {
       if (!(t instanceof HTMLElement)) return
 
       const postBtn = t.closest(
-        '[data-handle].panel-list__button, [data-handle].blog-post__embed-btn, [data-handle].blog-post__inline-entry, [data-handle].blog-post__embed-inline-btn',
+        '[data-handle].panel-list__button, [data-handle].rich-text-embed-btn, [data-handle].rich-text-inline-entry, [data-handle].rich-text-embed-inline-btn',
       )
       if (postBtn instanceof HTMLElement) {
         const handle = postBtn.dataset.handle?.trim()

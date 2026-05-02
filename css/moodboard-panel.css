@@ -44,7 +44,6 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   line-height: 1.25rem;
-  letter-spacing: -0.01em;
 }
 
 .moodboard-panel__status--error {
