@@ -18,7 +18,7 @@ function waitForPaint() {
 }
 
 const ARTICLE_BODY_SKELETON_HTML = `
-<div class="blog-post__skeleton" aria-hidden="true">
+<div class="blog-post__skeleton pointer-events-none" aria-hidden="true">
   <div class="blog-post__skeleton-line blog-post__skeleton-line--lg"></div>
   <div class="blog-post__skeleton-line"></div>
   <div class="blog-post__skeleton-line"></div>
@@ -132,7 +132,7 @@ const PANEL_HTML = `
       <ul id="blog-posts" class="panel-list list-none m-0 p-0 flex flex-col gap-3"></ul>
       <div
         id="blog-posts-load-sentinel"
-        class="panel-scroll__load-sentinel flex-shrink-0 w-full m-0 p-0"
+        class="panel-scroll__load-sentinel flex-shrink-0 w-full m-0 p-0 pointer-events-none"
         hidden
         aria-hidden="true"
       ></div>

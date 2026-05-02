@@ -131,6 +131,10 @@
   list-style: none;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .hidden {
   display: none;
 }

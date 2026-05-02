@@ -24,7 +24,6 @@
 /* Intersection / infinite-scroll sentinel; sits below the list inside the viewport. */
 .panel-scroll__load-sentinel {
   height: 1px;
-  pointer-events: none;
 }
 
 .panel-scroll__list-footer {

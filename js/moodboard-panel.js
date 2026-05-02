@@ -51,7 +51,7 @@ const PANEL_HTML = `
       <div id="moodboard-gallery" class="moodboard-panel__gallery flex flex-col gap-0 lg-gap-2 w-full max-w-full min-w-0"></div>
       <div
         id="moodboard-load-sentinel"
-        class="panel-scroll__load-sentinel flex-shrink-0 w-full m-0 p-0"
+        class="panel-scroll__load-sentinel flex-shrink-0 w-full m-0 p-0 pointer-events-none"
         hidden
         aria-hidden="true"
       ></div>

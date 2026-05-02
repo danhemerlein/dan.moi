@@ -140,7 +140,6 @@ image-element.image-dock {
   transform: translate3d(0, calc(-100vh - 100%), 0);
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
 }
 
 image-element.image-dock.image-dock--prep-open {

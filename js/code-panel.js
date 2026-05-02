@@ -14,7 +14,7 @@ function waitForPaint() {
 }
 
 const ARTICLE_BODY_SKELETON_HTML = `
-<div class="blog-post__skeleton" aria-hidden="true">
+<div class="blog-post__skeleton pointer-events-none" aria-hidden="true">
   <div class="blog-post__skeleton-line blog-post__skeleton-line--lg"></div>
   <div class="blog-post__skeleton-line"></div>
   <div class="blog-post__skeleton-line"></div>
