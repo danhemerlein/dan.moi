@@ -2,8 +2,6 @@ html {
   height: 100vh;
   max-height: 100vh;
   overflow: hidden;
-  /* Reserve space for scrollbar when it appears so centered content doesn’t jump horizontally */
-  scrollbar-gutter: stable;
 }
 
 body {
