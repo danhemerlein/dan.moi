@@ -22,11 +22,6 @@ dropdown-panel#writes-code.code-panel--article::part(panel) {
   border: 1px solid var(--color-lilac-border);
 }
 
-#code-panel .panel-list__item button {
-  padding: 1rem;
-  padding-right: 0;
-}
-
 #code-panel .panel-list__item .code-project-meta.code-project-meta--list {
   padding-right: 1rem;
 }

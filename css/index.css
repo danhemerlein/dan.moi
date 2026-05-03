@@ -6,6 +6,16 @@ html {
   scrollbar-gutter: stable;
 }
 
+body {
+  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  transition: background-color 260ms ease;
+}
+
 /* Match upgraded custom-element layout before/after definition (first paint stability) */
 dropdown-panel:not(:defined) {
   display: block;
@@ -33,45 +43,15 @@ blog-panel:not(:defined) {
   min-height: 0;
 }
 
-body {
-  min-height: 100vh;
-  height: 100vh;
-  max-height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  background-color: var(--color-surface);
-  transition: background-color 260ms ease;
-}
-
 .main-content {
-  width: 100%;
   /* Avoid 100vw — it ignores scrollbar gutter and can disagree with % width when inner scrollbars appear. */
-  max-width: 100%;
   height: 100vh;
   max-height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
 }
 
 .container {
-  width: 100%;
-  max-width: 100%;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-top: 7.5rem;
-  padding-bottom: 0;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  transition:
-    padding-top 360ms cubic-bezier(0.45, 0, 0.55, 1),
-    padding-bottom 360ms cubic-bezier(0.45, 0, 0.55, 1),
-    padding-left 360ms cubic-bezier(0.45, 0, 0.55, 1),
-    padding-right 360ms cubic-bezier(0.45, 0, 0.55, 1);
+  padding: 7.5rem 1rem;
+  transition: padding 360ms cubic-bezier(0.45, 0, 0.55, 1);
 }
 
 .container.article-open {
@@ -79,18 +59,11 @@ body {
 }
 
 .container.moodboard-open {
-  padding-top: 8rem;
-  padding-bottom: 2rem;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 8rem 0 2rem 0rem;
 }
 
 .paragraph-container {
-  display: flex;
-  flex-direction: column;
   width: min(100%, 42rem);
-  max-width: 100%;
-  box-sizing: border-box;
   align-self: center;
   /* Isolate subtree layout from hero/dock and late async updates where possible */
   contain: layout;
@@ -101,7 +74,7 @@ body {
 }
 
 .middle-line {
-  margin-top: 0.3rem;
+  margin-top: 0.75rem;
   /* Match blog intro: cap scroll height for writes-code / other dropdowns here */
   --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
 }
@@ -110,7 +83,8 @@ body {
   margin-top: 1rem;
 }
 
-.middle-line-mobile-margin {
+.middle-line-mobile-margin,
+.middle-line-mobile-margin--note-taker {
   display: inline-block;
   margin-top: 0.3rem;
 }
@@ -208,7 +182,11 @@ image-element.image-dock.image-dock--exit {
 
   .middle-line-mobile-margin {
     display: revert;
-    margin-top: revert;
+    margin-top: 0.75rem;
+  }
+
+  .middle-line-mobile-margin--note-taker {
+    margin-top: 0;
   }
 }
 
