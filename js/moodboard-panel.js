@@ -107,47 +107,24 @@ class MoodboardPanel extends HTMLElement {
   }
 
   #bindDropdownEvents() {
-    const blogIntroLine = document.querySelector('.intro-line')
+    const introLine = document.querySelector('.intro-line')
     const middleLine = document.querySelector('.middle-line')
     const bottomLine = document.querySelector('.bottom-line')
     const containerEl = document.querySelector('.container')
-
-    const COLLAPSE_TRANSITION = 'height 320ms cubic-bezier(0.45, 0, 0.55, 1)'
-
-    function collapseEl(el) {
-      if (!el) return
-      const h = el.offsetHeight
-      if (!h) return
-      el.style.overflow = 'hidden'
-      el.style.marginTop = '0'
-      el.style.height = h + 'px'
-      el.offsetHeight
-      el.style.transition = COLLAPSE_TRANSITION
-      el.offsetHeight
-      el.style.height = '0'
-    }
-
-    function expandEl(el) {
-      if (!el) return
-      el.style.transition = ''
-      el.style.height = ''
-      el.style.overflow = ''
-      el.style.marginTop = ''
-    }
 
     this.#onDropdownState = () => {
       const moodboardDropdown = document.getElementById('collects-moods')
       if (!moodboardDropdown) return
 
       if (moodboardDropdown.open) {
+        if (introLine) introLine.style.display = 'none'
+        if (middleLine) middleLine.style.display = 'none'
+        if (bottomLine) bottomLine.style.display = 'none'
         containerEl?.classList.add('moodboard-open')
-        collapseEl(blogIntroLine)
-        collapseEl(middleLine)
-        collapseEl(bottomLine)
       } else {
-        expandEl(blogIntroLine)
-        expandEl(middleLine)
-        expandEl(bottomLine)
+        if (introLine) introLine.style.display = ''
+        if (middleLine) middleLine.style.display = ''
+        if (bottomLine) bottomLine.style.display = ''
         containerEl?.classList.remove('moodboard-open')
       }
     }

@@ -25,13 +25,15 @@
     <script src="/contentful-env.js"></script>
   </head>
   <body>
-    <main class="main-content">
-      <div class="container h-full">
-        <div class="paragraph-container">
+    <main
+      class="main-content w-full max-w-full overflow-hidden flex items-center justify-center"
+    >
+      <div class="container w-full max-w-full min-h-0 flex flex-col h-full">
+        <div class="paragraph-container flex flex-col max-w-full">
           <p class="body-text intro-line">
             Dan Hemerlein is a reader first and a
             <dropdown-trigger
-              class="middle-line-mobile-margin"
+              class="middle-line-mobile-margin--note-taker"
               for="blog"
               bg="var(--color-mint)"
               bg-open="var(--color-lime)"
@@ -45,7 +47,7 @@
               class="flex flex-col flex-1 min-h-0 min-w-0 w-full max-w-full overflow-hidden"
             ></blog-panel>
           </dropdown-panel>
-          <p class="body-text middle-line">
+          <p class="body-text middle-line middle-line-mobile-margin">
             He also
             <dropdown-trigger
               for="writes-code"
@@ -61,7 +63,9 @@
               body-bg="var(--color-azure-soft)"
               >makes music,</dropdown-trigger
             >
+
             and
+
             <dropdown-trigger
               class="middle-line-mobile-margin"
               for="collects-moods"
