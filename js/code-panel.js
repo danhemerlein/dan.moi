@@ -1,6 +1,7 @@
 import { documentToHtmlString } from 'https://esm.sh/@contentful/rich-text-html-renderer@16.3.0'
 import { escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
 import { CLOSE_SVG, ARTICLE_BODY_SKELETON_HTML } from './constants.js'
+import { initScrollbar } from './scrollbar.js'
 
 function layoutDebugMark(name, detail) {
   window.__layoutDebugMark?.(name, detail)
@@ -97,14 +98,17 @@ const PANEL_HTML = `
     <div id="code-projects-list-wrap" class="panel-scroll__viewport flex-1 min-h-0">
       <ul id="code-projects" class="panel-list mt-2 list-none m-0 p-0 flex flex-col gap-3"></ul>
     </div>
-    <div id="code-project-article" class="panel-scroll__article flex flex-col flex-1 min-h-0" hidden>
-      <button type="button" id="code-project-back" class="panel-detail__back cursor-pointer">
-        ${CLOSE_SVG}
-      </button>
-      <h2 id="code-project-title" class="article-title"></h2>
-      <p id="code-project-timeline" class="code-project-meta mt-2 font-normal uppercase" hidden></p>
-      <div id="code-project-hero" class="code-project__hero flex w-full" hidden></div>
-      <article id="code-project-body" class="article-body"></article>
+    <div id="code-project-article-wrap" class="panel-scroll__article-wrap relative flex flex-col flex-1 min-h-0" hidden>
+      <div id="code-project-article" class="panel-scroll__article flex flex-col flex-1 min-h-0">
+        <button type="button" id="code-project-back" class="panel-detail__back cursor-pointer">
+          ${CLOSE_SVG}
+        </button>
+        <h2 id="code-project-title" class="article-title"></h2>
+        <p id="code-project-timeline" class="code-project-meta mt-2 font-normal uppercase" hidden></p>
+        <div id="code-project-hero" class="code-project__hero flex w-full" hidden></div>
+        <article id="code-project-body" class="article-body"></article>
+      </div>
+      <div class="panel-scroll__custom-bar-thumb" aria-hidden="true"></div>
     </div>
   </div>
 `
@@ -131,6 +135,7 @@ class CodePanel extends HTMLElement {
     const panel = document.getElementById('code-panel')
     const ul = document.getElementById('code-projects')
     const listWrap = document.getElementById('code-projects-list-wrap')
+    const articleWrap = document.getElementById('code-project-article-wrap')
     const articleRoot = document.getElementById('code-project-article')
     const backBtn = document.getElementById('code-project-back')
     const titleEl = document.getElementById('code-project-title')
@@ -142,6 +147,7 @@ class CodePanel extends HTMLElement {
       !panel ||
       !ul ||
       !listWrap ||
+      !articleWrap ||
       !articleRoot ||
       !backBtn ||
       !titleEl ||
@@ -153,6 +159,8 @@ class CodePanel extends HTMLElement {
     }
 
     layoutDebugMark('code:panel-init')
+
+    const { updateScrollbar } = initScrollbar({ articleWrap, articleRoot, bodyEl, trackStartEl: heroEl, lerpFactor: 0.06 })
 
     const introP = document.querySelector('.intro-line')
     const middleLine = document.querySelector('.middle-line')
@@ -174,7 +182,7 @@ class CodePanel extends HTMLElement {
     function showListView() {
       layoutDebugMark('code:show-list-view')
       listWrap.hidden = false
-      articleRoot.hidden = true
+      articleWrap.hidden = true
       bodyEl.removeAttribute('aria-busy')
       bodyEl.innerHTML = ''
       titleEl.textContent = ''
@@ -211,7 +219,7 @@ class CodePanel extends HTMLElement {
     function showArticleView() {
       layoutDebugMark('code:show-article-view')
       listWrap.hidden = true
-      articleRoot.hidden = false
+      articleWrap.hidden = false
       scrollCodePanelToTop()
       backBtn.focus({ preventScroll: true })
       middleLine?.classList.add('blog-article--exit-down')
@@ -243,6 +251,7 @@ class CodePanel extends HTMLElement {
         }
         bottomLine.addEventListener('transitionend', bottomLineExitHandler)
       }
+      requestAnimationFrame(updateScrollbar)
     }
 
     function showProjectError(message) {

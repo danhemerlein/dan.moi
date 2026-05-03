@@ -31,6 +31,7 @@
           <p class="body-text intro-line">
             Dan Hemerlein is a reader first and a
             <dropdown-trigger
+              class="middle-line-mobile-margin"
               for="blog"
               bg="var(--color-mint)"
               bg-open="var(--color-lime)"
@@ -40,7 +41,9 @@
             second.
           </p>
           <dropdown-panel id="blog" variant="scroll">
-            <blog-panel class="flex flex-col flex-1 min-h-0 min-w-0 w-full max-w-full overflow-hidden"></blog-panel>
+            <blog-panel
+              class="flex flex-col flex-1 min-h-0 min-w-0 w-full max-w-full overflow-hidden"
+            ></blog-panel>
           </dropdown-panel>
           <p class="body-text middle-line">
             He also
@@ -58,10 +61,9 @@
               body-bg="var(--color-azure-soft)"
               >makes music,</dropdown-trigger
             >
-            <span class="middle-line-mobile-margin">
-             and
-            </span>
+            and
             <dropdown-trigger
+              class="middle-line-mobile-margin"
               for="collects-moods"
               bg="var(--color-aqua)"
               bg-open="var(--color-cyan)"

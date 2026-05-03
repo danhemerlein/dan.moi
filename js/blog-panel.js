@@ -2,6 +2,7 @@ import { documentToHtmlString } from 'https://esm.sh/@contentful/rich-text-html-
 import { escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
 import { createBlogPostMetaElement } from './blog-utils.js'
 import { CLOSE_SVG, ARTICLE_BODY_SKELETON_HTML } from './constants.js'
+import { initScrollbar } from './scrollbar.js'
 
 function layoutDebugMark(name, detail) {
   window.__layoutDebugMark?.(name, detail)
@@ -138,20 +139,23 @@ const PANEL_HTML = `
         class="panel-scroll__list-footer__status uppercase m-0"
       ></p>
     </div>
-    <div id="blog-post-article" class="panel-scroll__article flex flex-col flex-1 min-h-0" hidden>
-      <button
-        type="button"
-        id="blog-post-back"
-        class="panel-detail__back cursor-pointer"
-      >
-        ${CLOSE_SVG}
-      </button>
-      <h2 id="blog-post-title" class="article-title"></h2>
-      <div id="blog-post-meta" hidden></div>
-      <article
-        id="blog-post-body"
-        class="article-body"
-      ></article>
+    <div id="blog-post-article-wrap" class="panel-scroll__article-wrap relative flex flex-col flex-1 min-h-0" hidden>
+      <div id="blog-post-article" class="panel-scroll__article flex flex-col flex-1 min-h-0">
+        <button
+          type="button"
+          id="blog-post-back"
+          class="panel-detail__back cursor-pointer"
+        >
+          ${CLOSE_SVG}
+        </button>
+        <h2 id="blog-post-title" class="article-title"></h2>
+        <div id="blog-post-meta" hidden></div>
+        <article
+          id="blog-post-body"
+          class="article-body"
+        ></article>
+      </div>
+      <div class="panel-scroll__custom-bar-thumb" aria-hidden="true"></div>
     </div>
   </div>
 `
@@ -172,11 +176,13 @@ class BlogPanel extends HTMLElement {
     const pageStatusEl = this.querySelector('#blog-posts-page-status')
     const loadSentinel = this.querySelector('#blog-posts-load-sentinel')
     const listWrap = this.querySelector('#blog-posts-list-wrap')
+    const articleWrap = this.querySelector('#blog-post-article-wrap')
     const articleRoot = this.querySelector('#blog-post-article')
     const backBtn = this.querySelector('#blog-post-back')
     const titleEl = this.querySelector('#blog-post-title')
     const metaEl = this.querySelector('#blog-post-meta')
     const bodyEl = this.querySelector('#blog-post-body')
+    const scrollbarThumb = this.querySelector('.panel-scroll__custom-bar-thumb')
 
     const introP = document.querySelector('.intro-line')
     const middleLine = document.querySelector('.middle-line')
@@ -187,6 +193,7 @@ class BlogPanel extends HTMLElement {
       !panel ||
       !ul ||
       !listWrap ||
+      !articleWrap ||
       !articleRoot ||
       !backBtn ||
       !titleEl ||
@@ -197,6 +204,8 @@ class BlogPanel extends HTMLElement {
     }
 
     layoutDebugMark('blog:panel-init')
+
+    const { updateScrollbar } = initScrollbar({ articleWrap, articleRoot, bodyEl })
 
     let blogPostListItems = []
     let yearFilterReady = false
@@ -225,7 +234,7 @@ class BlogPanel extends HTMLElement {
 
       if (total === 0) {
         if (yearStr) {
-          listFooter.hidden = !articleRoot.hidden
+          listFooter.hidden = !articleWrap.hidden
           pageStatusEl.textContent = `${formatPostCount(0)} in ${yearStr}`
         } else {
           listFooter.hidden = true
@@ -234,7 +243,7 @@ class BlogPanel extends HTMLElement {
         return
       }
 
-      listFooter.hidden = !articleRoot.hidden
+      listFooter.hidden = !articleWrap.hidden
 
       if (yearStr) {
         pageStatusEl.textContent = `${formatPostCount(total)} in ${yearStr}`
@@ -306,7 +315,7 @@ class BlogPanel extends HTMLElement {
     function showListView() {
       layoutDebugMark('blog:show-list-view')
       listWrap.hidden = false
-      articleRoot.hidden = true
+      articleWrap.hidden = true
       bodyEl.removeAttribute('aria-busy')
       bodyEl.innerHTML = ''
       titleEl.textContent = ''
@@ -341,7 +350,7 @@ class BlogPanel extends HTMLElement {
     function showArticleView() {
       layoutDebugMark('blog:show-article-view')
       listWrap.hidden = true
-      articleRoot.hidden = false
+      articleWrap.hidden = false
       if (yearFilterEl) yearFilterEl.hidden = true
       if (listFooter) listFooter.hidden = true
       scrollBlogPanelToTop()
@@ -373,6 +382,7 @@ class BlogPanel extends HTMLElement {
         }
         bottomLine.addEventListener('transitionend', bottomLineExitHandler)
       }
+      requestAnimationFrame(updateScrollbar)
     }
 
     async function openPostByHandle(handle) {
