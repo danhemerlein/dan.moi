@@ -139,6 +139,50 @@ image-element.image-dock.image-dock--exit {
   transform: translate3d(0, calc(-100vh - 100%), 0);
 }
 
+video-element.hero-image {
+  width: 70%;
+  transition: transform 600ms cubic-bezier(0.45, 0, 0.55, 1);
+  transform: translate3d(0, 0, 0);
+}
+
+video-element.hero-image.hero-image--exit {
+  transform: translate3d(0, calc(100vh + 100%), 0);
+}
+
+video-element.image-dock {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 30;
+  margin-top: 0;
+  transform: translate3d(0, calc(-100vh - 100%), 0);
+  opacity: 0;
+  visibility: hidden;
+}
+
+video-element.image-dock.image-dock--prep-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+video-element.image-dock.image-dock--prep-open.image-dock--open-anim {
+  transition: transform 480ms cubic-bezier(0.45, 0, 0.55, 1);
+  transform: translate3d(0, 0, 0);
+}
+
+video-element.image-dock.image-dock--shown:not(.image-dock--exit) {
+  visibility: visible;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+video-element.image-dock.image-dock--exit {
+  visibility: visible;
+  opacity: 1;
+  transition: transform 460ms cubic-bezier(0.45, 0, 0.55, 1);
+  transform: translate3d(0, calc(-100vh - 100%), 0);
+}
+
 /* Text elements that slide away when a blog article is open. */
 .intro-line,
 .middle-line,
@@ -159,6 +203,10 @@ image-element.image-dock.image-dock--exit {
 }
 
 @media (min-width: 768px) {
+  video-element.hero-image {
+    width: 35%;
+  }
+
   .middle-line {
     margin-top: 0.75rem;
   }

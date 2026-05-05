@@ -21,7 +21,24 @@
     <link rel="stylesheet" href="/css/code.css" />
     <link rel="stylesheet" href="/css/music-panel.css" />
     <link rel="stylesheet" href="/css/moodboard-panel.css" />
-    <title>dan hemerlein</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <title>dan.moi</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="dan hemerlein" />
+    <meta property="og:description" content="Dan Hemerlein's website." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dan.moi" />
+    <meta property="og:image" content="https://dan.moi/assets/headshot.jpg" />
+    <meta property="og:image:alt" content="Dan Hemerlein" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="dan hemerlein" />
+    <meta name="twitter:description" content="Dan Hemerlein's website." />
+    <meta name="twitter:image" content="https://dan.moi/assets/headshot.jpg" />
+    <meta name="twitter:image:alt" content="Dan Hemerlein" />
+
     <script src="/contentful-env.js"></script>
   </head>
   <body>
@@ -88,23 +105,23 @@
             Based in nyc and it's super trill.
           </p>
         </div>
-        <image-element
+        <video-element
           class="hero-image"
-          src="/assets/fonts/temporary-heart.png"
-          alt="temporary heart"
-        ></image-element>
-        <image-element
-          class="image-dock pointer-events-none"
-          src="/assets/fonts/temporary-heart.png"
-          alt="temporary heart"
+          src="/assets/ufo-optimized.mov"
+          show-controls
+        ></video-element>
+        <video-element
+          class="image-dock"
+          src="/assets/ufo-optimized.mov"
           aria-hidden="true"
-        ></image-element>
+        ></video-element>
       </div>
     </main>
     <script src="/js/layout-debug.js" defer></script>
     <script src="/js/dropdown.js" defer></script>
     <script src="/js/accessible-select.js" defer></script>
     <script src="/js/image.js" defer></script>
+    <script src="/js/video.js" defer></script>
     <script src="/js/dropdown-image.js" defer></script>
     <script src="/js/contentful-graphql.js" defer></script>
     <script type="module" src="/js/blog-panel.js"></script>

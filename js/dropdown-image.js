@@ -18,8 +18,8 @@
   }
 
   function getElements() {
-    const hero = document.querySelector("image-element.hero-image");
-    const dock = document.querySelector("image-element.image-dock");
+    const hero = document.querySelector("video-element.hero-image, image-element.hero-image");
+    const dock = document.querySelector("video-element.image-dock, image-element.image-dock");
     return hero instanceof HTMLElement && dock instanceof HTMLElement
       ? { hero, dock }
       : null;
