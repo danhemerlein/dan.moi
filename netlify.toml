@@ -2,6 +2,9 @@
   publish = "."
   edge_functions = "netlify/edge-functions"
 
+[functions]
+  included_files = ["css/*.css"]
+
 [[edge_functions]]
   function = "og-image"
   path = "/*"
