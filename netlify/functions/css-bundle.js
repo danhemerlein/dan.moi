@@ -37,7 +37,7 @@ export default async function handler() {
     status: 200,
     headers: {
       "Content-Type": "text/css; charset=utf-8",
-      "Cache-Control": "public, max-age=31536000, immutable",
+      "Cache-Control": "no-cache",
     },
   });
 }

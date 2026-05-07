@@ -1,5 +1,10 @@
 [build]
   publish = "."
+  edge_functions = "netlify/edge-functions"
+
+[[edge_functions]]
+  function = "og-image"
+  path = "/*"
 
 [[redirects]]
   from = "/contentful-env.js"
