@@ -1,9 +1,19 @@
 [build]
   publish = "."
+  edge_functions = "netlify/edge-functions"
+
+[[edge_functions]]
+  function = "og-image"
+  path = "/*"
 
 [[redirects]]
   from = "/contentful-env.js"
   to = "/.netlify/functions/contentful-env"
+  status = 200
+
+[[redirects]]
+  from = "/css/bundle.css"
+  to = "/.netlify/functions/css-bundle"
   status = 200
 
 [[redirects]]

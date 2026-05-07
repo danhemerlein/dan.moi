@@ -1,4 +1,5 @@
 ---
+name: css
 description: CSS conventions and rules for this project. Use when writing, editing, or reviewing any CSS — including utility class usage, shadow DOM component styles, breakpoints, and enforced rules.
 ---
 
@@ -18,6 +19,22 @@ Web components that use shadow DOM (e.g. `ImageElement`, `AccessibleSelect`) are
 - Desktop: 768px and above (`@media (min-width: 768px)`)
 
 CSS files are mobile-first: base styles (no media query) target mobile; desktop overrides go at the bottom of the file inside `@media (min-width: 768px)` blocks.
+
+## Bundling and minification
+
+All CSS files are concatenated and minified at request time — no physical bundle file exists in the repo. The individual files in `css/` are the source of truth.
+
+**Dev:** `serve.mjs` serves `/css/bundle.css` by reading and concatenating the files listed in `CSS_BUNDLE_FILES` (in order), then running them through `minifyCSS`.
+
+**Production (Netlify):** `netlify/functions/css-bundle.js` does the same, routed via the `/css/bundle.css` redirect in `netlify.toml`.
+
+`index.html` loads only `/css/bundle.css` — do not add individual `<link>` tags for CSS files there.
+
+When adding a new CSS file:
+1. Create it in `css/`
+2. Add its filename to `CSS_BUNDLE_FILES` in both `serve.mjs` and `netlify/functions/css-bundle.js` (order matters — put it after any files it depends on)
+
+The `minifyCSS` function strips comments, collapses whitespace, removes spaces around `{ } ; : , > ~ +`, and drops trailing semicolons. Avoid patterns it can't handle safely: whitespace inside `content` strings with multiple spaces, or comments used as IE hacks.
 
 ## Rules (enforced)
 

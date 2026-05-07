@@ -60,8 +60,44 @@ function safeFilePath(pathname) {
   return full;
 }
 
+function minifyCSS(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, "")     // strip comments
+    .replace(/\s+/g, " ")                  // collapse whitespace
+    .replace(/\s*([{};:,>~+])\s*/g, "$1") // remove spaces around special chars
+    .replace(/;}/g, "}")                   // drop trailing semicolons
+    .trim();
+}
+
+const CSS_BUNDLE_FILES = [
+  "reset.css",
+  "css-utils.css",
+  "fonts.css",
+  "index.css",
+  "panel-list.css",
+  "panel-scroll.css",
+  "skeleton.css",
+  "article.css",
+  "blog.css",
+  "code.css",
+  "music-panel.css",
+  "moodboard-panel.css",
+];
+
 const server = http.createServer((req, res) => {
   const pathname = new URL(req.url ?? "/", "http://localhost").pathname;
+
+  if (pathname === "/css/bundle.css") {
+    const cssDir = path.join(ROOT, "css");
+    const bundle = minifyCSS(
+      CSS_BUNDLE_FILES.map((file) =>
+        fs.readFileSync(path.join(cssDir, file), "utf8")
+      ).join("\n")
+    );
+    res.writeHead(200, { "Content-Type": "text/css; charset=utf-8" });
+    res.end(bundle);
+    return;
+  }
 
   if (pathname === "/contentful-env.js") {
     const spaceId = env.CONTENTFUL_SPACE_ID ?? "";
