@@ -1,5 +1,4 @@
-import { documentToHtmlString } from 'https://esm.sh/@contentful/rich-text-html-renderer@16.3.0'
-import { escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
+import { documentToHtmlString, escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
 import { createBlogPostMetaElement } from './blog-utils.js'
 import { CLOSE_SVG, ARTICLE_BODY_SKELETON_HTML } from './constants.js'
 import { initScrollbar } from './scrollbar.js'

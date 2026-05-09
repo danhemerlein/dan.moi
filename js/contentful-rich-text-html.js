@@ -1,7 +1,59 @@
-import {
-  BLOCKS,
-  INLINES,
-} from 'https://esm.sh/@contentful/rich-text-types@16.0.0'
+const BLOCKS = {
+  DOCUMENT: 'document',
+  PARAGRAPH: 'paragraph',
+  HEADING_1: 'heading-1',
+  HEADING_2: 'heading-2',
+  HEADING_3: 'heading-3',
+  HEADING_4: 'heading-4',
+  HEADING_5: 'heading-5',
+  HEADING_6: 'heading-6',
+  UL_LIST: 'unordered-list',
+  OL_LIST: 'ordered-list',
+  LIST_ITEM: 'list-item',
+  HR: 'hr',
+  QUOTE: 'blockquote',
+  EMBEDDED_ENTRY: 'embedded-entry-block',
+  EMBEDDED_ASSET: 'embedded-asset-block',
+  TABLE: 'table',
+  TABLE_ROW: 'table-row',
+  TABLE_CELL: 'table-cell',
+  TABLE_HEADER_CELL: 'table-header-cell',
+}
+
+const INLINES = {
+  HYPERLINK: 'hyperlink',
+  ENTRY_HYPERLINK: 'entry-hyperlink',
+  ASSET_HYPERLINK: 'asset-hyperlink',
+  EMBEDDED_ENTRY: 'embedded-entry-inline',
+}
+
+const BLOCK_TAGS = {
+  paragraph: 'p',
+  'heading-1': 'h1',
+  'heading-2': 'h2',
+  'heading-3': 'h3',
+  'heading-4': 'h4',
+  'heading-5': 'h5',
+  'heading-6': 'h6',
+  'unordered-list': 'ul',
+  'ordered-list': 'ol',
+  'list-item': 'li',
+  blockquote: 'blockquote',
+  table: 'table',
+  'table-row': 'tr',
+  'table-cell': 'td',
+  'table-header-cell': 'th',
+}
+
+const MARK_TAGS = {
+  bold: ['<b>', '</b>'],
+  italic: ['<i>', '</i>'],
+  underline: ['<u>', '</u>'],
+  code: ['<code>', '</code>'],
+  strikethrough: ['<s>', '</s>'],
+  superscript: ['<sup>', '</sup>'],
+  subscript: ['<sub>', '</sub>'],
+}
 
 export function escapeHtml(s) {
   return String(s)
@@ -9,6 +61,50 @@ export function escapeHtml(s) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
+}
+
+function renderText(node) {
+  let s = escapeHtml(node.value ?? '')
+  for (const mark of node.marks ?? []) {
+    const tags = MARK_TAGS[mark.type]
+    if (tags) s = tags[0] + s + tags[1]
+  }
+  return s
+}
+
+function defaultRenderNode(node, children) {
+  switch (node.nodeType) {
+    case 'document':
+      return children()
+    case 'hr':
+      return '<hr/>'
+    case INLINES.HYPERLINK: {
+      const href = escapeHtml(node.data?.uri ?? '')
+      return `<a href="${href}">${children()}</a>`
+    }
+    default: {
+      const tag = BLOCK_TAGS[node.nodeType]
+      if (tag) return `<${tag}>${children()}</${tag}>`
+      return children()
+    }
+  }
+}
+
+function nodeToHtml(node, renderNode) {
+  if (node.nodeType === 'text') return renderText(node)
+
+  const next = (contentNodes) =>
+    (contentNodes ?? []).map((child) => nodeToHtml(child, renderNode)).join('')
+
+  const custom = renderNode[node.nodeType]
+  if (custom) return custom(node, next)
+
+  return defaultRenderNode(node, () => next(node.content ?? []))
+}
+
+export function documentToHtmlString(doc, options = {}) {
+  if (!doc) return ''
+  return nodeToHtml(doc, options.renderNode ?? {})
 }
 
 export function buildAssetEntryMaps(links) {
