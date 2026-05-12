@@ -64,7 +64,7 @@ function minifyCSS(css) {
   return css
     .replace(/\/\*[\s\S]*?\*\//g, "")     // strip comments
     .replace(/\s+/g, " ")                  // collapse whitespace
-    .replace(/\s*([{};:,>~+])\s*/g, "$1") // remove spaces around special chars
+    .replace(/\s*([{};:,>~])\s*/g, "$1")  // remove spaces around special chars (not + to preserve calc() operators)
     .replace(/;}/g, "}")                   // drop trailing semicolons
     .trim();
 }
