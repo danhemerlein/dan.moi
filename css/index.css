@@ -202,6 +202,13 @@ video-element.image-dock.image-dock--exit {
   opacity: 0;
 }
 
+@media (max-width: 767px) {
+  image-element.hero-image.hero-image--exit,
+  video-element.hero-image.hero-image--exit {
+    transform: translate3d(0, calc(100vh + 200%), 0);
+  }
+}
+
 @media (min-width: 768px) {
   video-element.hero-image {
     width: 35%;
