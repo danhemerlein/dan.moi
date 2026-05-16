@@ -93,7 +93,7 @@
       this._btn    = this.shadowRoot.querySelector('button')
 
       this._btn.addEventListener('click', () => {
-        const next = !this._playing
+        const next = this._video.paused
         document.querySelectorAll('video-element').forEach(el => el.setPlaying(next))
         this._btn.innerHTML = next ? PAUSE_ICON : PLAY_ICON
         this._btn.setAttribute('aria-label', next ? 'Pause video' : 'Play video')
