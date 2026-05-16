@@ -84,7 +84,7 @@ blog-panel:not(:defined) {
 .middle-line-mobile-margin,
 .middle-line-mobile-margin--note-taker {
   display: inline-block;
-  margin-top: 0.3rem;
+  margin-top: 1rem;
 }
 
 /* Hero (bottom) ↔ dock (top-left) when any dropdown is open.
