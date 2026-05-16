@@ -47,6 +47,8 @@ const MIME = {
   ".woff2": "font/woff2",
   ".woff": "font/woff",
   ".ttf": "font/ttf",
+  ".webm": "video/webm",
+  ".mp4": "video/mp4",
 };
 
 function safeFilePath(pathname) {
