@@ -116,3 +116,9 @@ body {
     font-size: 1.5rem;
   }
 }
+
+.text-display {
+  font-family: var(--font-hypertext-bold);
+  font-size: 9.75rem;
+  line-height: 1;
+}

@@ -24,6 +24,7 @@ dropdown-trigger:not(:defined) {
   display: inline;
 }
 
+
 image-element:not(:defined) {
   display: block;
   min-height: 0;
@@ -52,6 +53,16 @@ blog-panel:not(:defined) {
   transition: padding 360ms cubic-bezier(0.45, 0, 0.55, 1);
 }
 
+.container--404 {
+  padding-top: 5rem;
+}
+
+@media (min-width: 768px) {
+  .container--404 {
+    padding-top: 3rem;
+  }
+}
+
 .container.article-open {
   padding-top: 2rem;
 }
@@ -65,10 +76,6 @@ blog-panel:not(:defined) {
   align-self: center;
   /* Isolate subtree layout from hero/dock and late async updates where possible */
   contain: layout;
-}
-
-.paragraph-container p {
-  text-align: left;
 }
 
 .middle-line {
@@ -187,6 +194,7 @@ video-element.image-dock.image-dock--exit {
 .intro-line,
 .middle-line,
 .bottom-line {
+  text-align: left;
   transition:
     transform 320ms cubic-bezier(0.45, 0, 0.55, 1),
     opacity 240ms ease;
