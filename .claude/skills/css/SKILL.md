@@ -5,9 +5,74 @@ description: CSS conventions and rules for this project. Use when writing, editi
 
 # CSS Architecture
 
+## When to use this skill
+
+Invoke this skill any time you are writing or editing HTML or CSS in this project. The utility class system and enforced rules below apply to all HTML templates and stylesheets.
+
 ## Composable utility classes (default approach)
 
-Prefer composable utility classes over component-specific CSS. Common utilities (typography, spacing, layout, visibility, etc.) live in shared CSS files and are composed directly in HTML. Only write a new rule in a component stylesheet when a utility class cannot do the job — for example, when you need higher specificity to override a base style, or when the style is truly unique to one component and has no reuse value.
+Prefer composable utility classes over component-specific CSS. Utility classes live in `css/css-utils.css` and are composed directly in HTML. Only write a new rule in a component stylesheet when no utility can do the job — for example, when you need a unique value not in the scale, a complex selector, or a property not covered by any utility.
+
+**Available utility classes** (from `css/css-utils.css`):
+
+| Class | Property |
+|---|---|
+| `.flex` | `display: flex` |
+| `.flex-col` | `flex-direction: column` |
+| `.flex-row` | `flex-direction: row` |
+| `.flex-1` | `flex: 1 1 auto` |
+| `.flex-shrink-0` | `flex-shrink: 0` |
+| `.flex-wrap` | `flex-wrap: wrap` |
+| `.flex-nowrap` | `flex-wrap: nowrap` |
+| `.items-center` | `align-items: center` |
+| `.items-baseline` | `align-items: baseline` |
+| `.justify-center` | `justify-content: center` |
+| `.justify-between` | `justify-content: space-between` |
+| `.gap-0` | `gap: 0` |
+| `.gap-1` | `gap: 0.25rem` |
+| `.gap-2` | `gap: 0.5rem` |
+| `.gap-3` | `gap: 0.75rem` |
+| `.gap-4` | `gap: 1rem` |
+| `.m-0` | `margin: 0` |
+| `.mt-2` | `margin-top: 0.5rem` |
+| `.mx-auto` | `margin-left/right: auto` |
+| `.ml-auto` | `margin-left: auto` |
+| `.p-0` | `padding: 0` |
+| `.w-full` | `width: 100%` |
+| `.w-auto` | `width: auto` |
+| `.h-full` | `height: 100%` |
+| `.h-auto` | `height: auto` |
+| `.max-w-full` | `max-width: 100%` |
+| `.min-w-0` | `min-width: 0` |
+| `.min-h-0` | `min-height: 0` |
+| `.overflow-hidden` | `overflow: hidden` |
+| `.object-cover` | `object-fit: cover` |
+| `.rounded-sm` | `border-radius: 0.35rem` |
+| `.block` | `display: block` |
+| `.grid` | `display: grid` |
+| `.hidden` | `display: none` |
+| `.uppercase` | `text-transform: uppercase` |
+| `.lowercase` | `text-transform: lowercase` |
+| `.text-center` | `text-align: center` |
+| `.text-left` | `text-align: left` |
+| `.text-right` | `text-align: right` |
+| `.font-normal` | `font-weight: 400` |
+| `.font-style-normal` | `font-style: normal` |
+| `.align-middle` | `vertical-align: middle` |
+| `.list-none` | `list-style: none` |
+| `.cursor-pointer` | `cursor: pointer` |
+| `.pointer-events-none` | `pointer-events: none` |
+
+**Responsive variants** (apply at `min-width: 768px`):
+
+| Class | Property |
+|---|---|
+| `.lg-flex` | `display: flex` |
+| `.lg-flex-col` | `flex-direction: column` |
+| `.lg-flex-row` | `flex-direction: row` |
+| `.lg-block` | `display: block` |
+| `.lg-hidden` | `display: none` |
+| `.lg-gap-2` | `gap: 0.5rem` |
 
 ## Shadow DOM components
 

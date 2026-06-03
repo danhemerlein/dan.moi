@@ -1,0 +1,288 @@
+html,
+body {
+  height: auto;
+  max-height: none;
+  overflow: auto;
+}
+
+.ds-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+@media (min-width: 768px) {
+  .ds-page {
+    grid-template-columns: 10rem 1fr;
+    gap: 3rem;
+    padding: 3rem 2rem 6rem;
+    align-items: start;
+  }
+}
+
+/* ─── Sidebar nav ───────────────────────────────────── */
+
+.ds-nav {
+  order: 2;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-ink-10);
+}
+
+@media (min-width: 768px) {
+  .ds-nav {
+    order: 0;
+    position: sticky;
+    top: 3rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+/* .ds-nav__list — flex flex-col gap-1 in HTML */
+
+.ds-nav__item {
+  gap: 0.125rem;
+  /* display flex-col in HTML */
+}
+
+.ds-nav__link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--color-ink);
+  padding: 0.25rem 0;
+  /* uppercase in HTML */
+}
+
+.ds-nav__link:hover {
+  color: var(--color-stone-gray);
+}
+
+.ds-nav__sublist {
+  gap: 0.125rem;
+  padding-left: 0.75rem;
+  margin-bottom: 0.5rem;
+  /* flex flex-col in HTML */
+}
+
+.ds-nav__sublink {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--color-stone-gray);
+  padding: 0.125rem 0;
+  /* uppercase in HTML */
+}
+
+.ds-nav__sublink:hover {
+  color: var(--color-ink);
+}
+
+/* ─── Content ───────────────────────────────────────── */
+/* .ds-content — min-w-0 in HTML */
+
+.ds-header {
+  margin-bottom: 4rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-ink-14);
+}
+
+.ds-title {
+  font-family: var(--font-hypertext-bold);
+  font-size: 2.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+/* ─── Sections ─────────────────────────────────────── */
+
+.ds-section {
+  margin-bottom: 5rem;
+}
+
+.ds-section__heading {
+  font-family: var(--font-hypertext-bold);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  margin-bottom: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-ink-10);
+}
+
+/* ─── Token groups ──────────────────────────────────── */
+
+.ds-token-group {
+  margin-bottom: 2rem;
+}
+
+.ds-token-group__name {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--color-stone-gray);
+  margin-bottom: 0.75rem;
+  /* uppercase in HTML */
+}
+
+/* ─── Color swatches ────────────────────────────────── */
+
+.ds-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .ds-swatch-grid {
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  }
+}
+
+/* .ds-swatch — flex flex-col gap-1 in HTML */
+
+.ds-swatch__preview {
+  height: 3.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-ink-10);
+}
+
+.ds-swatch__name {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  word-break: break-all;
+}
+
+.ds-swatch__value {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.2;
+  color: var(--color-stone-gray);
+}
+
+/* Base palette */
+.ds-swatch[data-token='ink'] .ds-swatch__preview { background-color: var(--color-ink); }
+.ds-swatch[data-token='mint'] .ds-swatch__preview { background-color: var(--color-mint); }
+.ds-swatch[data-token='lavender'] .ds-swatch__preview { background-color: var(--color-lavender); }
+.ds-swatch[data-token='sky'] .ds-swatch__preview { background-color: var(--color-sky); }
+.ds-swatch[data-token='aqua'] .ds-swatch__preview { background-color: var(--color-aqua); }
+.ds-swatch[data-token='spring'] .ds-swatch__preview { background-color: var(--color-spring); }
+.ds-swatch[data-token='lime'] .ds-swatch__preview { background-color: var(--color-lime); }
+.ds-swatch[data-token='orchid'] .ds-swatch__preview { background-color: var(--color-orchid); }
+.ds-swatch[data-token='azure'] .ds-swatch__preview { background-color: var(--color-azure); }
+.ds-swatch[data-token='cyan'] .ds-swatch__preview { background-color: var(--color-cyan); }
+.ds-swatch[data-token='white'] .ds-swatch__preview { background-color: var(--color-white); }
+
+/* Soft / cream */
+.ds-swatch[data-token='orchid-soft'] .ds-swatch__preview { background-color: var(--color-orchid-soft); }
+.ds-swatch[data-token='azure-soft'] .ds-swatch__preview { background-color: var(--color-azure-soft); }
+.ds-swatch[data-token='cyan-soft'] .ds-swatch__preview { background-color: var(--color-cyan-soft); }
+.ds-swatch[data-token='mint-cream'] .ds-swatch__preview { background-color: var(--color-mint-cream); }
+.ds-swatch[data-token='lavender-cream'] .ds-swatch__preview { background-color: var(--color-lavender-cream); }
+.ds-swatch[data-token='azure-cream'] .ds-swatch__preview { background-color: var(--color-azure-cream); }
+
+/* Border / interactive */
+.ds-swatch[data-token='mint-border'] .ds-swatch__preview { background-color: var(--color-mint-border); }
+.ds-swatch[data-token='mint-active'] .ds-swatch__preview { background-color: var(--color-mint-active); }
+.ds-swatch[data-token='sage'] .ds-swatch__preview { background-color: var(--color-sage); }
+.ds-swatch[data-token='sage-border'] .ds-swatch__preview { background-color: var(--color-sage-border); }
+.ds-swatch[data-token='wisteria'] .ds-swatch__preview { background-color: var(--color-wisteria); }
+.ds-swatch[data-token='wisteria-border'] .ds-swatch__preview { background-color: var(--color-wisteria-border); }
+.ds-swatch[data-token='lilac-border'] .ds-swatch__preview { background-color: var(--color-lilac-border); }
+.ds-swatch[data-token='sky-border'] .ds-swatch__preview { background-color: var(--color-sky-border); }
+
+/* Neutral */
+.ds-swatch[data-token='stone-gray'] .ds-swatch__preview { background-color: var(--color-stone-gray); }
+.ds-swatch[data-token='gray-light'] .ds-swatch__preview { background-color: var(--color-gray-light); }
+
+/* Ink opacity */
+.ds-swatch[data-token='ink-6'] .ds-swatch__preview { background-color: var(--color-ink-6); }
+.ds-swatch[data-token='ink-10'] .ds-swatch__preview { background-color: var(--color-ink-10); }
+.ds-swatch[data-token='ink-14'] .ds-swatch__preview { background-color: var(--color-ink-14); }
+.ds-swatch[data-token='ink-18'] .ds-swatch__preview { background-color: var(--color-ink-18); }
+
+/* ─── Typography specimens ──────────────────────────── */
+/* .ds-type-specimens — flex flex-col gap-0 in HTML */
+
+.ds-type-specimen {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--color-ink-6);
+}
+
+.ds-type-specimen__label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--color-stone-gray);
+  margin-bottom: 1rem;
+  /* uppercase in HTML */
+}
+
+.ds-type-specimen__display {
+  /* block in HTML */
+  font-size: 3.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  margin-bottom: 0.5rem;
+}
+
+.ds-type-specimen__body {
+  /* block in HTML */
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+/* font-style/font-weight kept in CSS — suppress browser synthesis of custom font faces */
+.ds-type-specimen--regular .ds-type-specimen__display,
+.ds-type-specimen--regular .ds-type-specimen__body {
+  font-family: var(--font-hypertext);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.ds-type-specimen--italic .ds-type-specimen__display,
+.ds-type-specimen--italic .ds-type-specimen__body {
+  font-family: var(--font-hypertext-italic);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.ds-type-specimen--bold .ds-type-specimen__display,
+.ds-type-specimen--bold .ds-type-specimen__body {
+  font-family: var(--font-hypertext-bold);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.ds-type-specimen--bold-italic .ds-type-specimen__display,
+.ds-type-specimen--bold-italic .ds-type-specimen__body {
+  font-family: var(--font-hypertext-bold-italic);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.ds-type-specimen--mono .ds-type-specimen__display,
+.ds-type-specimen--mono .ds-type-specimen__body {
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
