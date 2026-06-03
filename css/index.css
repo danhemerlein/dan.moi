@@ -48,7 +48,7 @@ blog-panel:not(:defined) {
 }
 
 .container {
-  padding: 7.5rem 1rem;
+  padding: 6rem 1rem;
   transition: padding 360ms cubic-bezier(0.45, 0, 0.55, 1);
 }
 
@@ -105,7 +105,7 @@ image-element.hero-image.hero-image--exit {
 
 image-element.image-dock {
   position: fixed;
-  top: 1.25rem;
+  top: 0.5rem;
   left: 1.25rem;
   z-index: 30;
   margin-top: 0;
@@ -151,7 +151,7 @@ video-element.hero-image.hero-image--exit {
 
 video-element.image-dock {
   position: fixed;
-  top: 1.25rem;
+  top: 0.5rem;
   left: 1.25rem;
   z-index: 30;
   margin-top: 0;
@@ -219,6 +219,8 @@ video-element.image-dock.image-dock--exit {
   }
 
   .container {
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
     padding-left: 0;
     padding-right: 0;
   }
@@ -226,6 +228,11 @@ video-element.image-dock.image-dock--exit {
   .container.moodboard-open {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  image-element.image-dock,
+  video-element.image-dock {
+    top: 1.25rem;
   }
 
   image-element.hero-image {

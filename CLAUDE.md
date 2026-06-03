@@ -23,6 +23,8 @@ Serves on port 3333 by default (override with `PORT` env var). Open `http://loca
 
 **No build step, no package manager.** This is a vanilla JS project — no npm, no bundler, no transpilation.
 
+**Target devices:** Development is on a MacBook Pro (desktop Safari + Chrome) and iPhone (iOS Safari). No Android or other mobile browsers to support.
+
 **Environment:** Contentful credentials go in `.env` (see `.env.example`. The server reads these and exposes them to the browser at runtime via the `/contentful-env.js` endpoint as `window.CONTENTFUL_CONFIG`.
 
 ## Architecture
