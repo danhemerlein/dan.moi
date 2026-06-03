@@ -51,6 +51,12 @@ All content comes from Contentful via GraphQL. Queries and fetch logic live in `
 
 Rich text from Contentful is rendered via `@contentful/rich-text-html-renderer` (loaded from ESM CDN, no local install).
 
+### CSS conventions
+
+Never write inline styles (`style="..."`). Always use a CSS class in the appropriate `css/` file.
+
+Never use `px` units in CSS. All units must be relative — use `rem` for sizes and spacing, `em` where relative-to-parent sizing is appropriate, `%` or viewport units for layout.
+
 ### CSS Architecture
 
 Each component has its own CSS file in `css/`. `css/reset.css` establishes global CSS custom properties (`--color-*`) and base resets. Naming follows BEM-like conventions: `.panel-list__item`, `.blog-post__body`.
