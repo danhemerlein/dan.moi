@@ -5,7 +5,7 @@ dropdown-panel#blog {
 }
 
 dropdown-panel#blog.blog-panel--article {
-  --dropdown-scroll-max-height: calc(100vh - 4rem);
+  --dropdown-scroll-max-height: calc(100dvh - 4rem);
 }
 
 dropdown-panel#blog::part(panel) {
