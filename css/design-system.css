@@ -113,6 +113,25 @@ body {
   margin-bottom: 2rem;
 }
 
+.ds-type-columns {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .ds-type-columns {
+    flex-direction: row;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .ds-type-columns > .ds-token-group {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+}
+
 .ds-token-group__name {
   color: var(--color-stone-gray);
   margin-bottom: 0.75rem;
@@ -157,7 +176,11 @@ ds-color-swatch {
   margin: 0;
 }
 
-/* ─── Typography specimens ──────────────────────────── */
+/* ─── Typography scale + specimens ─────────────────── */
+
+.ds-type-scale__sample {
+  color: var(--color-ink);
+}
 /* .ds-type-specimens — flex flex-col gap-0 in HTML */
 
 .ds-type-specimen {
