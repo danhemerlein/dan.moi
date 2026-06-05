@@ -20,8 +20,9 @@
     <link rel="stylesheet" href="/css/bundle.css" />
     <link rel="stylesheet" href="/css/design-system.css" />
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-    <title>dan.moi</title>
+    <title>dan.moi - design system</title>
     <script src="/js/dropdown.js" defer></script>
+    <script src="/js/design-system.js" defer></script>
   </head>
   <body>
     <div class="ds-page">
@@ -64,10 +65,18 @@
             <a href="#components" class="ds-nav__link uppercase">components</a>
             <ul class="ds-nav__sublist flex flex-col">
               <li>
-                <a href="#component-dropdown-trigger" class="ds-nav__sublink uppercase">dropdown-trigger</a>
+                <a
+                  href="#component-dropdown-trigger"
+                  class="ds-nav__sublink uppercase"
+                  >dropdown-trigger</a
+                >
               </li>
               <li>
-                <a href="#component-dropdown-panel" class="ds-nav__sublink uppercase">dropdown-panel</a>
+                <a
+                  href="#component-dropdown-panel"
+                  class="ds-nav__sublink uppercase"
+                  >dropdown-panel</a
+                >
               </li>
             </ul>
           </li>
@@ -86,118 +95,29 @@
             <div class="ds-token-group" id="colors-base">
               <h3 class="ds-token-group__name uppercase">base</h3>
               <div class="ds-swatch-grid">
-                <div class="ds-swatch flex flex-col gap-1" data-token="ink">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-ink</span>
-                  <span class="ds-swatch__value">#1b1b1b</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="mint">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-mint</span>
-                  <span class="ds-swatch__value">#a4ecb0</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="lavender"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-lavender</span>
-                  <span class="ds-swatch__value">#ecd9f6</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="sky">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-sky</span>
-                  <span class="ds-swatch__value">#bddbff</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="aqua">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-aqua</span>
-                  <span class="ds-swatch__value">#d0f6fe</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="spring">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-spring</span>
-                  <span class="ds-swatch__value">#d2f7d8</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="lime">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-lime</span>
-                  <span class="ds-swatch__value">#0ff536</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="orchid">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-orchid</span>
-                  <span class="ds-swatch__value">#dda2fc</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="azure">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-azure</span>
-                  <span class="ds-swatch__value">#67acff</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="cyan">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-cyan</span>
-                  <span class="ds-swatch__value">#6bd8ef</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="white">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-white</span>
-                  <span class="ds-swatch__value">#ffffff</span>
-                </div>
+                <ds-color-swatch token="ink" value="#1b1b1b"></ds-color-swatch>
+                <ds-color-swatch token="mint" value="#a4ecb0"></ds-color-swatch>
+                <ds-color-swatch token="lavender" value="#ecd9f6"></ds-color-swatch>
+                <ds-color-swatch token="sky" value="#bddbff"></ds-color-swatch>
+                <ds-color-swatch token="aqua" value="#d0f6fe"></ds-color-swatch>
+                <ds-color-swatch token="spring" value="#d2f7d8"></ds-color-swatch>
+                <ds-color-swatch token="lime" value="#0ff536"></ds-color-swatch>
+                <ds-color-swatch token="orchid" value="#dda2fc"></ds-color-swatch>
+                <ds-color-swatch token="azure" value="#67acff"></ds-color-swatch>
+                <ds-color-swatch token="cyan" value="#6bd8ef"></ds-color-swatch>
+                <ds-color-swatch token="white" value="#ffffff"></ds-color-swatch>
               </div>
             </div>
 
             <div class="ds-token-group" id="colors-soft">
               <h3 class="ds-token-group__name uppercase">soft / cream</h3>
               <div class="ds-swatch-grid">
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="orchid-soft"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-orchid-soft</span>
-                  <span class="ds-swatch__value">#fcf6ff</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="azure-soft"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-azure-soft</span>
-                  <span class="ds-swatch__value">#e9f3ff</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="cyan-soft"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-cyan-soft</span>
-                  <span class="ds-swatch__value">#eafbff</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="mint-cream"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-mint-cream</span>
-                  <span class="ds-swatch__value">#f4fff6</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="lavender-cream"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-lavender-cream</span>
-                  <span class="ds-swatch__value">#fefbff</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="azure-cream"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-azure-cream</span>
-                  <span class="ds-swatch__value">#f9fbff</span>
-                </div>
+                <ds-color-swatch token="orchid-soft" value="#fcf6ff"></ds-color-swatch>
+                <ds-color-swatch token="azure-soft" value="#e9f3ff"></ds-color-swatch>
+                <ds-color-swatch token="cyan-soft" value="#eafbff"></ds-color-swatch>
+                <ds-color-swatch token="mint-cream" value="#f4fff6"></ds-color-swatch>
+                <ds-color-swatch token="lavender-cream" value="#fefbff"></ds-color-swatch>
+                <ds-color-swatch token="azure-cream" value="#f9fbff"></ds-color-swatch>
               </div>
             </div>
 
@@ -206,100 +126,29 @@
                 border / interactive
               </h3>
               <div class="ds-swatch-grid">
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="mint-border"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-mint-border</span>
-                  <span class="ds-swatch__value">#c4e9ca</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="mint-active"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-mint-active</span>
-                  <span class="ds-swatch__value">#ddf0e0</span>
-                </div>
-                <div class="ds-swatch flex flex-col gap-1" data-token="sage">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-sage</span>
-                  <span class="ds-swatch__value">#afd1b5</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="sage-border"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-sage-border</span>
-                  <span class="ds-swatch__value">#8bb592</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="wisteria"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-wisteria</span>
-                  <span class="ds-swatch__value">#e2d1ea</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="wisteria-border"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-wisteria-border</span>
-                  <span class="ds-swatch__value">#c4a9d1</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="lilac-border"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-lilac-border</span>
-                  <span class="ds-swatch__value">#edd7f8</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="sky-border"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-sky-border</span>
-                  <span class="ds-swatch__value">#cad9eb</span>
-                </div>
+                <ds-color-swatch token="mint-border" value="#c4e9ca"></ds-color-swatch>
+                <ds-color-swatch token="mint-active" value="#ddf0e0"></ds-color-swatch>
+                <ds-color-swatch token="sage" value="#afd1b5"></ds-color-swatch>
+                <ds-color-swatch token="sage-border" value="#8bb592"></ds-color-swatch>
+                <ds-color-swatch token="wisteria" value="#e2d1ea"></ds-color-swatch>
+                <ds-color-swatch token="wisteria-border" value="#c4a9d1"></ds-color-swatch>
+                <ds-color-swatch token="lilac-border" value="#edd7f8"></ds-color-swatch>
+                <ds-color-swatch token="sky-border" value="#cad9eb"></ds-color-swatch>
               </div>
             </div>
 
             <div class="ds-token-group" id="colors-neutral">
               <h3 class="ds-token-group__name uppercase">neutral</h3>
               <div class="ds-swatch-grid">
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="stone-gray"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-stone-gray</span>
-                  <span class="ds-swatch__value">#6b6b6b</span>
-                </div>
-                <div
-                  class="ds-swatch flex flex-col gap-1"
-                  data-token="gray-light"
-                >
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-gray-light</span>
-                  <span class="ds-swatch__value">#f1f1f1</span>
-                </div>
+                <ds-color-swatch token="stone-gray" value="#6b6b6b"></ds-color-swatch>
+                <ds-color-swatch token="gray-light" value="#f1f1f1"></ds-color-swatch>
               </div>
             </div>
 
             <div class="ds-token-group" id="colors-ink-opacity">
               <h3 class="ds-token-group__name uppercase">ink opacity</h3>
               <div class="ds-swatch-grid">
-                <div class="ds-swatch flex flex-col gap-1" data-token="ink-6">
-                  <div class="ds-swatch__preview"></div>
-                  <span class="ds-swatch__name">--color-ink-6</span>
-                  <span class="ds-swatch__value">rgba(27,27,27,0.06)</span>
-                </div>
+                <ds-color-swatch token="ink-6" value="rgba(27,27,27,0.06)"></ds-color-swatch>
               </div>
             </div>
           </section>
@@ -311,9 +160,9 @@
 
             <div class="ds-type-specimens flex flex-col gap-0">
               <div class="ds-type-specimen ds-type-specimen--regular">
-                <div class="ds-type-specimen__label uppercase">
+                <p class="ds-type-specimen__label uppercase">
                   --font-hypertext — regular
-                </div>
+                </p>
                 <span class="ds-type-specimen__display block">Aa Bb Cc</span>
                 <span class="ds-type-specimen__body block"
                   >The quick brown fox jumps over the lazy dog</span
@@ -321,9 +170,9 @@
               </div>
 
               <div class="ds-type-specimen ds-type-specimen--italic">
-                <div class="ds-type-specimen__label uppercase">
+                <p class="ds-type-specimen__label uppercase">
                   --font-hypertext-italic — italic
-                </div>
+                </p>
                 <span class="ds-type-specimen__display block">Aa Bb Cc</span>
                 <span class="ds-type-specimen__body block"
                   >The quick brown fox jumps over the lazy dog</span
@@ -331,9 +180,9 @@
               </div>
 
               <div class="ds-type-specimen ds-type-specimen--bold">
-                <div class="ds-type-specimen__label uppercase">
+                <p class="ds-type-specimen__label uppercase">
                   --font-hypertext-bold — bold
-                </div>
+                </p>
                 <span class="ds-type-specimen__display block">Aa Bb Cc</span>
                 <span class="ds-type-specimen__body block"
                   >The quick brown fox jumps over the lazy dog</span
@@ -341,9 +190,9 @@
               </div>
 
               <div class="ds-type-specimen ds-type-specimen--bold-italic">
-                <div class="ds-type-specimen__label uppercase">
+                <p class="ds-type-specimen__label uppercase">
                   --font-hypertext-bold-italic — bold italic
-                </div>
+                </p>
                 <span class="ds-type-specimen__display block">Aa Bb Cc</span>
                 <span class="ds-type-specimen__body block"
                   >The quick brown fox jumps over the lazy dog</span
@@ -351,9 +200,9 @@
               </div>
 
               <div class="ds-type-specimen ds-type-specimen--mono">
-                <div class="ds-type-specimen__label uppercase">
+                <p class="ds-type-specimen__label uppercase">
                   --font-mono — roboto mono
-                </div>
+                </p>
                 <span class="ds-type-specimen__display block">Aa Bb Cc</span>
                 <span class="ds-type-specimen__body block"
                   >The quick brown fox jumps over the lazy dog</span
@@ -370,60 +219,104 @@
             <!-- dropdown-trigger -->
             <div class="ds-component" id="component-dropdown-trigger">
               <h3 class="ds-component__name">dropdown-trigger</h3>
-              <p class="ds-component__desc">An inline button that toggles a paired dropdown-panel. Renders as an inline element to sit naturally inside body text. Pairs with <code class="ds-inline-code">dropdown-panel</code> via the <code class="ds-inline-code">for</code> attribute.</p>
+              <p class="ds-component__desc">
+                An inline button that toggles a paired dropdown-panel. Renders
+                as an inline element to sit naturally inside body text. Pairs
+                with <code class="ds-inline-code">dropdown-panel</code> via the
+                <code class="ds-inline-code">for</code> attribute.
+              </p>
 
               <div class="ds-component__section">
-                <div class="ds-component__section-label uppercase">demo</div>
+                <h4 class="ds-component__section-label uppercase">demo</h4>
                 <div class="ds-component__demo">
                   <p class="body-text">
                     with color:
-                    <dropdown-trigger for="ds-demo-color" bg="var(--color-mint)" bg-open="var(--color-lime)" body-bg="var(--color-spring)">note taker</dropdown-trigger>
+                    <dropdown-trigger
+                      for="ds-demo-color"
+                      bg="var(--color-mint)"
+                      bg-open="var(--color-lime)"
+                      body-bg="var(--color-spring)"
+                      >note taker</dropdown-trigger
+                    >
                   </p>
-                  <dropdown-panel id="ds-demo-color"><div class="ds-demo-panel-content">panel content</div></dropdown-panel>
+                  <dropdown-panel id="ds-demo-color"
+                    ><div class="ds-demo-panel-content">
+                      panel content
+                    </div></dropdown-panel
+                  >
                   <p class="body-text">
                     without color:
-                    <dropdown-trigger for="ds-demo-plain">note taker</dropdown-trigger>
+                    <dropdown-trigger for="ds-demo-plain"
+                      >note taker</dropdown-trigger
+                    >
                   </p>
-                  <dropdown-panel id="ds-demo-plain"><div class="ds-demo-panel-content">panel content</div></dropdown-panel>
+                  <dropdown-panel id="ds-demo-plain"
+                    ><div class="ds-demo-panel-content">
+                      panel content
+                    </div></dropdown-panel
+                  >
                 </div>
               </div>
 
               <div class="ds-component__section">
-                <div class="ds-component__section-label uppercase">attributes</div>
+                <h4 class="ds-component__section-label uppercase">
+                  attributes
+                </h4>
                 <ul class="ds-attr-list flex flex-col gap-2">
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <div class="flex items-baseline gap-2">
                       <span class="ds-attr-list__name">for</span>
-                      <span class="ds-attr-badge ds-attr-badge--required uppercase">required</span>
+                      <span
+                        class="ds-attr-badge ds-attr-badge--required uppercase"
+                        >required</span
+                      >
                     </div>
-                    <span class="ds-attr-list__desc">ID of the paired dropdown-panel. Works like the HTML label for attribute.</span>
+                    <span class="ds-attr-list__desc"
+                      >ID of the paired dropdown-panel. Works like the HTML
+                      label for attribute.</span
+                    >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <div class="flex items-baseline gap-2">
                       <span class="ds-attr-list__name">bg</span>
-                      <span class="ds-attr-badge ds-attr-badge--optional">optional</span>
+                      <span class="ds-attr-badge ds-attr-badge--optional"
+                        >optional</span
+                      >
                     </div>
-                    <span class="ds-attr-list__desc">Button background when the panel is closed. Accepts any CSS value or custom property.</span>
+                    <span class="ds-attr-list__desc"
+                      >Button background when the panel is closed. Accepts any
+                      CSS value or custom property.</span
+                    >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <div class="flex items-baseline gap-2">
                       <span class="ds-attr-list__name">bg-open</span>
-                      <span class="ds-attr-badge ds-attr-badge--optional">optional</span>
+                      <span class="ds-attr-badge ds-attr-badge--optional"
+                        >optional</span
+                      >
                     </div>
-                    <span class="ds-attr-list__desc">Button background when the panel is open. Also used as the focus-visible outline color.</span>
+                    <span class="ds-attr-list__desc"
+                      >Button background when the panel is open. Also used as
+                      the focus-visible outline color.</span
+                    >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <div class="flex items-baseline gap-2">
                       <span class="ds-attr-list__name">body-bg</span>
-                      <span class="ds-attr-badge ds-attr-badge--optional">optional</span>
+                      <span class="ds-attr-badge ds-attr-badge--optional"
+                        >optional</span
+                      >
                     </div>
-                    <span class="ds-attr-list__desc">Sets --color-surface on &lt;html&gt; while open, transitioning the page background color.</span>
+                    <span class="ds-attr-list__desc"
+                      >Sets --color-surface on &lt;html&gt; while open,
+                      transitioning the page background color.</span
+                    >
                   </li>
                 </ul>
               </div>
 
               <div class="ds-component__section">
-                <div class="ds-component__section-label uppercase">example</div>
+                <h4 class="ds-component__section-label uppercase">example</h4>
                 <pre class="ds-code"><code>&lt;dropdown-trigger
   for="my-panel"
   bg="var(--color-mint)"
@@ -440,59 +333,95 @@
             <!-- dropdown-panel -->
             <div class="ds-component" id="component-dropdown-panel">
               <h3 class="ds-component__name">dropdown-panel</h3>
-              <p class="ds-component__desc">A collapsible content container that animates open and closed using grid-template-rows, avoiding layout shift. Content is accepted via a slot. Managed by <code class="ds-inline-code">dropdown-trigger</code>.</p>
+              <p class="ds-component__desc">
+                A collapsible content container that animates open and closed
+                using grid-template-rows, avoiding layout shift. Content is
+                accepted via a slot. Managed by
+                <code class="ds-inline-code">dropdown-trigger</code>.
+              </p>
 
               <div class="ds-component__section">
-                <div class="ds-component__section-label uppercase">attributes</div>
+                <h4 class="ds-component__section-label uppercase">
+                  attributes
+                </h4>
                 <ul class="ds-attr-list flex flex-col gap-2">
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <div class="flex items-baseline gap-2">
                       <span class="ds-attr-list__name">id</span>
-                      <span class="ds-attr-badge ds-attr-badge--required uppercase">required</span>
+                      <span
+                        class="ds-attr-badge ds-attr-badge--required uppercase"
+                        >required</span
+                      >
                     </div>
-                    <span class="ds-attr-list__desc">Referenced by dropdown-trigger via its for attribute.</span>
+                    <span class="ds-attr-list__desc"
+                      >Referenced by dropdown-trigger via its for
+                      attribute.</span
+                    >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <div class="flex items-baseline gap-2">
                       <span class="ds-attr-list__name">variant="scroll"</span>
-                      <span class="ds-attr-badge ds-attr-badge--optional">optional</span>
+                      <span class="ds-attr-badge ds-attr-badge--optional"
+                        >optional</span
+                      >
                     </div>
-                    <span class="ds-attr-list__desc">Fixed-height scrollable panel. Height controlled by --dropdown-scroll-max-height (default: min(55vh, 28rem)).</span>
+                    <span class="ds-attr-list__desc"
+                      >Fixed-height scrollable panel. Height controlled by
+                      --dropdown-scroll-max-height (default: min(55vh,
+                      28rem)).</span
+                    >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <div class="flex items-baseline gap-2">
                       <span class="ds-attr-list__name">open</span>
-                      <span class="ds-attr-badge ds-attr-badge--optional">optional</span>
+                      <span class="ds-attr-badge ds-attr-badge--optional"
+                        >optional</span
+                      >
                     </div>
-                    <span class="ds-attr-list__desc">Boolean. Managed automatically — set on load only to pre-open a panel.</span>
+                    <span class="ds-attr-list__desc"
+                      >Boolean. Managed automatically — set on load only to
+                      pre-open a panel.</span
+                    >
                   </li>
                 </ul>
               </div>
 
               <div class="ds-component__section">
-                <div class="ds-component__section-label uppercase">css parts</div>
+                <h4 class="ds-component__section-label uppercase">css parts</h4>
                 <ul class="ds-attr-list flex flex-col gap-2">
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <span class="ds-attr-list__name">::part(panel)</span>
-                    <span class="ds-attr-list__desc">Outer wrapper. Gains margin-top: 0.75rem when open.</span>
+                    <span class="ds-attr-list__desc"
+                      >Outer wrapper. Gains margin-top: 0.75rem when open.</span
+                    >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <span class="ds-attr-list__name">::part(content)</span>
-                    <span class="ds-attr-list__desc">Animated inner div controlling the open/close transition.</span>
+                    <span class="ds-attr-list__desc"
+                      >Animated inner div controlling the open/close
+                      transition.</span
+                    >
                   </li>
                 </ul>
               </div>
 
               <div class="ds-component__section">
-                <div class="ds-component__section-label uppercase">events</div>
+                <h4 class="ds-component__section-label uppercase">events</h4>
                 <ul class="ds-attr-list flex flex-col gap-2">
                   <li class="ds-attr-list__item flex flex-col gap-1">
-                    <span class="ds-attr-list__name">dropdown:state-changed</span>
-                    <span class="ds-attr-list__desc">Bubbles from the panel when it opens or closes.</span>
+                    <span class="ds-attr-list__name"
+                      >dropdown:state-changed</span
+                    >
+                    <span class="ds-attr-list__desc"
+                      >Bubbles from the panel when it opens or closes.</span
+                    >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
                     <span class="ds-attr-list__name">dropdown:close-all</span>
-                    <span class="ds-attr-list__desc">Dispatch on document to close all panels. Pass detail.exceptId to keep one open.</span>
+                    <span class="ds-attr-list__desc"
+                      >Dispatch on document to close all panels. Pass
+                      detail.exceptId to keep one open.</span
+                    >
                   </li>
                 </ul>
               </div>

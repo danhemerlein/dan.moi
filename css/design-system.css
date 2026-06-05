@@ -152,12 +152,17 @@ body {
   }
 }
 
-/* .ds-swatch — flex flex-col gap-1 in HTML */
+ds-color-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
 
 .ds-swatch__preview {
   height: 3.5rem;
   border-radius: 0.5rem;
   border: 1px solid var(--color-ink-6);
+  background-color: var(--swatch-color);
 }
 
 .ds-swatch__name {
@@ -167,6 +172,7 @@ body {
   letter-spacing: -0.01em;
   color: var(--color-ink);
   word-break: break-all;
+  margin: 0;
 }
 
 .ds-swatch__value {
@@ -174,45 +180,8 @@ body {
   font-size: 0.625rem;
   line-height: 1.2;
   color: var(--color-stone-gray);
+  margin: 0;
 }
-
-/* Base palette */
-.ds-swatch[data-token='ink'] .ds-swatch__preview { background-color: var(--color-ink); }
-.ds-swatch[data-token='mint'] .ds-swatch__preview { background-color: var(--color-mint); }
-.ds-swatch[data-token='lavender'] .ds-swatch__preview { background-color: var(--color-lavender); }
-.ds-swatch[data-token='sky'] .ds-swatch__preview { background-color: var(--color-sky); }
-.ds-swatch[data-token='aqua'] .ds-swatch__preview { background-color: var(--color-aqua); }
-.ds-swatch[data-token='spring'] .ds-swatch__preview { background-color: var(--color-spring); }
-.ds-swatch[data-token='lime'] .ds-swatch__preview { background-color: var(--color-lime); }
-.ds-swatch[data-token='orchid'] .ds-swatch__preview { background-color: var(--color-orchid); }
-.ds-swatch[data-token='azure'] .ds-swatch__preview { background-color: var(--color-azure); }
-.ds-swatch[data-token='cyan'] .ds-swatch__preview { background-color: var(--color-cyan); }
-.ds-swatch[data-token='white'] .ds-swatch__preview { background-color: var(--color-white); }
-
-/* Soft / cream */
-.ds-swatch[data-token='orchid-soft'] .ds-swatch__preview { background-color: var(--color-orchid-soft); }
-.ds-swatch[data-token='azure-soft'] .ds-swatch__preview { background-color: var(--color-azure-soft); }
-.ds-swatch[data-token='cyan-soft'] .ds-swatch__preview { background-color: var(--color-cyan-soft); }
-.ds-swatch[data-token='mint-cream'] .ds-swatch__preview { background-color: var(--color-mint-cream); }
-.ds-swatch[data-token='lavender-cream'] .ds-swatch__preview { background-color: var(--color-lavender-cream); }
-.ds-swatch[data-token='azure-cream'] .ds-swatch__preview { background-color: var(--color-azure-cream); }
-
-/* Border / interactive */
-.ds-swatch[data-token='mint-border'] .ds-swatch__preview { background-color: var(--color-mint-border); }
-.ds-swatch[data-token='mint-active'] .ds-swatch__preview { background-color: var(--color-mint-active); }
-.ds-swatch[data-token='sage'] .ds-swatch__preview { background-color: var(--color-sage); }
-.ds-swatch[data-token='sage-border'] .ds-swatch__preview { background-color: var(--color-sage-border); }
-.ds-swatch[data-token='wisteria'] .ds-swatch__preview { background-color: var(--color-wisteria); }
-.ds-swatch[data-token='wisteria-border'] .ds-swatch__preview { background-color: var(--color-wisteria-border); }
-.ds-swatch[data-token='lilac-border'] .ds-swatch__preview { background-color: var(--color-lilac-border); }
-.ds-swatch[data-token='sky-border'] .ds-swatch__preview { background-color: var(--color-sky-border); }
-
-/* Neutral */
-.ds-swatch[data-token='stone-gray'] .ds-swatch__preview { background-color: var(--color-stone-gray); }
-.ds-swatch[data-token='gray-light'] .ds-swatch__preview { background-color: var(--color-gray-light); }
-
-/* Ink opacity */
-.ds-swatch[data-token='ink-6'] .ds-swatch__preview { background-color: var(--color-ink-6); }
 
 /* ─── Typography specimens ──────────────────────────── */
 /* .ds-type-specimens — flex flex-col gap-0 in HTML */
