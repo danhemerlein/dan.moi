@@ -9,8 +9,8 @@
 
       this.innerHTML = `
         <div class="ds-swatch__preview"></div>
-        <p class="ds-swatch__name">--color-${token}</p>
-        <p class="ds-swatch__value">${value}</p>
+        <p class="ds-swatch__name type-label">--color-${token}</p>
+        <p class="ds-swatch__value type-label">${value}</p>
       `
     }
   }

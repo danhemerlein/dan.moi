@@ -99,7 +99,7 @@ function renderMusicList(ul, items, emptyMessage = 'No music projects yet.') {
     if (dateStr) {
       const dateDesktop = document.createElement('p')
       dateDesktop.className =
-        'music-project__date music-project__date--desktop hidden lg-block m-0 font-style-normal font-normal uppercase ml-auto text-right'
+        'music-project__date type-ui music-project__date--desktop hidden lg-block m-0 font-style-normal font-normal uppercase ml-auto text-right'
       dateDesktop.textContent = dateStr
       titleGroup.appendChild(dateDesktop)
     }
@@ -132,7 +132,7 @@ function renderMusicList(ul, items, emptyMessage = 'No music projects yet.') {
       if (dateStr) {
         const dateMobile = document.createElement('p')
         dateMobile.className =
-          'music-project__date music-project__date--mobile m-0 font-style-normal font-normal uppercase lg-hidden'
+          'music-project__date type-ui music-project__date--mobile m-0 font-style-normal font-normal uppercase lg-hidden'
         dateMobile.textContent = dateStr
         bottom.appendChild(dateMobile)
       }
@@ -165,7 +165,7 @@ function renderMusicList(ul, items, emptyMessage = 'No music projects yet.') {
         for (const part of credits) {
           const span = document.createElement('span')
           span.className =
-            'music-project__credit font-style-normal font-normal uppercase'
+            'music-project__credit type-ui font-style-normal font-normal uppercase'
           span.textContent = part
           cred.appendChild(span)
         }
