@@ -37,9 +37,6 @@
 
   /* Ink at opacity (base rgb matches --color-ink) */
   --color-ink-6: rgba(27, 27, 27, 0.06);
-  --color-ink-10: rgba(27, 27, 27, 0.1);
-  --color-ink-14: rgba(27, 27, 27, 0.14);
-  --color-ink-18: rgba(27, 27, 27, 0.18);
 }
 
 *,

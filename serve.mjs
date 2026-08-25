@@ -102,6 +102,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (pathname === "/design-system") {
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    fs.createReadStream(path.join(ROOT, "design-system.html")).pipe(res);
+    return;
+  }
+
   if (pathname === "/contentful-env.js") {
     const spaceId = env.CONTENTFUL_SPACE_ID ?? "";
     const accessToken = env.CONTENTFUL_ACCESS_TOKEN ?? "";

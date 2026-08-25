@@ -61,9 +61,7 @@ accessible-select.blog-year-filter:not(:defined) {
 
 .blog-post-meta__date,
 .blog-post-meta__reading {
-  font-family: var(--font-mono);
   color: var(--color-stone-gray);
-  font-size: 0.75rem;
 }
 
 .blog-post__figure {

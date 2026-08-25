@@ -55,6 +55,8 @@ Rich text from Contentful is rendered via `@contentful/rich-text-html-renderer` 
 
 ### CSS conventions
 
+**Always invoke the `/css` skill when writing or editing any HTML or CSS.** It contains the full utility class reference, enforced rules, and architecture decisions. Do not write or review CSS without it loaded.
+
 Never write inline styles (`style="..."`). Always use a CSS class in the appropriate `css/` file.
 
 Never use `px` units in CSS. All units must be relative — use `rem` for sizes and spacing, `em` where relative-to-parent sizing is appropriate, `%` or viewport units for layout.
@@ -63,7 +65,7 @@ Never use `px` units in CSS. All units must be relative — use `rem` for sizes 
 
 Each component has its own CSS file in `css/`. `css/reset.css` establishes global CSS custom properties (`--color-*`) and base resets. Naming follows BEM-like conventions: `.panel-list__item`, `.blog-post__body`.
 
-For full CSS rules and conventions, use the `/css` skill.
+`css/css-utils.css` is the project's utility class system — a lightweight Tailwind-style set of single-purpose classes for layout, spacing, typography, and display. Always prefer these over writing new component CSS when a utility covers the need. The full class list is in the `/css` skill.
 
 ### Accessibility
 

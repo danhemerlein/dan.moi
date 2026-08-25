@@ -139,7 +139,7 @@ const PANEL_HTML = `
     >
       <p
         id="blog-posts-page-status"
-        class="panel-scroll__list-footer__status uppercase m-0"
+        class="panel-scroll__list-footer__status type-ui uppercase m-0"
       ></p>
     </div>
     <div id="blog-post-article-wrap" class="panel-scroll__article-wrap relative flex flex-col flex-1 min-h-0" hidden>
