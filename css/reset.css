@@ -39,6 +39,56 @@
   --color-ink-6: rgba(27, 27, 27, 0.06);
 }
 
+/* Dark theme overrides — literal black & white for now; a fuller dark
+   palette can be designed later. Background stays white and text stays a
+   near-black ink (not pure #000); every pastel accent collapses to a
+   neutral grey computed from its light-mode lightness via Rec.709 luma
+   (0.2126R + 0.7152G + 0.0722B), so it keeps its original contrast
+   relationship with the ink text. --color-white/--color-surface are left
+   unset — the background doesn't change from light mode. */
+:root[data-theme="dark"] {
+  --color-ink: #171717;
+
+  /* mint/lavender/sky/aqua are each one dropdown-trigger's closed-state
+     `bg` — unified to a single flat grey rather than four near-identical
+     greys, since without hue there's no reason for them to differ. */
+  --color-mint: var(--color-gray-light);
+  --color-lavender: var(--color-gray-light);
+  --color-sky: var(--color-gray-light);
+  --color-aqua: var(--color-gray-light);
+  /* lime/orchid/azure/cyan are each one dropdown-trigger's `bg-open` —
+     unified the same way. --color-lime also doubles as the shared
+     focus-visible ring (dropdown.js/accessible-select.js), so this also
+     fixes its contrast against the white background (was ~1.4:1, now
+     ~5.3:1 via --color-stone-gray). */
+  --color-lime: var(--color-stone-gray);
+  --color-orchid: var(--color-stone-gray);
+  --color-azure: var(--color-stone-gray);
+  --color-cyan: var(--color-stone-gray);
+  /* spring/orchid-soft/azure-soft/cyan-soft are each one dropdown-trigger's
+     `body-bg` — the panel-open page background (js/dropdown.js applies
+     whichever one via an inline --color-surface override). Pinned to
+     white so the background stays pure white regardless of which panel is
+     open, instead of each panel tinting it a slightly different off-white. */
+  --color-spring: var(--color-white);
+  --color-orchid-soft: var(--color-white);
+  --color-azure-soft: var(--color-white);
+  --color-cyan-soft: var(--color-white);
+
+  --color-mint-cream: #fcfcfc;
+  --color-mint-border: #dfdfdf;
+  --color-mint-active: #ebebeb;
+  --color-sage: #c8c8c8;
+  --color-sage-border: #aaaaaa;
+  --color-wisteria: #d6d6d6;
+  --color-wisteria-border: #b2b2b2;
+
+  --color-lavender-cream: #fcfcfc;
+  --color-lilac-border: #dedede;
+  --color-azure-cream: #fbfbfb;
+  --color-sky-border: #d7d7d7;
+}
+
 *,
 *::before,
 *::after {

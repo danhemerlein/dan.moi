@@ -232,6 +232,23 @@
               var(--dropdown-trigger-focus-outline, transparent);
             border-radius: 0.375rem;
           }
+          /* Dark mode: every trigger gets the same faint background (not a
+             per-trigger color fill) instead of the light-mode pastel bg;
+             the selected (open) trigger is distinguished only by a
+             border-like ring, identical whether reached by mouse click or
+             keyboard, instead of a stronger fill plus a separate
+             focus-visible ring. Uses inset box-shadow rather than an
+             actual border so switching themes never changes the button's
+             box size (border would add layout height/width even at 0
+             opacity — box-shadow is paint-only). */
+          :host-context([data-theme='dark']) button {
+            background-color: var(--color-ink-6);
+            box-shadow: inset 0 0 0 0.125rem transparent;
+            transition: background-color 260ms ease, box-shadow 260ms ease;
+          }
+          :host-context([data-theme='dark']) button[aria-expanded='true'] {
+            box-shadow: inset 0 0 0 0.125rem var(--dropdown-trigger-bg, transparent);
+          }
         </style>
         <button type="button" part="trigger" aria-expanded="false">
           <slot></slot>

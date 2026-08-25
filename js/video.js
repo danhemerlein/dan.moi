@@ -1,11 +1,11 @@
 ;(() => {
   const PAUSE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <rect x="5" y="3" width="4" height="18" rx="1" fill="#1b1b1b"/>
-    <rect x="15" y="3" width="4" height="18" rx="1" fill="#1b1b1b"/>
+    <rect x="5" y="3" width="4" height="18" rx="1" fill="currentColor"/>
+    <rect x="15" y="3" width="4" height="18" rx="1" fill="currentColor"/>
   </svg>`
 
   const PLAY_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <polygon points="5,3 19,12 5,21" fill="#1b1b1b"/>
+    <polygon points="5,3 19,12 5,21" fill="currentColor"/>
   </svg>`
 
   // Safari decodes VP9 WebM but ignores the alpha track; use canvas compositing instead.
@@ -40,6 +40,7 @@
       cursor: pointer;
       padding: 0.25rem;
       line-height: 0;
+      color: var(--color-ink);
     }
     :host([show-controls]) button { display: block; }
     button svg { display: block; width: 1.25rem; height: 1.25rem; }

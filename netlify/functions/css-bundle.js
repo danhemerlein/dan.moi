@@ -15,6 +15,7 @@ const CSS_FILES = [
   "css-utils.css",
   "fonts.css",
   "index.css",
+  "theme-toggle.css",
   "panel-list.css",
   "panel-scroll.css",
   "skeleton.css",
