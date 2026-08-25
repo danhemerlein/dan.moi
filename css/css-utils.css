@@ -135,6 +135,10 @@
   text-align: right;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .lowercase {
   text-transform: lowercase;
 }

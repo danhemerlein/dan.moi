@@ -89,7 +89,41 @@ body {
   font-family: var(--font-hypertext);
 }
 
-/* Utility typography class: 00 Hypertext / Non-Commercial / Regular */
+/* ── Type scale ─────────────────────────────────────────────────────────
+   Use these classes on any text element. Component CSS then only needs
+   contextual overrides (color, margin, decoration) — not repeated
+   font-family/size/line-height/letter-spacing combos.
+   ─────────────────────────────────────────────────────────────────── */
+
+.type-display,
+.text-display {
+  font-family: var(--font-hypertext-bold);
+  font-size: 9.75rem;
+  line-height: 1;
+}
+
+.type-heading-xl {
+  font-family: var(--font-hypertext-bold);
+  font-size: 2.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.type-heading-l {
+  font-family: var(--font-hypertext-bold);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.type-heading-m {
+  font-family: var(--font-hypertext-bold);
+  font-size: 1.25rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.type-body,
 .body-text {
   font-family: var(--font-hypertext);
   font-style: normal;
@@ -100,6 +134,28 @@ body {
   color: var(--color-ink);
 }
 
+.type-body-sm {
+  font-family: var(--font-hypertext);
+  font-size: 1rem;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+
+.type-ui {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.type-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* type-roboto-mono-12-caps = type-ui + uppercase + centered */
 .type-roboto-mono-12-caps {
   font-family: var(--type-roboto-mono-12-font-family);
   font-style: normal;
@@ -112,6 +168,7 @@ body {
 }
 
 @media (min-width: 768px) {
+  .type-body,
   .body-text {
     font-size: 1.5rem;
   }

@@ -23,6 +23,8 @@ Serves on port 3333 by default (override with `PORT` env var). Open `http://loca
 
 **No build step, no package manager.** This is a vanilla JS project — no npm, no bundler, no transpilation.
 
+**Target devices:** Development is on a MacBook Pro (desktop Safari + Chrome) and iPhone (iOS Safari). No Android or other mobile browsers to support.
+
 **Environment:** Contentful credentials go in `.env` (see `.env.example`. The server reads these and exposes them to the browser at runtime via the `/contentful-env.js` endpoint as `window.CONTENTFUL_CONFIG`.
 
 ## Architecture
@@ -51,11 +53,19 @@ All content comes from Contentful via GraphQL. Queries and fetch logic live in `
 
 Rich text from Contentful is rendered via `@contentful/rich-text-html-renderer` (loaded from ESM CDN, no local install).
 
+### CSS conventions
+
+**Always invoke the `/css` skill when writing or editing any HTML or CSS.** It contains the full utility class reference, enforced rules, and architecture decisions. Do not write or review CSS without it loaded.
+
+Never write inline styles (`style="..."`). Always use a CSS class in the appropriate `css/` file.
+
+Never use `px` units in CSS. All units must be relative — use `rem` for sizes and spacing, `em` where relative-to-parent sizing is appropriate, `%` or viewport units for layout.
+
 ### CSS Architecture
 
 Each component has its own CSS file in `css/`. `css/reset.css` establishes global CSS custom properties (`--color-*`) and base resets. Naming follows BEM-like conventions: `.panel-list__item`, `.blog-post__body`.
 
-For full CSS rules and conventions, use the `/css` skill.
+`css/css-utils.css` is the project's utility class system — a lightweight Tailwind-style set of single-purpose classes for layout, spacing, typography, and display. Always prefer these over writing new component CSS when a utility covers the need. The full class list is in the `/css` skill.
 
 ### Accessibility
 

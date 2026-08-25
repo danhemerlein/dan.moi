@@ -1,4 +1,8 @@
-import { documentToHtmlString, escapeHtml, richTextOptions } from './contentful-rich-text-html.js'
+import {
+  documentToHtmlString,
+  escapeHtml,
+  richTextOptions,
+} from './contentful-rich-text-html.js'
 import { createBlogPostMetaElement } from './blog-utils.js'
 import { CLOSE_SVG, ARTICLE_BODY_SKELETON_HTML } from './constants.js'
 import { initScrollbar } from './scrollbar.js'
@@ -135,7 +139,7 @@ const PANEL_HTML = `
     >
       <p
         id="blog-posts-page-status"
-        class="panel-scroll__list-footer__status uppercase m-0"
+        class="panel-scroll__list-footer__status type-ui uppercase m-0"
       ></p>
     </div>
     <div id="blog-post-article-wrap" class="panel-scroll__article-wrap relative flex flex-col flex-1 min-h-0" hidden>
@@ -204,7 +208,11 @@ class BlogPanel extends HTMLElement {
 
     layoutDebugMark('blog:panel-init')
 
-    const { updateScrollbar } = initScrollbar({ articleWrap, articleRoot, bodyEl })
+    const { updateScrollbar } = initScrollbar({
+      articleWrap,
+      articleRoot,
+      bodyEl,
+    })
 
     let blogPostListItems = []
     let yearFilterReady = false
@@ -457,7 +465,8 @@ class BlogPanel extends HTMLElement {
       if (!item) {
         titleEl.textContent = ''
         bodyEl.removeAttribute('aria-busy')
-        bodyEl.innerHTML = '<p class="article-error m-0">Post not found.</p>'
+        bodyEl.innerHTML =
+          '<p class="article-error m-0 text-center">Post not found.</p>'
         metaEl.replaceChildren()
         metaEl.hidden = true
         return

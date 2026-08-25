@@ -102,6 +102,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (pathname === "/design-system") {
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    fs.createReadStream(path.join(ROOT, "design-system.html")).pipe(res);
+    return;
+  }
+
   if (pathname === "/contentful-env.js") {
     const spaceId = env.CONTENTFUL_SPACE_ID ?? "";
     const accessToken = env.CONTENTFUL_ACCESS_TOKEN ?? "";
@@ -125,11 +131,16 @@ const server = http.createServer((req, res) => {
 
   fs.stat(filePath, (err, st) => {
     if (err || !st.isFile()) {
-      // SPA fallback: serve index.html for paths with no file extension (e.g. /blog/:handle).
       if (!path.extname(filePath)) {
-        const indexPath = path.join(ROOT, "index.html");
-        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-        fs.createReadStream(indexPath).pipe(res);
+        const isKnownRoute =
+          pathname === "/" || /^\/notes\/[^/]+\/?$/.test(pathname);
+        if (isKnownRoute) {
+          res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+          fs.createReadStream(path.join(ROOT, "index.html")).pipe(res);
+        } else {
+          res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+          fs.createReadStream(path.join(ROOT, "404.html")).pipe(res);
+        }
         return;
       }
       res.writeHead(404).end("Not found");

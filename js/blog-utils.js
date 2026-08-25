@@ -80,7 +80,7 @@ export function createBlogPostMetaElement({
     const readable = createReadableDateFromContentful(published);
     if (readable) {
       const timeEl = document.createElement("time");
-      timeEl.className = "blog-post-meta__date font-style-normal font-normal uppercase";
+      timeEl.className = "blog-post-meta__date type-ui font-style-normal font-normal uppercase";
       timeEl.dateTime = published;
       timeEl.textContent = readable;
       meta.appendChild(timeEl);
