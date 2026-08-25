@@ -11,10 +11,28 @@
   padding: 1rem;
   border-radius: 0.5rem;
   border: 1px solid var(--color-mint-border);
+  /* Matches music-panel.css's fixed 5rem media + this rule's own 1rem
+     padding on each side, so blog/code/music list rows share one height
+     for visual consistency across panels. */
+  min-height: 7rem;
 }
 
 .panel-list__item:first-child {
   margin-top: 0;
+}
+
+/* Compound selector so this reliably beats .panel-list__item's own padding
+   regardless of bundle order — the .p-0 utility alone has equal specificity
+   and loses to it, since css-utils.css is concatenated before this file. */
+.panel-list__item.p-0 {
+  padding: 0;
+}
+
+/* Padded inner row for items that make the whole card clickable (blog,
+   code): li padding moves here so the click target covers the full card,
+   not just the title text. */
+.panel-list__row {
+  padding: 1rem;
 }
 
 .panel-list__button {
