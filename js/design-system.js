@@ -16,4 +16,22 @@
   }
 
   customElements.define('ds-color-swatch', DsColorSwatch)
+
+  const navToggle = document.querySelector('.ds-nav__toggle')
+  const navList = document.getElementById('ds-nav-list')
+
+  if (navToggle && navList) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navToggle.getAttribute('aria-expanded') === 'true'
+      navToggle.setAttribute('aria-expanded', String(!isOpen))
+      navList.hidden = isOpen
+    })
+
+    navList.addEventListener('click', (e) => {
+      if (!(e.target instanceof HTMLElement) || !e.target.closest('a')) return
+      if (window.matchMedia('(min-width: 768px)').matches) return
+      navToggle.setAttribute('aria-expanded', 'false')
+      navList.hidden = true
+    })
+  }
 })()

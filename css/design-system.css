@@ -25,26 +25,66 @@ body {
 /* ─── Sidebar nav ───────────────────────────────────── */
 
 .ds-nav {
-  order: 2;
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--color-ink-6);
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-ink-6);
 }
 
 @media (min-width: 768px) {
   .ds-nav {
-    order: 0;
     position: sticky;
     top: 3rem;
     max-height: calc(100vh - 6rem);
     overflow-y: auto;
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
   }
 }
 
+.ds-nav__toggle {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--color-ink);
+  cursor: pointer;
+  font: inherit;
+  /* uppercase, flex items-center justify-between in HTML */
+}
+
+.ds-nav__toggle-icon {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1px solid var(--color-ink); /* px: hairline border */
+  border-bottom: 1px solid var(--color-ink); /* px: hairline border */
+  transform: rotate(45deg);
+  transition: transform 200ms ease;
+}
+
+.ds-nav__toggle[aria-expanded="true"] .ds-nav__toggle-icon {
+  transform: rotate(-135deg);
+}
+
 /* .ds-nav__list — flex flex-col gap-1 in HTML */
+
+.ds-nav__list {
+  margin-top: 1rem;
+}
+
+.ds-nav__list[hidden] {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .ds-nav__list {
+    margin-top: 0;
+  }
+
+  .ds-nav__list[hidden] {
+    display: flex;
+  }
+}
 
 .ds-nav__item {
   gap: 0.125rem;
