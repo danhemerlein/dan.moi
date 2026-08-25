@@ -20,6 +20,7 @@
             cursor: pointer;
           }
           .track {
+            box-sizing: border-box;
             position: relative;
             flex-shrink: 0;
             width: 2.75rem;
@@ -33,6 +34,7 @@
             background-color: var(--color-stone-gray);
           }
           .thumb {
+            box-sizing: border-box;
             position: absolute;
             top: 0.0625rem;
             left: 0.0625rem;
@@ -67,27 +69,6 @@
       this._button = this.shadowRoot.querySelector('button')
       this._button.addEventListener('click', () => this.#toggle())
       this.#syncFromDocument()
-
-      this._mql = window.matchMedia('(prefers-color-scheme: dark)')
-      this._onSystemChange = () => {
-        if (this.#storedTheme()) return
-        this.#applyTheme(this._mql.matches ? 'dark' : 'light', {
-          persist: false,
-        })
-      }
-      this._mql.addEventListener('change', this._onSystemChange)
-    }
-
-    disconnectedCallback() {
-      this._mql?.removeEventListener('change', this._onSystemChange)
-    }
-
-    #storedTheme() {
-      try {
-        return localStorage.getItem(STORAGE_KEY)
-      } catch {
-        return null
-      }
     }
 
     #toggle() {

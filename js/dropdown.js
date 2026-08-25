@@ -335,7 +335,10 @@
     const clickedPanel = path.some(
       (el) => el instanceof HTMLElement && el.tagName === 'DROPDOWN-PANEL',
     )
-    if (!clickedTrigger && !clickedPanel) {
+    const clickedThemeToggle = path.some(
+      (el) => el instanceof HTMLElement && el.tagName === 'THEME-TOGGLE',
+    )
+    if (!clickedTrigger && !clickedPanel && !clickedThemeToggle) {
       document.querySelectorAll('dropdown-panel').forEach((panel) => {
         if (panel instanceof DropdownPanel) panel.setOpen(false)
       })
