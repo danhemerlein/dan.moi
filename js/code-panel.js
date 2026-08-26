@@ -53,32 +53,53 @@ function renderProjectList(ul, items, emptyMessage = 'No projects yet.') {
     const id = item.sys?.id?.trim()
     const title = item.title?.trim() || 'Untitled'
     const li = document.createElement('li')
-    li.className = 'panel-list__item flex flex-row items-baseline gap-3 p-0'
+    li.className = 'panel-list__item flex p-0'
 
     const yearStr = formatTimelineLabel(item.timelineLaunchDate)
 
     if (id) {
+      // The button fills the whole row (flex-1 + li's default cross-axis
+      // stretch) so the entire card is clickable, not just the title text.
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className =
-        'panel-list__button cursor-pointer block w-full m-0 p-0 font-style-normal font-normal text-left flex-1 min-w-0'
+        'panel-list__button panel-list__row cursor-pointer flex flex-row items-center justify-between gap-3 w-full flex-1 m-0 font-style-normal font-normal text-left'
       btn.dataset.id = id
-      btn.textContent = title
+
+      const titleSpan = document.createElement('span')
+      titleSpan.className = 'block flex-1 min-w-0'
+      titleSpan.textContent = title
+      btn.appendChild(titleSpan)
+
+      if (yearStr) {
+        const meta = document.createElement('p')
+        meta.className =
+          'code-project-meta type-ui code-project-meta--list font-normal uppercase flex-shrink-0 m-0'
+        meta.textContent = yearStr
+        btn.appendChild(meta)
+      }
+
       li.appendChild(btn)
     } else {
+      const row = document.createElement('div')
+      row.className =
+        'panel-list__row flex flex-row items-center justify-between gap-3 w-full'
+
       const titleOnly = document.createElement('span')
       titleOnly.className =
         'panel-list__title-fallback block flex-1 min-w-0 text-left'
       titleOnly.textContent = title
-      li.appendChild(titleOnly)
-    }
+      row.appendChild(titleOnly)
 
-    if (yearStr) {
-      const meta = document.createElement('p')
-      meta.className =
-        'code-project-meta type-ui code-project-meta--list font-normal uppercase flex-shrink-0 m-0 ml-auto'
-      meta.textContent = yearStr
-      li.appendChild(meta)
+      if (yearStr) {
+        const meta = document.createElement('p')
+        meta.className =
+          'code-project-meta type-ui code-project-meta--list font-normal uppercase flex-shrink-0 m-0'
+        meta.textContent = yearStr
+        row.appendChild(meta)
+      }
+
+      li.appendChild(row)
     }
 
     fragment.appendChild(li)

@@ -232,6 +232,26 @@
               var(--dropdown-trigger-focus-outline, transparent);
             border-radius: 0.375rem;
           }
+          /* Dark mode: every trigger is transparent with a thin ink border
+             (not a per-trigger color fill) instead of the light-mode
+             pastel bg, so it reads as interactive against the white page
+             background rather than a disabled grey pill. The selected
+             (open) trigger inverts to a solid ink fill with white text,
+             identical whether reached by mouse click or keyboard, instead
+             of a per-trigger accent fill plus a separate focus-visible
+             ring. Uses inset box-shadow rather than an actual border so
+             switching themes never changes the button's box size (border
+             would add layout height/width even at 0 opacity — box-shadow
+             is paint-only). */
+          :host-context([data-theme='dark']) button {
+            background-color: transparent;
+            box-shadow: inset 0 0 0 0.0625rem var(--color-ink);
+            transition: background-color 260ms ease, box-shadow 260ms ease, color 260ms ease;
+          }
+          :host-context([data-theme='dark']) button[aria-expanded='true'] {
+            background-color: var(--color-ink);
+            color: var(--color-white);
+          }
         </style>
         <button type="button" part="trigger" aria-expanded="false">
           <slot></slot>
@@ -318,7 +338,10 @@
     const clickedPanel = path.some(
       (el) => el instanceof HTMLElement && el.tagName === 'DROPDOWN-PANEL',
     )
-    if (!clickedTrigger && !clickedPanel) {
+    const clickedThemeToggle = path.some(
+      (el) => el instanceof HTMLElement && el.tagName === 'THEME-TOGGLE',
+    )
+    if (!clickedTrigger && !clickedPanel && !clickedThemeToggle) {
       document.querySelectorAll('dropdown-panel').forEach((panel) => {
         if (panel instanceof DropdownPanel) panel.setOpen(false)
       })

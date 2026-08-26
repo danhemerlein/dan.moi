@@ -80,29 +80,48 @@ function renderPostList(ul, items, emptyMessage = 'No posts yet.') {
     const title = item.title?.trim() || 'Untitled'
     const handle = item.handle?.trim()
     const li = document.createElement('li')
-    li.className = 'panel-list__item'
+    li.className = 'panel-list__item flex p-0'
     if (handle) {
+      // The button fills the whole row (flex-1 + li's default cross-axis
+      // stretch) so the entire card is clickable, not just the title text.
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className =
-        'panel-list__button cursor-pointer block w-full m-0 p-0 font-style-normal font-normal text-left'
+        'panel-list__button panel-list__row cursor-pointer flex flex-col justify-center flex-1 w-full m-0 font-style-normal font-normal text-left'
       btn.dataset.handle = handle
-      btn.textContent = title
+
+      const titleSpan = document.createElement('span')
+      titleSpan.className = 'block'
+      titleSpan.textContent = title
+      btn.appendChild(titleSpan)
+
+      btn.appendChild(
+        createBlogPostMetaElement({
+          published: item.published,
+          contentJson: item.content?.json,
+          variant: 'list',
+        }),
+      )
       li.appendChild(btn)
     } else {
+      const row = document.createElement('div')
+      row.className = 'panel-list__row flex flex-col justify-center w-full'
+
       const titleOnly = document.createElement('span')
       titleOnly.className = 'panel-list__title-fallback block'
       titleOnly.textContent = title
-      li.appendChild(titleOnly)
+      row.appendChild(titleOnly)
+
+      row.appendChild(
+        createBlogPostMetaElement({
+          published: item.published,
+          contentJson: item.content?.json,
+          variant: 'list',
+        }),
+      )
+      li.appendChild(row)
     }
 
-    li.appendChild(
-      createBlogPostMetaElement({
-        published: item.published,
-        contentJson: item.content?.json,
-        variant: 'list',
-      }),
-    )
     fragment.appendChild(li)
   }
   ul.appendChild(fragment)

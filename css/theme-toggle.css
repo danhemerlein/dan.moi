@@ -1,0 +1,12 @@
+theme-toggle {
+  position: fixed;
+  top: 0.5rem;
+  right: 1.25rem;
+  z-index: 40;
+}
+
+@media (min-width: 768px) {
+  theme-toggle {
+    top: 1.25rem;
+  }
+}
