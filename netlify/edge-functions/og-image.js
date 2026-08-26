@@ -92,7 +92,10 @@ async function fetchArticleMeta(handle) {
 }
 
 function withMetaTag(html, tagMatcher, content) {
-  return html.replace(tagMatcher, (full, prefix, suffix) => `${prefix}${escapeHtml(content)}${suffix}`)
+  return html.replace(
+    tagMatcher,
+    (full, prefix, suffix) => `${prefix}${escapeHtml(content)}${suffix}`,
+  )
 }
 
 export default async function handler(request, context) {
@@ -108,8 +111,8 @@ export default async function handler(request, context) {
   let html = await response.text()
 
   html = html.replaceAll(
-    'https://dan.moi/assets/share.jpg',
-    `${origin}/assets/share.jpg`,
+    'https://dan.moi/assets/share-2.jpg',
+    `${origin}/assets/share-2.jpg`,
   )
 
   const noteMatch = url.pathname.match(/^\/notes\/([^/]+)\/?$/)
@@ -119,10 +122,14 @@ export default async function handler(request, context) {
 
     if (article?.title) {
       const title = article.title
-      const description = article.description || 'Dan Hemerlein\'s website.'
+      const description = article.description || "Dan Hemerlein's website."
       const pageUrl = `${origin}${url.pathname}`
 
-      html = withMetaTag(html, /(<title>)[^<]*(<\/title>)/, `${title} — dan.moi`)
+      html = withMetaTag(
+        html,
+        /(<title>)[^<]*(<\/title>)/,
+        `${title} — dan.moi`,
+      )
       html = withMetaTag(
         html,
         /(<meta name="description" content=")[^"]*("\s*\/>)/,
