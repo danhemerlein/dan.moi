@@ -3,6 +3,7 @@
 }
 
 .trigger-link {
+  display: inline-block;
   background: linear-gradient(
     45deg,
     var(--color-mint),
@@ -22,4 +23,18 @@
     padding: 0.75rem 1.75rem;
     font-size: 1.5rem;
   }
+}
+
+/* Dark theme: the light-mode pastels collapse to a flat grey (see
+   reset.css), which reads as a disabled button. Use an outlined
+   white/black treatment instead of a grey fill. */
+:root[data-theme="dark"] .trigger-link {
+  background: var(--color-white);
+  color: var(--color-ink);
+  /* box-shadow instead of border: a real border adds to the auto-sized
+     box's rendered dimensions (box-sizing: border-box only redistributes
+     space when width/height is explicit), which shifted the button size
+     between themes. An inset shadow paints the same outline without
+     affecting layout. */
+  box-shadow: inset 0 0 0 0.0625rem var(--color-ink);
 }
