@@ -9,7 +9,11 @@
   --color-lavender: #ecd9f6;
   --color-sky: #bddbff;
   --color-aqua: #d0f6fe;
-  --color-spring: #d2f7d8;
+  /* -soft (TA-06): each panel's body-bg tint, named after its own bg-open
+     hue + -soft (mint-soft/orchid-soft/azure-soft/cyan-soft) — see
+     --color-panel-*-body-bg below. Do not confuse with the unrelated
+     -cream family further down (panel-list row backgrounds). */
+  --color-mint-soft: #d2f7d8;
   --color-lime: #0ff536;
   --color-orchid: #dda2fc;
   --color-orchid-soft: #fcf6ff;
@@ -18,8 +22,16 @@
   --color-cyan: #6bd8ef;
   --color-cyan-soft: #eafbff;
   --color-white: #fff;
+  /* --color-white is the static primitive. --color-surface (TA-05) is a
+     distinct semantic "current page background" token: js/dropdown.js
+     overwrites it inline (via --color-panel-*-body-bg) to whichever tint
+     matches the currently open panel, then removes the override on close
+     — it is not a plain alias, it's meant to be mutated at runtime. */
   --color-surface: var(--color-white);
 
+  /* -cream (TA-06): panel-list row background tint for the 3 panels that
+     use panel-list.css (blog/code/music) — unrelated to the -soft family
+     above. moodboard has none since it doesn't use panel-list rows. */
   --color-mint-cream: #f4fff6;
   --color-mint-border: #c4e9ca;
   --color-mint-active: #ddf0e0;
@@ -50,7 +62,7 @@
      comments on the primitive tier above/below. */
   --color-panel-blog-bg: var(--color-mint);
   --color-panel-blog-bg-open: var(--color-lime);
-  --color-panel-blog-body-bg: var(--color-spring);
+  --color-panel-blog-body-bg: var(--color-mint-soft);
 
   --color-panel-code-bg: var(--color-lavender);
   --color-panel-code-bg-open: var(--color-orchid);
@@ -110,7 +122,7 @@
      --color-surface override). Pinned to white so the background stays
      pure white regardless of which panel is open, instead of each panel
      tinting it a slightly different off-white. */
-  --color-spring: var(--color-white);
+  --color-mint-soft: var(--color-white);
   --color-orchid-soft: var(--color-white);
   --color-azure-soft: var(--color-white);
   --color-cyan-soft: var(--color-white);
