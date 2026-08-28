@@ -35,6 +35,14 @@
   padding: 1rem;
 }
 
+/* Reviewed against fonts.css's type scale (TC-02): .panel-list__button's
+   mobile size (1rem) coincides with .type-body-sm, but its line-height
+   (1.3 vs 1.45), letter-spacing (0 vs -0.02em), and desktop bump to
+   1.125rem (a step .type-body-sm doesn't have) are all deliberate — this
+   is a list-row title, not prose. Kept as its own declaration rather than
+   forced into that class. .panel-list__title-fallback matches its
+   line-height for visual consistency between the two but uses a distinct
+   font-size (1.125rem) since it's a fallback label, not the primary title. */
 .panel-list__button {
   border: none;
   background: none;
