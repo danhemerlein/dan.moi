@@ -35,8 +35,11 @@
   --color-sky-border: #cad9eb;
   --color-gray-light: #f1f1f1;
 
-  /* Ink at opacity (base rgb matches --color-ink) */
-  --color-ink-6: rgba(27, 27, 27, 0.06);
+  /* Ink at 6% opacity. Relative color syntax so it always tracks the
+     active --color-ink (TH-01) instead of being pinned to light mode's
+     RGB triplet and silently drifting once dark mode changes --color-ink
+     (#1b1b1b -> #171717) without a matching override here. */
+  --color-ink-6: rgba(from var(--color-ink) r g b / 6%);
 
   /* Semantic tier — per-panel trigger colors.
      Each of the 4 dropdown-trigger panels (blog/writes-code/makes-music/
