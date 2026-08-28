@@ -63,11 +63,13 @@
             cursor: not-allowed;
           }
           /* Inset ring: default outline sits outside the border and is clipped by
-             dropdown-panel / panel-scroll overflow (top/left vanish at the scroll edge). */
+             dropdown-panel / panel-scroll overflow (top/left vanish at the scroll edge).
+             Defaults to --color-stone-gray rather than --color-lime, which fails
+             WCAG's ≥3:1 non-text contrast requirement against white (~1.5:1). */
           .trigger:focus-visible {
             outline: none;
             box-shadow: inset 0 0 0 0.125rem
-              var(--accessible-select-focus, var(--color-lime));
+              var(--accessible-select-focus, var(--color-stone-gray));
           }
           .trigger-label {
             flex: 1 1 auto;
