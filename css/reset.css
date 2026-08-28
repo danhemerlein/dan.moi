@@ -21,6 +21,17 @@
   --color-azure-soft: #e9f3ff;
   --color-cyan: #6bd8ef;
   --color-cyan-soft: #eafbff;
+  /* -ring: darkened, same-hue variants of lime/orchid/azure/cyan used only
+     for each trigger's focus-visible ring (accessibility follow-up).
+     lime/orchid/azure/cyan themselves are too light against white
+     (~1.4-2.4:1) to serve as a WCAG-compliant (>=3:1) focus indicator —
+     see --color-panel-*-focus-ring below. Each stays >=3.6:1 against
+     white. Dark mode collapses all four to --color-stone-gray instead of
+     keeping them distinct — see the dark override below. */
+  --color-lime-ring: #079d20;
+  --color-orchid-ring: #c052f9;
+  --color-azure-ring: #1f84ff;
+  --color-cyan-ring: #1393ae;
   --color-white: #fff;
   /* --color-white is the static primitive. --color-surface (TA-05) is a
      distinct semantic "current page background" token: js/dropdown.js
@@ -55,26 +66,30 @@
 
   /* Semantic tier — per-panel trigger colors.
      Each of the 4 dropdown-trigger panels (blog/writes-code/makes-music/
-     collects-moods) has a closed-state bg, an open-state bg (which doubles
-     as that trigger's focus-visible outline, see js/dropdown.js), and a
-     body-bg applied to the page while its panel is open. These names carry
-     that per-panel contract explicitly instead of it living only in the
+     collects-moods) has a closed-state bg, an open-state bg, a body-bg
+     applied to the page while its panel is open, and its own
+     focus-visible ring color (see js/dropdown.js). These names carry that
+     per-panel contract explicitly instead of it living only in the
      comments on the primitive tier above/below. */
   --color-panel-blog-bg: var(--color-mint);
   --color-panel-blog-bg-open: var(--color-lime);
   --color-panel-blog-body-bg: var(--color-mint-soft);
+  --color-panel-blog-focus-ring: var(--color-lime-ring);
 
   --color-panel-code-bg: var(--color-lavender);
   --color-panel-code-bg-open: var(--color-orchid);
   --color-panel-code-body-bg: var(--color-orchid-soft);
+  --color-panel-code-focus-ring: var(--color-orchid-ring);
 
   --color-panel-music-bg: var(--color-sky);
   --color-panel-music-bg-open: var(--color-azure);
   --color-panel-music-body-bg: var(--color-azure-soft);
+  --color-panel-music-focus-ring: var(--color-azure-ring);
 
   --color-panel-moodboard-bg: var(--color-aqua);
   --color-panel-moodboard-bg-open: var(--color-cyan);
   --color-panel-moodboard-body-bg: var(--color-cyan-soft);
+  --color-panel-moodboard-focus-ring: var(--color-cyan-ring);
 }
 
 /* Shared layout tokens (not color) — dropdown-panel scroll-height caps.
@@ -109,14 +124,19 @@
   --color-sky: var(--color-gray-light);
   --color-aqua: var(--color-gray-light);
   /* --color-panel-{blog,code,music,moodboard}-bg-open — unified the same
-     way. --color-panel-blog-bg-open also doubles as that trigger's
-     focus-visible ring (dropdown.js), so this also fixes its contrast
-     against the white background (was ~1.4:1, now ~5.3:1 via
-     --color-stone-gray). */
+     way. */
   --color-lime: var(--color-stone-gray);
   --color-orchid: var(--color-stone-gray);
   --color-azure: var(--color-stone-gray);
   --color-cyan: var(--color-stone-gray);
+  /* --color-panel-{blog,code,music,moodboard}-focus-ring — unlike bg/
+     bg-open, these are deliberately unified to one shared color in dark
+     mode (per-panel hue already isn't preserved anywhere else there), vs.
+     staying distinct per panel in light mode. */
+  --color-lime-ring: var(--color-stone-gray);
+  --color-orchid-ring: var(--color-stone-gray);
+  --color-azure-ring: var(--color-stone-gray);
+  --color-cyan-ring: var(--color-stone-gray);
   /* --color-panel-{blog,code,music,moodboard}-body-bg — the panel-open
      page background (js/dropdown.js applies whichever one via an inline
      --color-surface override). Pinned to white so the background stays

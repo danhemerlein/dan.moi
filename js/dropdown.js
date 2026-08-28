@@ -200,7 +200,7 @@
 
   class DropdownTrigger extends HTMLElement {
     static get observedAttributes() {
-      return ['bg', 'bg-open']
+      return ['bg', 'bg-open', 'focus-ring']
     }
 
     constructor() {
@@ -228,7 +228,8 @@
             }
           }
           button:focus-visible {
-            outline: 0.125rem solid var(--color-stone-gray);
+            outline: 0.125rem solid
+              var(--dropdown-trigger-focus-outline, var(--color-stone-gray));
             border-radius: 0.375rem;
           }
           /* Dark mode: every trigger is transparent with a thin ink border
@@ -284,7 +285,7 @@
     }
 
     attributeChangedCallback(name, _oldValue, _newValue) {
-      if (name !== 'bg' && name !== 'bg-open') return
+      if (name !== 'bg' && name !== 'bg-open' && name !== 'focus-ring') return
       this.syncOpenStyles()
     }
 
@@ -304,12 +305,16 @@
         this.style.removeProperty('--dropdown-trigger-bg')
       }
 
-      // Focus ring uses --color-stone-gray rather than the trigger's own
-      // accent (bg/bg-open), which fails WCAG's ≥3:1 non-text contrast
-      // requirement against the white page background for 3 of the 4
-      // panel accents in light mode (dark mode already resolved to
-      // stone-gray incidentally, via the accent token's own dark-mode
-      // override — this makes that the deliberate, theme-independent rule).
+      // Per-panel focus ring (light mode: distinct per trigger via the
+      // focus-ring attribute; dark mode: the shared --color-stone-gray
+      // fallback below, since --color-panel-*-focus-ring collapses to it
+      // there too — see reset.css).
+      const focusRing = this.getAttribute('focus-ring')
+      if (focusRing) {
+        this.style.setProperty('--dropdown-trigger-focus-outline', focusRing)
+      } else {
+        this.style.removeProperty('--dropdown-trigger-focus-outline')
+      }
     }
   }
 
