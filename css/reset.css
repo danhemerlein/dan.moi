@@ -37,6 +37,29 @@
 
   /* Ink at opacity (base rgb matches --color-ink) */
   --color-ink-6: rgba(27, 27, 27, 0.06);
+
+  /* Semantic tier — per-panel trigger colors.
+     Each of the 4 dropdown-trigger panels (blog/writes-code/makes-music/
+     collects-moods) has a closed-state bg, an open-state bg (which doubles
+     as that trigger's focus-visible outline, see js/dropdown.js), and a
+     body-bg applied to the page while its panel is open. These names carry
+     that per-panel contract explicitly instead of it living only in the
+     comments on the primitive tier above/below. */
+  --color-panel-blog-bg: var(--color-mint);
+  --color-panel-blog-bg-open: var(--color-lime);
+  --color-panel-blog-body-bg: var(--color-spring);
+
+  --color-panel-code-bg: var(--color-lavender);
+  --color-panel-code-bg-open: var(--color-orchid);
+  --color-panel-code-body-bg: var(--color-orchid-soft);
+
+  --color-panel-music-bg: var(--color-sky);
+  --color-panel-music-bg-open: var(--color-azure);
+  --color-panel-music-body-bg: var(--color-azure-soft);
+
+  --color-panel-moodboard-bg: var(--color-aqua);
+  --color-panel-moodboard-bg-open: var(--color-cyan);
+  --color-panel-moodboard-body-bg: var(--color-cyan-soft);
 }
 
 /* Dark theme overrides — literal black & white for now; a fuller dark
@@ -49,27 +72,27 @@
 :root[data-theme="dark"] {
   --color-ink: #171717;
 
-  /* mint/lavender/sky/aqua are each one dropdown-trigger's closed-state
-     `bg` — unified to a single flat grey rather than four near-identical
-     greys, since without hue there's no reason for them to differ. */
+  /* --color-panel-{blog,code,music,moodboard}-bg — unified to a single
+     flat grey rather than four near-identical greys, since without hue
+     there's no reason for them to differ. */
   --color-mint: var(--color-gray-light);
   --color-lavender: var(--color-gray-light);
   --color-sky: var(--color-gray-light);
   --color-aqua: var(--color-gray-light);
-  /* lime/orchid/azure/cyan are each one dropdown-trigger's `bg-open` —
-     unified the same way. --color-lime also doubles as the shared
-     focus-visible ring (dropdown.js/accessible-select.js), so this also
-     fixes its contrast against the white background (was ~1.4:1, now
-     ~5.3:1 via --color-stone-gray). */
+  /* --color-panel-{blog,code,music,moodboard}-bg-open — unified the same
+     way. --color-panel-blog-bg-open also doubles as that trigger's
+     focus-visible ring (dropdown.js), so this also fixes its contrast
+     against the white background (was ~1.4:1, now ~5.3:1 via
+     --color-stone-gray). */
   --color-lime: var(--color-stone-gray);
   --color-orchid: var(--color-stone-gray);
   --color-azure: var(--color-stone-gray);
   --color-cyan: var(--color-stone-gray);
-  /* spring/orchid-soft/azure-soft/cyan-soft are each one dropdown-trigger's
-     `body-bg` — the panel-open page background (js/dropdown.js applies
-     whichever one via an inline --color-surface override). Pinned to
-     white so the background stays pure white regardless of which panel is
-     open, instead of each panel tinting it a slightly different off-white. */
+  /* --color-panel-{blog,code,music,moodboard}-body-bg — the panel-open
+     page background (js/dropdown.js applies whichever one via an inline
+     --color-surface override). Pinned to white so the background stays
+     pure white regardless of which panel is open, instead of each panel
+     tinting it a slightly different off-white. */
   --color-spring: var(--color-white);
   --color-orchid-soft: var(--color-white);
   --color-azure-soft: var(--color-white);
