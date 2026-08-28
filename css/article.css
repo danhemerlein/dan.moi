@@ -96,7 +96,7 @@
 .article-body blockquote {
   margin: 0.75rem 0;
   padding-left: 0.85rem;
-  border-left: 3px solid var(--color-mint-border);
+  border-left: 0.1875rem solid var(--color-mint-border);
   opacity: 0.95;
 }
 
