@@ -30,7 +30,8 @@
 }
 
 .panel-scroll__list-footer__status {
-  line-height: 1.25rem;
+  /* 1.25rem / .type-ui's 0.75rem font-size (TC-03) */
+  line-height: 1.6667;
 }
 
 .panel-scroll__article {

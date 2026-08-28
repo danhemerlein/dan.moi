@@ -44,7 +44,8 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
 }
 
 .moodboard-panel__status {
-  line-height: 1.25rem;
+  /* 1.25rem / .type-ui's 0.75rem font-size (TC-03) */
+  line-height: 1.6667;
 }
 
 .moodboard-panel__status--error {
