@@ -6,9 +6,6 @@
 }
 
 .article-body {
-  font-family: var(--font-hypertext);
-  font-size: 1rem;
-  line-height: 1.45;
   color: var(--color-ink);
   margin-top: 1.5rem;
 }

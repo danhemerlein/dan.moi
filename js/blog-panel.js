@@ -174,7 +174,7 @@ const PANEL_HTML = `
         <div id="blog-post-meta" hidden></div>
         <article
           id="blog-post-body"
-          class="article-body"
+          class="article-body type-body-sm"
         ></article>
       </div>
       <div class="panel-scroll__custom-bar-thumb" aria-hidden="true"></div>
