@@ -62,6 +62,20 @@
   --color-panel-moodboard-body-bg: var(--color-cyan-soft);
 }
 
+/* Shared layout tokens (not color) — dropdown-panel scroll-height caps.
+   Each dropdown-panel[variant="scroll"] reads --dropdown-scroll-max-height
+   (js/dropdown.js) to cap its own height. Two values are intentionally
+   shared across panels rather than independently re-derived:
+   -list caps a closed-layout list view (blog list, writes-code/makes-music
+   intro lines — see index.css .middle-line); -detail caps an open article
+   detail view (blog article, code project). moodboard-panel.css uses its
+   own values instead — it's a full-height panel, not a list/detail view,
+   so it isn't a match for either. */
+:root {
+  --dropdown-scroll-max-height-list: min(48vh, calc(100vh - 14rem));
+  --dropdown-scroll-max-height-detail: calc(100dvh - 4rem);
+}
+
 /* Dark theme overrides — literal black & white for now; a fuller dark
    palette can be designed later. Background stays white and text stays a
    near-black ink (not pure #000); every pastel accent collapses to a

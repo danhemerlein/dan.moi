@@ -81,7 +81,7 @@ blog-panel:not(:defined) {
 .middle-line {
   margin-top: 0.75rem;
   /* Match blog intro: cap scroll height for writes-code / other dropdowns here */
-  --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
+  --dropdown-scroll-max-height: var(--dropdown-scroll-max-height-list);
 }
 
 .bottom-line {
