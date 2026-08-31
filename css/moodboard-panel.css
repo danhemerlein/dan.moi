@@ -3,7 +3,10 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
   display: none !important;
 }
 
-/* Full-height panel when moodboard is open. */
+/* Full-height panel when moodboard is open. Deliberately not
+   --dropdown-scroll-max-height-list/-detail (reset.css) — this is a
+   full-height grid panel, not a list or article-detail view, so it needs
+   its own cap. */
 .moodboard-open dropdown-panel#collects-moods {
   --dropdown-scroll-max-height: calc(100vh - 10rem);
 }
@@ -41,7 +44,8 @@ dropdown-panel#collects-moods:not([open]) #moodboard-panel {
 }
 
 .moodboard-panel__status {
-  line-height: 1.25rem;
+  /* 1.25rem / .type-ui's 0.75rem font-size (TC-03) */
+  line-height: 1.6667;
 }
 
 .moodboard-panel__status--error {

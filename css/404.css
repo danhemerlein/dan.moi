@@ -2,6 +2,12 @@
   margin-top: 1.5rem;
 }
 
+/* Reviewed against fonts.css's type scale (TC-02): font-size here matches
+   .type-body's responsive steps (1.25rem -> 1.5rem) exactly, but that class
+   also hardcodes color: var(--color-ink), which would break this button's
+   deliberate color: inherit below (see the dark-theme override further
+   down, which relies on inherit to swap to --color-ink only in dark mode).
+   Kept independent for that reason. */
 .trigger-link {
   display: inline-block;
   background: linear-gradient(

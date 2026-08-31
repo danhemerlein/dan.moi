@@ -1,10 +1,10 @@
 dropdown-panel#blog {
   /* In-flow panel: max height + inner scroll so layout doesn’t grow unbounded. */
-  --dropdown-scroll-max-height: min(48vh, calc(100vh - 14rem));
+  --dropdown-scroll-max-height: var(--dropdown-scroll-max-height-list);
 }
 
 dropdown-panel#blog.blog-panel--article {
-  --dropdown-scroll-max-height: calc(100dvh - 4rem);
+  --dropdown-scroll-max-height: var(--dropdown-scroll-max-height-detail);
 }
 
 dropdown-panel#blog::part(panel) {
