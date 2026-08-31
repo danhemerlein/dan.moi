@@ -126,7 +126,7 @@ const PANEL_HTML = `
         <h2 id="code-project-title" class="article-title"></h2>
         <p id="code-project-timeline" class="code-project-meta type-ui mt-2 font-normal uppercase" hidden></p>
         <div id="code-project-hero" class="code-project__hero flex w-full" hidden></div>
-        <article id="code-project-body" class="article-body"></article>
+        <article id="code-project-body" class="article-body type-body-sm"></article>
       </div>
       <div class="panel-scroll__custom-bar-thumb" aria-hidden="true"></div>
     </div>

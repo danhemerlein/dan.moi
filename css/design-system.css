@@ -382,6 +382,6 @@ ds-color-swatch {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   line-height: 1.6;
-  color: var(--color-spring);
+  color: var(--color-mint-soft);
   white-space: pre;
 }
