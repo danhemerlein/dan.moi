@@ -34,4 +34,13 @@
       navList.hidden = true
     })
   }
+
+  const demoSelect = document.getElementById('ds-demo-select')
+  if (demoSelect) {
+    demoSelect.setOptions([
+      { value: '', label: 'all years' },
+      { value: '2026', label: '2026' },
+      { value: '2025', label: '2025' },
+    ])
+  }
 })()

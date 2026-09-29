@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/theme-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
+      />
+    </noscript>
+    <link rel="stylesheet" href="/css/bundle.css" />
+    <link rel="stylesheet" href="/css/docs.css" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <title>dan.moi - developer guide</title>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/design-system.js" defer></script>
+  </head>
+  <body>
+    <theme-toggle></theme-toggle>
+    <div class="docs-page">
+      <nav class="docs-nav">
+        <button
+          type="button"
+          class="docs-nav__toggle lg-hidden type-ui uppercase w-full flex items-center justify-between"
+          aria-expanded="false"
+          aria-controls="docs-nav-list"
+        >
+          on this page
+          <span class="docs-nav__toggle-icon" aria-hidden="true"></span>
+        </button>
+        <ol class="docs-nav__list flex flex-col gap-0" id="docs-nav-list" hidden>
+          <li><a href="#overview" class="docs-nav__link type-label">Overview</a></li>
+          <li><a href="#running-locally" class="docs-nav__link type-label">Running the app locally</a></li>
+          <li><a href="#contentful" class="docs-nav__link type-label">How it fetches from Contentful</a></li>
+          <li><a href="#dependencies" class="docs-nav__link type-label">Key dependencies</a></li>
+          <li><a href="#decisions" class="docs-nav__link type-label">Key technical decisions</a></li>
+          <li><a href="#contributing" class="docs-nav__link type-label">Contributing</a></li>
+        </ol>
+      </nav>
+
+      <div class="docs-content">
+        <a href="/" class="docs-back type-ui uppercase">&larr; dan.moi</a>
+        <nav class="docs-tabs flex gap-3" aria-label="Documentation">
+          <a href="/docs/developer-guide.html" class="docs-tabs__link type-ui uppercase" aria-current="page">developer guide</a>
+          <a href="/docs/changelog.html" class="docs-tabs__link type-ui uppercase">change log</a>
+        </nav>
+        <header class="docs-header">
+          <p class="docs-eyebrow type-ui uppercase">dan.moi</p>
+          <h1 class="docs-title type-heading-xl">Developer Guide</h1>
+          <p class="docs-intro type-body-sm">
+            How to run this project locally, how it talks to Contentful, what it depends on,
+            the decisions behind its architecture, and how to contribute a change.
+          </p>
+        </header>
+
+        <main class="docs-sections flex flex-col">
+          <article class="docs-section" id="overview">
+            <h2 class="docs-section__title type-heading-l">Overview</h2>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>dan.moi is a single-page personal site built entirely with vanilla JavaScript and native Web Components &mdash; no framework, no bundler, and no build step. Four dropdown panels (Blog, Writes Code, Makes Music, and Collects Moods) each follow the same two-pane pattern, a list view that opens into a detail view, and all of their content comes from Contentful over GraphQL.</p>
+              <p>The rest of this guide covers how to run the project, how it talks to Contentful, what it depends on, the reasoning behind its main architectural choices, and how to contribute a change.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="running-locally">
+            <h2 class="docs-section__title type-heading-l">Running the App Locally</h2>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>To run the site on a local machine, follow these steps:</p>
+              <ol>
+                <li>Copy <code>.env.example</code> to <code>.env</code> and fill in a Contentful space ID and access token.</li>
+                <li>Run <code>node serve.mjs</code> from the project root.</li>
+                <li>Open <code>http://localhost:3333</code> in a browser.</li>
+              </ol>
+              <p>Set the <code>PORT</code> environment variable to serve on a different port, for example <code>PORT=1234 node serve.mjs</code>. The server reads <code>.env</code> and exposes the Contentful credentials to the browser at runtime &mdash; nothing is baked in at build time, because there is no build step.</p>
+              <h3>Jumping straight into a panel</h3>
+              <p>Append one of these query parameters to any URL, including a direct article link, to open a panel automatically during development:</p>
+              <ul>
+                <li><code>?dev-mode=blog-list</code> &mdash; Blog panel opens and stays open</li>
+                <li><code>?dev-mode=blog-article</code> &mdash; Blog panel opens with the first article loaded</li>
+                <li><code>?dev-mode=code-list</code> &mdash; Writes Code panel opens and stays open</li>
+                <li><code>?dev-mode=code-project</code> &mdash; Writes Code panel opens with the first project loaded</li>
+                <li><code>?dev-mode=music-list</code> &mdash; Makes Music panel opens and stays open</li>
+                <li><code>?dev-mode=moodboard</code> &mdash; Collects Moods panel opens and stays open</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="docs-section" id="contentful">
+            <h2 class="docs-section__title type-heading-l">How It Fetches from Contentful</h2>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>All content comes from Contentful&rsquo;s GraphQL Content API. <code>js/contentful-graphql.js</code> sends requests directly to <code>https://graphql.contentful.com/content/v1/spaces/&lt;space-id&gt;/environments/master</code> with <code>fetch</code>, authenticated by a bearer token &mdash; the project depends on no Contentful SDK.</p>
+              <p>Every fetch function returns a <code>{ data, errors }</code> tuple instead of throwing, so the calling panel decides how to handle a failed request rather than needing a try/catch around every call.</p>
+              <p>The Contentful GraphQL API caps a single collection query at 100 items, so <code>contentful-graphql.js</code> pages through larger collections with a <code>skip</code> argument. The blog and moodboard panels drive that pagination with an <code>IntersectionObserver</code> that requests the next page as the reader scrolls near the bottom of the list.</p>
+              <p>Rich text fields render through a local implementation in <code>js/contentful-rich-text-html.js</code> rather than a CDN-hosted renderer, removing a runtime dependency on an external script for content that every blog post and code project article depends on.</p>
+              <p>Credentials never ship in the repository. In development, <code>serve.mjs</code> reads <code>.env</code> and exposes it to the browser through a <code>/contentful-env.js</code> endpoint as <code>window.CONTENTFUL_CONFIG</code>. In production, <code>netlify/functions/contentful-env.js</code> serves the same shape from Netlify&rsquo;s own environment variables.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="dependencies">
+            <h2 class="docs-section__title type-heading-l">Key Dependencies</h2>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The project has no <code>package.json</code> and installs no npm packages. Every script in <code>js/</code> runs unmodified in the browser, so the dependencies below are services and assets, not libraries.</p>
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th class="type-label uppercase">Dependency</th>
+                    <th class="type-label uppercase">Used for</th>
+                    <th class="type-label uppercase">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Contentful GraphQL Content API</td>
+                    <td>All panel content (blog posts, code projects, music projects, moodboard entries)</td>
+                    <td>Queried directly with <code>fetch</code>; no Contentful SDK</td>
+                  </tr>
+                  <tr>
+                    <td>Roboto Mono (Google Fonts)</td>
+                    <td>UI and label typography (<code>.type-ui</code>, <code>.type-label</code>)</td>
+                    <td>The only external stylesheet the site loads</td>
+                  </tr>
+                  <tr>
+                    <td>00Hypertext</td>
+                    <td>Body and heading typography</td>
+                    <td>Self-hosted <code>.woff2</code>/<code>.woff</code> files in <code>assets/fonts/</code>; no external font host</td>
+                  </tr>
+                  <tr>
+                    <td>Netlify</td>
+                    <td>Hosting, plus <code>netlify/functions/</code> and <code>netlify/edge-functions/</code></td>
+                    <td>Serves the CSS bundle, the Contentful environment endpoint, and the Open Graph share image in production</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="docs-section" id="decisions">
+            <h2 class="docs-section__title type-heading-l">Key Technical Decisions</h2>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>A few decisions shape most of the codebase. Each is described here with the reasoning behind it.</p>
+              <div class="docs-decisions flex flex-col">
+                <div class="docs-decision">
+                  <p class="docs-decision__title type-heading-m">Vanilla web components, no framework</p>
+                  <p class="docs-decision__body">Every panel and reusable primitive is a native Custom Element, not a React, Vue, or Svelte component. The project trades a component framework&rsquo;s conveniences for zero build step and zero runtime dependency: <code>node serve.mjs</code> needs no compile stage, and any browser can load <code>index.html</code> directly.</p>
+                </div>
+                <div class="docs-decision">
+                  <p class="docs-decision__title type-heading-m">CSS custom-property design tokens</p>
+                  <p class="docs-decision__body"><code>css/reset.css</code> defines the site&rsquo;s color palette as CSS custom properties (<code>--color-*</code>), and every panel and component reads from that token set instead of hardcoding colors. A later refactor added semantic per-panel tokens, such as <code>--color-panel-blog-bg</code>, so each of the four panels&rsquo; trigger, background, and focus-ring colors are named by role rather than by raw hue.</p>
+                </div>
+                <div class="docs-decision">
+                  <p class="docs-decision__title type-heading-m">A utility-class system over component CSS</p>
+                  <p class="docs-decision__body"><code>css/css-utils.css</code> provides a small, Tailwind-style set of single-purpose classes for layout, spacing, and typography, composed directly in HTML. A component stylesheet only adds a rule when no utility covers the need: a unique value, a complex selector, or a property no utility exposes.</p>
+                </div>
+                <div class="docs-decision">
+                  <p class="docs-decision__title type-heading-m">CSS bundled and minified at request time, not at build time</p>
+                  <p class="docs-decision__body"><code>index.html</code> loads a single <code>/css/bundle.css</code>. <code>netlify/functions/css-bundle.js</code> and its development equivalent in <code>serve.mjs</code> concatenate and minify the files listed in <code>CSS_BUNDLE_FILES</code> on every request, trading a small amount of per-request server work for keeping the project&rsquo;s zero-build-step constraint.</p>
+                </div>
+                <div class="docs-decision">
+                  <p class="docs-decision__title type-heading-m">Dark mode is opt-in only</p>
+                  <p class="docs-decision__body">The site does not follow the visitor&rsquo;s <code>prefers-color-scheme</code> automatically. A first-time visitor always sees light mode&rsquo;s full-color branding; dark mode is only reached through the explicit toggle in <code>theme-toggle.js</code>, and that choice then persists in <code>localStorage</code>. This is a deliberate product decision documented directly in <code>theme-init.js</code>, not an oversight.</p>
+                </div>
+                <div class="docs-decision">
+                  <p class="docs-decision__title type-heading-m">Rich text rendered locally, not from a CDN</p>
+                  <p class="docs-decision__body">Contentful rich text fields were originally rendered through a CDN-hosted ESM import. <code>js/contentful-rich-text-html.js</code> now implements that rendering locally, removing a runtime dependency on an external script for content every blog post and code project article depends on.</p>
+                </div>
+                <div class="docs-decision">
+                  <p class="docs-decision__title type-heading-m">A design-system audit skill runs against the codebase periodically</p>
+                  <p class="docs-decision__body"><code>.claude/skills/design-system-ops/</code> is a Claude Code skill that audits the project&rsquo;s tokens, typography, and accessibility for drift. Its diagnostics have already driven fixes to focus-ring contrast, token naming, and typography-scale conformance &mdash; see the <a href="/docs/changelog.html#commit-df00486">change log</a> for the most recent pass.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="docs-section" id="contributing">
+            <h2 class="docs-section__title type-heading-l">Contributing</h2>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The project&rsquo;s git history shows a consistent branching pattern: feature and fix work happens on a branch off <code>develop</code>, named for what it does (<code>feat/...</code>, <code>fix/...</code>, or <code>refactor-N</code>), and merges into <code>develop</code> through a pull request. A separate pull request from <code>develop</code> into <code>main</code> acts as a release, bundling everything <code>develop</code> has accumulated since the last one.</p>
+              <p>To propose a change:</p>
+              <ol>
+                <li>Branch from <code>develop</code>, using a <code>feat/</code>, <code>fix/</code>, or <code>refactor-</code> prefix that describes the change.</li>
+                <li>Load the <code>/css</code> skill before writing or editing any HTML or CSS. It documents the full utility class reference and the rules this project enforces &mdash; no <code>px</code> units outside hairline borders, no inline styles, unitless <code>line-height</code>, and more.</li>
+                <li>Run <code>node serve.mjs</code> and check the change in a real browser. The project has no automated test suite; a browser check on the target devices is the verification step.</li>
+                <li>Open a pull request into <code>develop</code>.</li>
+              </ol>
+              <p>Target devices are a MacBook Pro (desktop Safari and Chrome) and an iPhone (iOS Safari) &mdash; there is no Android or other mobile browser to support.</p>
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
