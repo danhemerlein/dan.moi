@@ -24,6 +24,9 @@
     <title>dan.moi - design system</title>
     <script src="/js/theme-toggle.js" defer></script>
     <script src="/js/dropdown.js" defer></script>
+    <script src="/js/accessible-select.js" defer></script>
+    <script src="/js/image.js" defer></script>
+    <script src="/js/video.js" defer></script>
     <script src="/js/design-system.js" defer></script>
   </head>
   <body>
@@ -81,6 +84,62 @@
                   href="#component-dropdown-panel"
                   class="ds-nav__sublink type-label uppercase"
                   >dropdown-panel</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-accessible-select"
+                  class="ds-nav__sublink type-label uppercase"
+                  >accessible-select</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-image-element"
+                  class="ds-nav__sublink type-label uppercase"
+                  >image-element</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-video-element"
+                  class="ds-nav__sublink type-label uppercase"
+                  >video-element</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-theme-toggle"
+                  class="ds-nav__sublink type-label uppercase"
+                  >theme-toggle</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-blog-panel"
+                  class="ds-nav__sublink type-label uppercase"
+                  >blog-panel</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-code-panel"
+                  class="ds-nav__sublink type-label uppercase"
+                  >code-panel</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-music-panel"
+                  class="ds-nav__sublink type-label uppercase"
+                  >music-panel</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#component-moodboard-panel"
+                  class="ds-nav__sublink type-label uppercase"
+                  >moodboard-panel</a
                 >
               </li>
             </ul>
@@ -563,6 +622,635 @@
                     >
                   </li>
                 </ul>
+              </div>
+            </div>
+
+            <!-- accessible-select -->
+            <div class="ds-component" id="component-accessible-select">
+              <h3 class="ds-component__name type-heading-m">
+                accessible-select
+              </h3>
+              <p class="ds-component__desc type-body-sm">
+                A shadow-DOM combobox implementing the WAI-ARIA listbox
+                pattern as a native
+                <code class="ds-inline-code">&lt;select&gt;</code> replacement.
+                Options aren&rsquo;t known until Contentful data loads, so
+                they&rsquo;re set programmatically with
+                <code class="ds-inline-code">setOptions()</code> rather than
+                as markup. Used by the blog panel&rsquo;s year filter.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  demo
+                </h4>
+                <div class="ds-component__demo">
+                  <accessible-select
+                    id="ds-demo-select"
+                    placeholder="all years"
+                  ></accessible-select>
+                </div>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui">disabled</span>
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Boolean. Also readable/settable as the
+                      <code class="ds-inline-code">.disabled</code>
+                      property.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui"
+                        >placeholder</span
+                      >
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Label shown before the reader has picked an option.
+                      Once they commit a value, the picked option&rsquo;s
+                      label replaces it &mdash; even if that value is an
+                      empty string (e.g. an &ldquo;all&rdquo; option).</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  properties &amp; methods
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui">value</span>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Get or set the current selection by its
+                      <code class="ds-inline-code">value</code>.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >setOptions(options)</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >Replaces the option list. Takes an array of
+                      <code class="ds-inline-code"
+                        >{ value, label }</code
+                      >. If the current value isn&rsquo;t in the new list, it
+                      falls back to the first option.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  css parts
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >::part(trigger)</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >The clickable combobox button.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >::part(listbox)</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >The popover list of options.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  events
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui">change</span>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Fires when the reader picks an option. detail:
+                      <code class="ds-inline-code">{ value }</code>.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;accessible-select id="year-filter" placeholder="all years"&gt;&lt;/accessible-select&gt;
+
+&lt;script&gt;
+  document.getElementById('year-filter').setOptions([
+    { value: '', label: 'all years' },
+    { value: '2026', label: '2026' },
+  ])
+&lt;/script&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- image-element -->
+            <div class="ds-component" id="component-image-element">
+              <h3 class="ds-component__name type-heading-m">image-element</h3>
+              <p class="ds-component__desc type-body-sm">
+                A shadow-DOM wrapper around a native
+                <code class="ds-inline-code">&lt;img&gt;</code>, used for
+                Contentful-sourced images across the blog, code, and music
+                panels. Exists so image rendering has one owned place to add
+                shared behavior later, rather than every panel writing its
+                own <code class="ds-inline-code">&lt;img&gt;</code> markup.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  demo
+                </h4>
+                <div class="ds-component__demo">
+                  <image-element
+                    src="/assets/share-2.jpg"
+                    alt="Dan Hemerlein"
+                    width="12rem"
+                  ></image-element>
+                </div>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui">src</span>
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Image URL. Omitting it removes the internal
+                      <code class="ds-inline-code">src</code> entirely rather
+                      than rendering a broken-image icon.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui">alt</span>
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Defaults to an empty string, not a missing
+                      attribute &mdash; treat every image as needing
+                      real alt text.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui"
+                        >width / height</span
+                      >
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Applied as inline CSS on the internal
+                      <code class="ds-inline-code">&lt;img&gt;</code>, so any
+                      CSS length works (e.g.
+                      <code class="ds-inline-code">12rem</code>), not just a
+                      bare pixel number.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui"
+                        >loading / decoding</span
+                      >
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Passed straight through to the internal
+                      <code class="ds-inline-code">&lt;img&gt;</code> (e.g.
+                      <code class="ds-inline-code">loading="lazy"</code>).</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  css parts
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >::part(img)</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >The internal &lt;img&gt; element.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;image-element
+  src="/assets/share-2.jpg"
+  alt="Dan Hemerlein"
+  width="12rem"
+  loading="lazy"
+&gt;&lt;/image-element&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- video-element -->
+            <div class="ds-component" id="component-video-element">
+              <h3 class="ds-component__name type-heading-m">video-element</h3>
+              <p class="ds-component__desc type-body-sm">
+                A shadow-DOM looping background video, used for the site&rsquo;s
+                3D UFO and Saturn clips. On Safari, which decodes VP9 WebM but
+                ignores its alpha track, it composites a two-column
+                color+alpha-mask
+                <code class="ds-inline-code">.webm</code> onto a
+                <code class="ds-inline-code">&lt;canvas&gt;</code>
+                frame by frame instead; every other browser plays the
+                <code class="ds-inline-code">.webm</code> directly, since it
+                supports WebM alpha natively.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  demo
+                </h4>
+                <div class="ds-component__demo">
+                  <video-element
+                    src="/assets/ufo.webm"
+                    description="A looping animation of a 3D UFO with a futuristic monochromatic color scheme."
+                    show-controls
+                  ></video-element>
+                </div>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui">src</span>
+                      <span
+                        class="ds-attr-badge ds-attr-badge--required type-label uppercase"
+                        >required</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Path to the color+alpha
+                      <code class="ds-inline-code">.webm</code>. On Safari the
+                      component swaps
+                      <code class="ds-inline-code">.webm</code> for
+                      <code class="ds-inline-code">_split.webm</code> and
+                      expects that file to exist alongside it.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui"
+                        >description</span
+                      >
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Becomes a visually-hidden caption for screen readers.
+                      The video itself is
+                      <code class="ds-inline-code">aria-hidden</code>, so this
+                      is the only description assistive tech will
+                      announce.</span
+                    >
+                  </li>
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <div class="flex items-baseline gap-2">
+                      <span class="ds-attr-list__name type-ui"
+                        >show-controls</span
+                      >
+                      <span
+                        class="ds-attr-badge ds-attr-badge--optional type-label"
+                        >optional</span
+                      >
+                    </div>
+                    <span class="ds-attr-list__desc type-ui"
+                      >Boolean. Reveals a play/pause button overlay.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  properties &amp; methods
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >setPlaying(playing)</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >Plays or pauses this instance. Clicking any
+                      video-element&rsquo;s own play/pause button calls this
+                      on <em>every</em> video-element on the page, so all
+                      background clips play or pause together.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;video-element
+  src="/assets/ufo.webm"
+  description="A looping animation of a 3D UFO."
+  show-controls
+&gt;&lt;/video-element&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- theme-toggle -->
+            <div class="ds-component" id="component-theme-toggle">
+              <h3 class="ds-component__name type-heading-m">theme-toggle</h3>
+              <p class="ds-component__desc type-body-sm">
+                The light/dark switch shown in the top-right corner of every
+                page (see this page&rsquo;s own corner). Reads and writes the
+                <code class="ds-inline-code">data-theme</code> attribute on
+                <code class="ds-inline-code">&lt;html&gt;</code> and persists
+                the choice to <code class="ds-inline-code">localStorage</code>.
+                Dark mode is opt-in only: a first-time visitor always sees
+                light mode, regardless of their OS
+                <code class="ds-inline-code">prefers-color-scheme</code> &mdash;
+                <code class="ds-inline-code">theme-init.js</code> applies the
+                stored choice (or defaults to light) before first paint, so
+                there&rsquo;s no flash of the wrong theme.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  demo
+                </h4>
+                <p class="ds-attr-list__desc type-ui">
+                  See the toggle in this page&rsquo;s own top-right corner.
+                  <code class="ds-inline-code">theme-toggle</code> is styled
+                  <code class="ds-inline-code">position: fixed</code>
+                  globally (in <code class="ds-inline-code"
+                    >css/theme-toggle.css</code
+                  >), so a second instance placed inline here would render on
+                  top of that corner instance instead of inside this box.
+                </p>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <p class="ds-attr-list__desc type-ui">
+                  None. Add it anywhere in the document; every instance stays
+                  in sync since they all read and write the same
+                  <code class="ds-inline-code">data-theme</code> attribute
+                  &mdash; though in practice, only one should ever be on the
+                  page at a time, given the fixed positioning above.
+                </p>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  events
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >theme:changed</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >Dispatched on document when the mode changes. detail:
+                      <code class="ds-inline-code"
+                        >{ theme: 'light' | 'dark' }</code
+                      >.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;theme-toggle&gt;&lt;/theme-toggle&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- blog-panel -->
+            <div class="ds-component" id="component-blog-panel">
+              <h3 class="ds-component__name type-heading-m">blog-panel</h3>
+              <p class="ds-component__desc type-body-sm">
+                Renders the Blog panel&rsquo;s full list-to-detail view: a
+                year-filterable, infinite-scroll list of posts (via
+                <code class="ds-inline-code">accessible-select</code> and an
+                <code class="ds-inline-code">IntersectionObserver</code>),
+                and an article detail view rendered with the site&rsquo;s
+                local rich text renderer. A zero-configuration singleton
+                &mdash; it builds its own markup and fetches its own content
+                as soon as it&rsquo;s connected to the page.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <p class="ds-attr-list__desc type-ui">
+                  None. Slot it inside a
+                  <code class="ds-inline-code">dropdown-panel</code> and it
+                  handles the rest.
+                </p>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  events
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >dropdown:state-changed</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >Listened for on document, so the panel can hide the
+                      site&rsquo;s introductory copy behind it while open.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;dropdown-panel id="blog" variant="scroll"&gt;
+  &lt;blog-panel&gt;&lt;/blog-panel&gt;
+&lt;/dropdown-panel&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- code-panel -->
+            <div class="ds-component" id="component-code-panel">
+              <h3 class="ds-component__name type-heading-m">code-panel</h3>
+              <p class="ds-component__desc type-body-sm">
+                Renders the Writes Code panel: a list of code projects that
+                opens into a detail view with a hero image, a timeline, and
+                the project&rsquo;s rich text body. Fetches its full project
+                list in one request &mdash; no pagination, unlike
+                <code class="ds-inline-code">blog-panel</code>.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <p class="ds-attr-list__desc type-ui">
+                  None. Slot it inside a
+                  <code class="ds-inline-code">dropdown-panel</code> and it
+                  handles the rest.
+                </p>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;dropdown-panel id="writes-code" variant="scroll"&gt;
+  &lt;code-panel&gt;&lt;/code-panel&gt;
+&lt;/dropdown-panel&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- music-panel -->
+            <div class="ds-component" id="component-music-panel">
+              <h3 class="ds-component__name type-heading-m">music-panel</h3>
+              <p class="ds-component__desc type-body-sm">
+                Renders the Makes Music panel&rsquo;s list view. Fetches every
+                music project in one request via
+                <code class="ds-inline-code">window.fetchAllMusicProjects()</code>
+                &mdash; the simplest of the four panels, with no filtering,
+                pagination, or detail view of its own.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <p class="ds-attr-list__desc type-ui">
+                  None. Slot it inside a
+                  <code class="ds-inline-code">dropdown-panel</code> and it
+                  handles the rest.
+                </p>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;dropdown-panel id="makes-music" variant="scroll"&gt;
+  &lt;music-panel&gt;&lt;/music-panel&gt;
+&lt;/dropdown-panel&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- moodboard-panel -->
+            <div class="ds-component" id="component-moodboard-panel">
+              <h3 class="ds-component__name type-heading-m">
+                moodboard-panel
+              </h3>
+              <p class="ds-component__desc type-body-sm">
+                Renders the Collects Moods panel&rsquo;s image grid, paging
+                through entries with an
+                <code class="ds-inline-code">IntersectionObserver</code> as
+                the reader scrolls, the same pattern
+                <code class="ds-inline-code">blog-panel</code> uses for its
+                list. Also watches a media query to adjust its grid on
+                resize.
+              </p>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  attributes
+                </h4>
+                <p class="ds-attr-list__desc type-ui">
+                  None. Slot it inside a
+                  <code class="ds-inline-code">dropdown-panel</code> and it
+                  handles the rest.
+                </p>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  events
+                </h4>
+                <ul class="ds-attr-list flex flex-col gap-2">
+                  <li class="ds-attr-list__item flex flex-col gap-1">
+                    <span class="ds-attr-list__name type-ui"
+                      >dropdown:state-changed</span
+                    >
+                    <span class="ds-attr-list__desc type-ui"
+                      >Listened for on document, so the panel can hide the
+                      site&rsquo;s introductory copy behind it while
+                      open.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="ds-component__section">
+                <h4 class="ds-component__section-label type-ui uppercase">
+                  example
+                </h4>
+                <pre class="ds-code"><code>&lt;dropdown-panel id="collects-moods" variant="scroll"&gt;
+  &lt;moodboard-panel&gt;&lt;/moodboard-panel&gt;
+&lt;/dropdown-panel&gt;</code></pre>
               </div>
             </div>
           </section>

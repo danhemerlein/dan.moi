@@ -1,0 +1,265 @@
+html,
+body {
+  height: auto;
+  max-height: none;
+  overflow: auto;
+}
+
+.docs-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+@media (min-width: 768px) {
+  .docs-page {
+    grid-template-columns: 12rem 1fr;
+    gap: 3rem;
+    padding: 3rem 2rem 8rem;
+    align-items: start;
+  }
+}
+
+/* ─── Sidebar nav ───────────────────────────────────── */
+
+.docs-nav {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-ink-6);
+}
+
+@media (min-width: 768px) {
+  .docs-nav {
+    position: sticky;
+    top: 3rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.docs-nav__toggle {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--color-ink);
+  cursor: pointer;
+  font: inherit;
+}
+
+.docs-nav__toggle-icon {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1px solid var(--color-ink); /* px: hairline border */
+  border-bottom: 1px solid var(--color-ink); /* px: hairline border */
+  transform: rotate(45deg);
+  transition: transform 200ms ease;
+}
+
+.docs-nav__toggle[aria-expanded="true"] .docs-nav__toggle-icon {
+  transform: rotate(-135deg);
+}
+
+.docs-nav__list {
+  margin-top: 1rem;
+}
+
+.docs-nav__list[hidden] {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .docs-nav__list {
+    margin-top: 0;
+  }
+
+  .docs-nav__list[hidden] {
+    display: flex;
+  }
+}
+
+.docs-nav__link {
+  display: block;
+  text-decoration: none;
+  color: var(--color-stone-gray);
+  padding: 0.3rem 0;
+  line-height: 1.35;
+}
+
+.docs-nav__link:hover,
+.docs-nav__link:focus-visible {
+  color: var(--color-ink);
+}
+
+.docs-nav__link[aria-current="true"] {
+  color: var(--color-ink);
+}
+
+/* ─── Header ────────────────────────────────────────── */
+
+.docs-content {
+  min-width: 0;
+}
+
+.docs-back {
+  display: inline-block;
+  color: var(--color-stone-gray);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+}
+
+.docs-back:hover,
+.docs-back:focus-visible {
+  color: var(--color-ink);
+}
+
+.docs-tabs {
+  margin-bottom: 2rem;
+}
+
+.docs-tabs__link {
+  text-decoration: none;
+  color: var(--color-stone-gray);
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid transparent;
+}
+
+.docs-tabs__link:hover,
+.docs-tabs__link:focus-visible {
+  color: var(--color-ink);
+}
+
+.docs-tabs__link[aria-current="page"] {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}
+
+.docs-header {
+  margin-bottom: 3.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-ink-6);
+}
+
+.docs-eyebrow {
+  color: var(--color-stone-gray);
+  margin-bottom: 0.75rem;
+}
+
+.docs-title {
+  color: var(--color-ink);
+  margin-bottom: 1rem;
+}
+
+.docs-intro {
+  color: var(--color-stone-gray);
+  max-width: 38rem;
+}
+
+/* ─── Sections ──────────────────────────────────────── */
+
+.docs-sections {
+  gap: 3.5rem;
+}
+
+.docs-section {
+  scroll-margin-top: 2rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid var(--color-ink-6);
+}
+
+.docs-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.docs-section__title {
+  color: var(--color-ink);
+  margin-bottom: 0.75rem;
+}
+
+.docs-section__meta {
+  display: block;
+  color: var(--color-stone-gray);
+  margin-bottom: 1.5rem;
+}
+
+.docs-section__meta code {
+  font-family: var(--font-mono);
+}
+
+.docs-section__body {
+  color: var(--color-ink);
+}
+
+.docs-section__body h3 {
+  color: var(--color-ink);
+}
+
+/* ─── Dependency table ──────────────────────────────── */
+
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.docs-table th,
+.docs-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.75rem 1rem 0.75rem 0;
+  border-bottom: 1px solid var(--color-ink-6);
+}
+
+.docs-table th {
+  color: var(--color-stone-gray);
+}
+
+.docs-table td {
+  color: var(--color-ink);
+}
+
+.docs-table code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+/* ─── Decision cards ────────────────────────────────── */
+/* Left-border accent cycles through the four panel hues (blog/code/music/
+   moodboard) as a light callback to the site's own palette. */
+
+.docs-decisions {
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.docs-decision {
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 0.1875rem solid var(--color-mint-border);
+}
+
+.docs-decision:nth-child(4n + 2) {
+  border-left-color: var(--color-lilac-border);
+}
+
+.docs-decision:nth-child(4n + 3) {
+  border-left-color: var(--color-sky-border);
+}
+
+.docs-decision:nth-child(4n + 4) {
+  border-left-color: var(--color-wisteria-border);
+}
+
+.docs-decision__title {
+  color: var(--color-ink);
+  margin-bottom: 0.35rem;
+}
+
+.docs-decision__body {
+  color: var(--color-ink);
+}
