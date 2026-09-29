@@ -385,6 +385,7 @@ class CodePanel extends HTMLElement {
         const id = projectBtn.dataset.id?.trim()
         if (id) {
           ev.preventDefault()
+          window.navHistory?.sync({ panel: 'writes-code', detail: id })
           openProjectById(id)
         }
         return
@@ -404,7 +405,16 @@ class CodePanel extends HTMLElement {
 
     backBtn.addEventListener('click', () => {
       layoutDebugMark('code:back-click')
+      window.navHistory?.sync({ panel: 'writes-code' })
       showListView()
+    })
+
+    // Browser back/forward (see nav-history.js); the dropdown is already open.
+    document.addEventListener('nav:restore', (e) => {
+      const { panel: panelId, detail: id } = e.detail
+      if (panelId !== 'writes-code') return
+      if (id) openProjectById(id)
+      else showListView()
     })
 
     document.addEventListener('dropdown:state-changed', () => {

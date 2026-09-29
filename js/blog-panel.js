@@ -422,11 +422,6 @@ class BlogPanel extends HTMLElement {
       })
       showArticleView()
 
-      const articleUrl = '/notes/' + encodeURIComponent(handle)
-      if (location.pathname !== articleUrl) {
-        history.pushState({ blogHandle: handle }, '', articleUrl)
-      }
-
       bodyEl.innerHTML = ARTICLE_BODY_SKELETON_HTML
       bodyEl.setAttribute('aria-busy', 'true')
       layoutDebugMark('blog:skeleton-injected', {
@@ -552,6 +547,7 @@ class BlogPanel extends HTMLElement {
         )
         blogDropdown.setOpen(true)
       }
+      window.navHistory?.sync({ panel: 'blog', detail: handle })
       await openPostByHandle(handle)
     }
 
@@ -566,6 +562,7 @@ class BlogPanel extends HTMLElement {
         const handle = postBtn.dataset.handle?.trim()
         if (handle) {
           ev.preventDefault()
+          window.navHistory?.sync({ panel: 'blog', detail: handle })
           openPostByHandle(handle)
         }
         return
@@ -579,33 +576,21 @@ class BlogPanel extends HTMLElement {
 
     backBtn.addEventListener('click', () => {
       layoutDebugMark('blog:back-click')
-      if (location.pathname !== '/') history.pushState(null, '', '/')
+      window.navHistory?.sync({ panel: 'blog' })
       showListView()
     })
 
-    window.addEventListener('popstate', async (e) => {
-      const handle = e.state?.blogHandle
-      if (handle) {
-        const blogDropdown = document.getElementById('blog')
-        if (blogDropdown && typeof blogDropdown.setOpen === 'function') {
-          document.dispatchEvent(
-            new CustomEvent('dropdown:close-all', {
-              detail: { exceptId: 'blog' },
-            }),
-          )
-          blogDropdown.setOpen(true)
-        }
-        await openPostByHandle(handle)
-      } else {
-        showListView()
-      }
+    // Browser back/forward (see nav-history.js); the dropdown is already open.
+    document.addEventListener('nav:restore', (e) => {
+      const { panel: panelId, detail: handle } = e.detail
+      if (panelId !== 'blog') return
+      if (handle) openPostByHandle(handle)
+      else showListView()
     })
 
     document.addEventListener('dropdown:state-changed', () => {
       const blogDropdown = document.getElementById('blog')
       if (blogDropdown && !blogDropdown.open) {
-        if (location.pathname.startsWith('/notes/'))
-          history.pushState(null, '', '/')
         if (introP) {
           if (introPExitHandler) {
             introP.removeEventListener('transitionend', introPExitHandler)
@@ -632,26 +617,6 @@ class BlogPanel extends HTMLElement {
         containerEl?.classList.remove('article-open')
       }
     })
-
-    const initMatch = /^\/notes\/([^/]+)\/?$/.exec(location.pathname)
-    if (initMatch) {
-      const handle = decodeURIComponent(initMatch[1])
-      history.replaceState(
-        { blogHandle: handle },
-        '',
-        location.pathname + location.search,
-      )
-      const blogDropdown = document.getElementById('blog')
-      if (blogDropdown && typeof blogDropdown.setOpen === 'function') {
-        document.dispatchEvent(
-          new CustomEvent('dropdown:close-all', {
-            detail: { exceptId: 'blog' },
-          }),
-        )
-        blogDropdown.setOpen(true)
-      }
-      openPostByHandle(handle)
-    }
 
     if (yearFilterEl) {
       yearFilterEl.addEventListener('change', () => {
