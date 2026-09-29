@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/theme-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
+      />
+    </noscript>
+    <link rel="stylesheet" href="/css/bundle.css" />
+    <link rel="stylesheet" href="/css/docs.css" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <title>dan.moi - change log</title>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/design-system.js" defer></script>
+  </head>
+  <body>
+    <theme-toggle></theme-toggle>
+    <div class="docs-page">
+      <nav class="docs-nav">
+        <button
+          type="button"
+          class="docs-nav__toggle lg-hidden type-ui uppercase w-full flex items-center justify-between"
+          aria-expanded="false"
+          aria-controls="docs-nav-list"
+        >
+          on this page
+          <span class="docs-nav__toggle-icon" aria-hidden="true"></span>
+        </button>
+        <ol class="docs-nav__list flex flex-col gap-0" id="docs-nav-list" hidden>
+          <li><a href="#commit-df00486" class="docs-nav__link type-label">2026-08-31 — Design system diagnostic fixes and design-system-ops tooling</a></li>
+          <li><a href="#commit-26c512a" class="docs-nav__link type-label">2026-08-26 — Theme toggle, meta tags, and panel list fixes</a></li>
+          <li><a href="#commit-0371b71" class="docs-nav__link type-label">2026-08-25 — 404 page, design system reference, and mobile dropdown fix</a></li>
+          <li><a href="#commit-05df9c1" class="docs-nav__link type-label">2026-05-16 — First test release</a></li>
+          <li><a href="#commit-46b9f07" class="docs-nav__link type-label">2026-05-16 — 3D asset fixes</a></li>
+          <li><a href="#commit-c7f1ac7" class="docs-nav__link type-label">2026-05-11 — 3D assets</a></li>
+          <li><a href="#commit-4cd7af8" class="docs-nav__link type-label">2026-05-09 — Local rich text rendering</a></li>
+          <li><a href="#commit-27f17ea" class="docs-nav__link type-label">2026-05-09 — Video captions and accessibility</a></li>
+          <li><a href="#commit-4dfc4d1" class="docs-nav__link type-label">2026-05-07 — Performance fixes, continued</a></li>
+          <li><a href="#commit-6af7aeb" class="docs-nav__link type-label">2026-05-07 — Performance fixes</a></li>
+          <li><a href="#commit-a5d14b2" class="docs-nav__link type-label">2026-05-04 — Meta, share image, and favicon</a></li>
+          <li><a href="#commit-ace5678" class="docs-nav__link type-label">2026-05-03 — Netlify deployment configuration</a></li>
+          <li><a href="#commit-f188716" class="docs-nav__link type-label">2026-05-03 — Fixes, May 3</a></li>
+          <li><a href="#commit-29bde9f" class="docs-nav__link type-label">2026-05-03 — Custom scrollbars</a></li>
+          <li><a href="#commit-1bb2aff" class="docs-nav__link type-label">2026-05-02 — Refactor 4: cleanup</a></li>
+          <li><a href="#commit-4d2f811" class="docs-nav__link type-label">2026-05-02 — Refactor 3: article styles and constants</a></li>
+          <li><a href="#commit-b257914" class="docs-nav__link type-label">2026-05-02 — Refactor 2: utility class system</a></li>
+          <li><a href="#commit-d99a667" class="docs-nav__link type-label">2026-05-01 — Refactor: CSS design tokens and custom element panels</a></li>
+          <li><a href="#commit-5dccdbe" class="docs-nav__link type-label">2026-04-30 — Mobile moodboard</a></li>
+          <li><a href="#commit-5e0883a" class="docs-nav__link type-label">2026-04-30 — Mobile music</a></li>
+          <li><a href="#commit-8779e79" class="docs-nav__link type-label">2026-04-29 — Mobile blog</a></li>
+          <li><a href="#commit-aca9dde" class="docs-nav__link type-label">2026-04-29 — Desktop moodboard tweaks</a></li>
+          <li><a href="#commit-ea638ca" class="docs-nav__link type-label">2026-04-27 — Music panel layout tweaks</a></li>
+          <li><a href="#commit-e844390" class="docs-nav__link type-label">2026-04-27 — Expand code project article view</a></li>
+          <li><a href="#commit-7e0f1fa" class="docs-nav__link type-label">2026-04-27 — Desktop code tweaks</a></li>
+          <li><a href="#commit-664f138" class="docs-nav__link type-label">2026-04-26 — Desktop blog tweaks</a></li>
+          <li><a href="#commit-e33d9f6" class="docs-nav__link type-label">2026-03-24 — Moodboard content, and a CSS refactor</a></li>
+          <li><a href="#commit-04d9be4" class="docs-nav__link type-label">2026-03-23 — Music project content</a></li>
+          <li><a href="#commit-0743ac2" class="docs-nav__link type-label">2026-03-22 — Code project content</a></li>
+          <li><a href="#commit-efd3ee1" class="docs-nav__link type-label">2026-03-22 — Blog filters and pagination</a></li>
+          <li><a href="#commit-6576f0b" class="docs-nav__link type-label">2026-03-21 — Blog list and article content land</a></li>
+          <li><a href="#commit-8682780" class="docs-nav__link type-label">2026-03-21 — Initial commit establishes the site shell</a></li>
+        </ol>
+      </nav>
+
+      <div class="docs-content">
+        <a href="/" class="docs-back type-ui uppercase">&larr; dan.moi</a>
+        <nav class="docs-tabs flex gap-3" aria-label="Documentation">
+          <a href="/docs/developer-guide.html" class="docs-tabs__link type-ui uppercase">developer guide</a>
+          <a href="/docs/changelog.html" class="docs-tabs__link type-ui uppercase" aria-current="page">change log</a>
+        </nav>
+        <header class="docs-header">
+          <p class="docs-eyebrow type-ui uppercase">dan.moi</p>
+          <h1 class="docs-title type-heading-xl">Change Log</h1>
+          <p class="docs-intro type-body-sm">
+            A technical record of every commit merged into <code>main</code>, newest first.
+            Each entry describes what changed and, where the commit shows it, why.
+          </p>
+        </header>
+
+        <main class="docs-sections flex flex-col">
+          <article class="docs-section" id="commit-df00486">
+            <h2 class="docs-section__title type-heading-l">Release: Design System Diagnostic Fixes and Design-System-Ops Tooling</h2>
+            <p class="docs-section__meta type-label uppercase">2026-08-31 &middot; <code>df00486</code> &middot; PR #38</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>This release bundles a swapped share image (<code>assets/share-2.jpg</code> replaces <code>assets/share.jpg</code>) and a corrected 404 page &ldquo;go home&rdquo; button style with a larger addition: <code>.claude/skills/design-system-ops/</code>, a Claude Code skill for auditing design systems, is added to the repository&rsquo;s development tooling.</p>
+              <p>Running that skill&rsquo;s diagnostics against this project surfaced a batch of fixes applied in the same release: semantic color tokens for each panel&rsquo;s trigger states, several raw typography declarations converted to the site&rsquo;s <code>.type-*</code> scale, a low-contrast focus-visible ring corrected for light mode, <code>--color-ink-6</code> changed to track the active theme&rsquo;s ink color via relative color syntax instead of a fixed light-mode value, and the site&rsquo;s opt-in-only dark mode behavior documented as an intentional product decision rather than an oversight.</p>
+              <p>A late fix in the same release restores the distinct per-panel focus ring colors in light mode that an earlier fix in the batch had inadvertently unified.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-26c512a">
+            <h2 class="docs-section__title type-heading-l">Release: Theme Toggle, Meta Tags, and Panel List Fixes</h2>
+            <p class="docs-section__meta type-label uppercase">2026-08-26 &middot; <code>26c512a</code> &middot; PR #36</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>This release adds a light/dark theme toggle: <code>js/theme-toggle.js</code> and <code>css/theme-toggle.css</code> implement the control, and <code>js/theme-init.js</code> applies the stored preference before first paint to avoid a flash of the wrong theme.</p>
+              <p><code>index.html</code> gains page title and description meta tags, and <code>netlify/edge-functions/og-image.js</code> extends substantially to generate a matching Open Graph share image. Panel list rows across the blog and code panels now match each other&rsquo;s height and are clickable across their full area, not just the link text.</p>
+              <p><code>README.md</code> and <code>.env.example</code> document the project for the first time.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-0371b71">
+            <h2 class="docs-section__title type-heading-l">Release: 404 Page, Design System Reference, and Mobile Dropdown Fix</h2>
+            <p class="docs-section__meta type-label uppercase">2026-08-25 &middot; <code>0371b71</code> &middot; PR #31</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>This release bundles several changes merged into <code>develop</code> since the last release. A <code>404.html</code> page, styled by a new <code>css/404.css</code>, now handles unknown routes instead of falling through to the home page.</p>
+              <p><code>design-system.html</code> and <code>css/design-system.css</code> add a living design system reference page, documenting the site&rsquo;s color tokens and typography scale and defining the <code>.type-*</code> classes now applied site-wide.</p>
+              <p>The article detail panel switches to <code>100dvh</code> for its height calculation, fixing a reachability problem on mobile browsers where the dynamic toolbar previously clipped part of the panel. <code>js/credits.js</code> adds a short attribution message to the browser console.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-05df9c1">
+            <h2 class="docs-section__title type-heading-l">First Test Release</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-16 &middot; <code>05df9c1</code> &middot; PR #28</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>robots.txt</code> is added alongside a small set of fixes to <code>css/index.css</code>, <code>index.html</code>, and <code>js/video.js</code>, marking the site&rsquo;s first test release.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-46b9f07">
+            <h2 class="docs-section__title type-heading-l">3D Asset Fixes</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-16 &middot; <code>46b9f07</code> &middot; PR #26</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>assets/saturn_split.webm</code> and <code>assets/ufo_split.webm</code> add split versions of the two 3D video clips, and <code>js/video.js</code> is substantially reworked to support them.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-c7f1ac7">
+            <h2 class="docs-section__title type-heading-l">3D Assets</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-11 &middot; <code>c7f1ac7</code> &middot; PR #25</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>Two looping 3D-rendered video clips, <code>assets/saturn.webm</code> and <code>assets/ufo.webm</code>, replace the placeholder heart image and the original UFO video used earlier in the site.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-4cd7af8">
+            <h2 class="docs-section__title type-heading-l">Local Rich Text Rendering</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-09 &middot; <code>4cd7af8</code> &middot; PR #24</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>js/contentful-rich-text-html.js</code> replaces its CDN-loaded rich text renderer with a local implementation, removing the runtime dependency on an external ESM import for rendering Contentful rich text fields. <code>blog-panel.js</code> and <code>code-panel.js</code> update their imports to match.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-27f17ea">
+            <h2 class="docs-section__title type-heading-l">Video Captions and Accessibility</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-09 &middot; <code>27f17ea</code> &middot; PR #23</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>js/video.js</code> gains a <code>description</code> attribute that renders as an accessible caption, and marks its decorative video element <code>aria-hidden</code> so screen readers announce the caption text instead of the video itself.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-4dfc4d1">
+            <h2 class="docs-section__title type-heading-l">Performance Fixes, Continued</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-07 &middot; <code>4dfc4d1</code> &middot; PR #22</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>A follow-up performance pass makes a small adjustment to <code>index.html</code> and <code>netlify.toml</code>.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-6af7aeb">
+            <h2 class="docs-section__title type-heading-l">Performance Fixes</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-07 &middot; <code>6af7aeb</code> &middot; PR #21</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>CSS delivery moves to a server-generated bundle: <code>netlify/functions/css-bundle.js</code> concatenates and minifies the files listed in <code>CSS_BUNDLE_FILES</code> at request time in production, and <code>serve.mjs</code> gains the equivalent development route at <code>/css/bundle.css</code>.</p>
+              <p><code>index.html</code> switches to loading that single bundled stylesheet instead of individual <code>&lt;link&gt;</code> tags. <code>assets/headshot.jpg</code> is replaced by a smaller <code>assets/share.jpg</code>.</p>
+              <h3>Adding a new stylesheet</h3>
+              <ol>
+                <li>Create the file in <code>css/</code>.</li>
+                <li>Add its filename to <code>CSS_BUNDLE_FILES</code> in both <code>serve.mjs</code> and <code>netlify/functions/css-bundle.js</code>, placing it after any file it depends on.</li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-a5d14b2">
+            <h2 class="docs-section__title type-heading-l">Meta, Share Image, and Favicon</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-04 &middot; <code>a5d14b2</code> &middot; PR #20</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The site gains an SVG favicon, an Open Graph share image, and social meta tags in <code>index.html</code>. <code>js/video.js</code> is added as a new custom element for embedding video, and <code>dropdown-image.js</code> adjusts to accommodate it.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-ace5678">
+            <h2 class="docs-section__title type-heading-l">Netlify Deployment Configuration</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-03 &middot; <code>ace5678</code> &middot; PR #19</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>netlify.toml</code> configures the site for deployment on Netlify, and <code>netlify/functions/contentful-env.js</code> adds a serverless function that exposes the Contentful environment variables to the browser in production, mirroring the <code>/contentful-env.js</code> endpoint <code>serve.mjs</code> already serves in development.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-f188716">
+            <h2 class="docs-section__title type-heading-l">Fixes, May 3</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-03 &middot; <code>f188716</code> &middot; PR #18</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>css/index.css</code> is significantly trimmed, and <code>js/moodboard-panel.js</code> is simplified, removing logic no longer needed after the earlier refactors.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-29bde9f">
+            <h2 class="docs-section__title type-heading-l">Custom Scrollbars</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-03 &middot; <code>29bde9f</code> &middot; PR #17</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>js/scrollbar.js</code> adds a custom scrollbar implementation, and <code>blog-panel.js</code> and <code>code-panel.js</code> adopt it in place of native scrollbars for their scrollable regions. <code>css/panel-scroll.css</code> and <code>css/reset.css</code> gain the supporting styles.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-1bb2aff">
+            <h2 class="docs-section__title type-heading-l">Refactor 4: Cleanup</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-02 &middot; <code>1bb2aff</code> &middot; PR #16</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>A small follow-up cleanup consolidates a few remaining rules into <code>css/css-utils.css</code> and simplifies <code>js/constants.js</code>, <code>js/code-panel.js</code>, and <code>js/music-panel.js</code>.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-4d2f811">
+            <h2 class="docs-section__title type-heading-l">Refactor 3: Article Styles and Constants</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-02 &middot; <code>4d2f811</code> &middot; PR #15</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>css/article.css</code> is split out to hold rich-text article body styles, cutting <code>css/blog.css</code> by roughly 250 lines, and <code>css/skeleton.css</code> adds shared loading-skeleton styles. <code>js/constants.js</code> centralizes values previously duplicated across panel files.</p>
+              <p><code>.claude/skills/css/SKILL.md</code> is added, documenting the utility class system and CSS rules this project enforces. <code>js/contentful-config.example.js</code> is removed in favor of environment-variable-based Contentful configuration.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-b257914">
+            <h2 class="docs-section__title type-heading-l">Refactor 2: Utility Class System</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-02 &middot; <code>b257914</code> &middot; PR #14</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>css/css-utils.css</code> is added, introducing the project&rsquo;s Tailwind-style utility class system for layout, spacing, and typography. <code>css/panel-detail.css</code> and <code>css/panel-list.css</code> are removed as their rules move into utility classes composed directly in HTML, and <code>accessible-select.js</code>, <code>blog-panel.js</code>, <code>code-panel.js</code>, <code>moodboard-panel.js</code>, and <code>music-panel.js</code> are all rewritten to use them.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-d99a667">
+            <h2 class="docs-section__title type-heading-l">Refactor: CSS Design Tokens and Custom Element Panels</h2>
+            <p class="docs-section__meta type-label uppercase">2026-05-01 &middot; <code>d99a667</code> &middot; PR #13</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>This refactor introduces the CSS custom-property color tokens (<code>--color-*</code>) that <code>css/reset.css</code> still defines today, and restructures each panel&rsquo;s markup and styling around them. <code>blog-panel.js</code> is rewritten almost line for line, and <code>js/blog-intro-section.js</code> is removed as its logic folds back into the blog panel.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-5dccdbe">
+            <h2 class="docs-section__title type-heading-l">Mobile Moodboard</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-30 &middot; <code>5dccdbe</code> &middot; PR #12</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The moodboard panel&rsquo;s mobile layout receives further tweaks in <code>css/index.css</code> and <code>css/moodboard-panel.css</code>.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-5e0883a">
+            <h2 class="docs-section__title type-heading-l">Mobile Music</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-30 &middot; <code>5e0883a</code> &middot; PR #11</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The music panel gains mobile-specific layout rules in <code>css/music-panel.css</code>, and <code>js/music-panel.js</code> adjusts its rendering logic to match.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-8779e79">
+            <h2 class="docs-section__title type-heading-l">Mobile Blog</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-29 &middot; <code>8779e79</code> &middot; PR #10</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The blog panel&rsquo;s list and detail views gain mobile-specific layout rules across <code>css/blog.css</code>, <code>css/panel-list.css</code>, <code>css/panel-scroll.css</code>, and <code>css/fonts.css</code>. <code>dropdown.js</code> and <code>dropdown-image.js</code> pick up matching adjustments for smaller viewports.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-aca9dde">
+            <h2 class="docs-section__title type-heading-l">Desktop Moodboard Tweaks</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-29 &middot; <code>aca9dde</code> &middot; PR #9</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The moodboard panel gains desktop-specific layout behavior in <code>js/moodboard-panel.js</code> and <code>css/moodboard-panel.css</code>, and <code>js/dev-mode.js</code> extends to cover its dev mode.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-ea638ca">
+            <h2 class="docs-section__title type-heading-l">Music Panel Layout Tweaks</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-27 &middot; <code>ea638ca</code> &middot; PR #8</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>css/music-panel.css</code> is simplified, trimming its rule count while preserving the panel&rsquo;s layout. <code>js/dev-mode.js</code> extends to cover the music panel&rsquo;s dev modes.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-e844390">
+            <h2 class="docs-section__title type-heading-l">Expand Code Project Article View</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-27 &middot; <code>e844390</code> &middot; PR #7</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The code project detail view expands, and the logic that tracks which article is currently open consolidates into <code>code-panel.js</code> rather than being split across files.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-7e0f1fa">
+            <h2 class="docs-section__title type-heading-l">Desktop Code Tweaks</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-27 &middot; <code>7e0f1fa</code> &middot; PR #6</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The &ldquo;Writes Code&rdquo; panel&rsquo;s detail view moves to a new shared stylesheet, <code>css/panel-detail.css</code>, and gains its own <code>css/code.css</code> for panel-specific rules. <code>js/code-panel.js</code> is substantially reworked to match, and <code>js/dev-mode.js</code> extends to cover the code panel&rsquo;s own list and project dev modes.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-664f138">
+            <h2 class="docs-section__title type-heading-l">Desktop Blog Tweaks</h2>
+            <p class="docs-section__meta type-label uppercase">2026-04-26 &middot; <code>664f138</code> &middot; PR #5</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>CLAUDE.md</code> appears for the first time, documenting the project&rsquo;s architecture and development commands for future work. <code>js/dev-mode.js</code> adds the <code>?dev-mode=</code> URL parameters that force a panel open during development, and <code>js/dropdown.js</code> is substantially reworked to support them alongside the coordinated open/close behavior between panels.</p>
+              <h3>Using dev mode</h3>
+              <ol>
+                <li>Append <code>?dev-mode=blog-list</code> or <code>?dev-mode=blog-article</code> to any URL.</li>
+                <li>Reload the page. The blog panel opens automatically and, in <code>blog-article</code> mode, loads its first article.</li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-e33d9f6">
+            <h2 class="docs-section__title type-heading-l">Moodboard Content, and a CSS Refactor</h2>
+            <p class="docs-section__meta type-label uppercase">2026-03-24 &middot; <code>e33d9f6</code> &middot; PR #4</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>A &ldquo;Collects Moods&rdquo; panel joins the site through a new <code>js/moodboard-panel.js</code> custom element and <code>css/moodboard-panel.css</code> stylesheet. Alongside it, shared panel styles move out of the growing <code>css/blog.css</code> and into two new dedicated files, <code>css/music-panel.css</code> and <code>css/panel-scroll.css</code>, cutting <code>blog.css</code> by roughly half.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-04d9be4">
+            <h2 class="docs-section__title type-heading-l">Music Project Content</h2>
+            <p class="docs-section__meta type-label uppercase">2026-03-23 &middot; <code>04d9be4</code> &middot; PR #3</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>A &ldquo;Makes Music&rdquo; panel joins the site, driven by a new <code>js/music-panel.js</code> custom element. <code>contentful-graphql.js</code> gains the queries needed to fetch music project entries from Contentful.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-0743ac2">
+            <h2 class="docs-section__title type-heading-l">Code Project Content</h2>
+            <p class="docs-section__meta type-label uppercase">2026-03-22 &middot; <code>0743ac2</code> &middot; PR #2</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>A &ldquo;Writes Code&rdquo; panel joins the blog panel, backed by a new <code>js/code-panel.js</code> custom element and <code>css/panel-list.css</code> for the shared list layout both panels now use. <code>js/blog-intro-section.js</code> factors the blog panel&rsquo;s introductory copy into its own component, and <code>js/contentful-rich-text-html.js</code> adds a renderer for Contentful&rsquo;s rich text fields.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-efd3ee1">
+            <h2 class="docs-section__title type-heading-l">Blog Filters and Pagination</h2>
+            <p class="docs-section__meta type-label uppercase">2026-03-22 &middot; <code>efd3ee1</code> &middot; PR #1</p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The blog panel&rsquo;s list view now supports filtering and infinite-scroll pagination. <code>js/accessible-select.js</code> introduces a reusable, keyboard- and screen-reader-accessible <code>&lt;select&gt;</code> replacement as its own custom element, and <code>blog-panel.js</code> grows the logic to drive it alongside the new pagination behavior.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-6576f0b">
+            <h2 class="docs-section__title type-heading-l">Blog List and Article Content Land</h2>
+            <p class="docs-section__meta type-label uppercase">2026-03-21 &middot; <code>6576f0b</code></p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p><code>blog-panel.js</code> and <code>blog-utils.js</code> replace <code>note-taker-posts.js</code> as the source of the blog panel&rsquo;s list and article views, backed by a new <code>css/blog.css</code> stylesheet. <code>js/layout-debug.js</code> adds an on-screen layout inspector for development, and <code>contentful-graphql.js</code> gains the queries the blog panel needs to fetch posts.</p>
+            </div>
+          </article>
+
+          <article class="docs-section" id="commit-8682780">
+            <h2 class="docs-section__title type-heading-l">Initial Commit Establishes the Site Shell</h2>
+            <p class="docs-section__meta type-label uppercase">2026-03-21 &middot; <code>8682780</code></p>
+            <div class="docs-section__body article-body type-body-sm">
+              <p>The initial commit lays down the site&rsquo;s foundation: a single <code>index.html</code> document, a <code>reset.css</code>/<code>fonts.css</code>/<code>index.css</code> stylesheet set, and a small collection of vanilla JavaScript modules (<code>dropdown.js</code>, <code>dropdown-image.js</code>, <code>image.js</code>, <code>contentful-graphql.js</code>, <code>note-taker-posts.js</code>) registered as native custom elements. <code>serve.mjs</code> adds a dependency-free Node development server, and the 00Hypertext font family ships as local <code>.woff</code>/<code>.woff2</code> assets.</p>
+              <h3>Running the site locally</h3>
+              <ol>
+                <li>Run <code>node serve.mjs</code> from the project root.</li>
+                <li>Open <code>http://localhost:3333</code> in a browser.</li>
+              </ol>
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
