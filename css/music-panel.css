@@ -1,4 +1,3 @@
-/* Makes music panel — list only */
 dropdown-panel#makes-music:not([open]) #music-panel {
   display: none !important;
 }
@@ -13,14 +12,6 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   height: 5rem;
 }
 
-/* Reviewed against fonts.css's type scale (TC-02): .music-project__title's
-   1.5rem coincides with .type-heading-l, but it's rendered in the regular
-   weight (not bold) with no letter-spacing, and shrinks to 1.125rem on
-   desktop rather than staying fixed — the opposite of every .type-heading-*
-   step, which are single-weight and don't shrink. __meta and __link's
-   sizes (1.125rem, 1rem) don't set a line-height at all (unlike
-   .type-body-sm's 1.45), so applying that class would add spacing this
-   layout doesn't currently have. All three kept as their own declarations. */
 .music-project__title {
   font-family: var(--font-hypertext);
   font-size: 1.5rem;
@@ -61,8 +52,6 @@ dropdown-panel#makes-music:not([open]) #music-panel {
   color: var(--color-ink);
 }
 
-/* Desktop: 2-column grid (image | content). top dissolves via display:contents
-   so media and top-text participate directly in the grid. */
 @media (min-width: 768px) {
   .music-project__shell {
     display: grid;
