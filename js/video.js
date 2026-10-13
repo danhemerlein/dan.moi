@@ -42,6 +42,10 @@
       line-height: 0;
       color: var(--color-ink);
     }
+    button:focus-visible {
+      outline: 0.125rem solid var(--color-focus-ring);
+      border-radius: 0.25rem;
+    }
     :host([show-controls]) button { display: block; }
     button svg { display: block; width: 1.25rem; height: 1.25rem; }
     .sr-only {

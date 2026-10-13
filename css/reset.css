@@ -90,6 +90,13 @@
   --color-panel-moodboard-bg-open: var(--color-cyan);
   --color-panel-moodboard-body-bg: var(--color-cyan-soft);
   --color-panel-moodboard-focus-ring: var(--color-cyan-ring);
+
+  /* Default focus-visible ring for every element that doesn't set its own
+     (links, panel-list rows, back buttons, shadow-DOM controls) so none
+     fall back to the browser's blue ring. Aliases --color-azure-ring, so
+     dark mode collapses it to --color-stone-gray along with the per-panel
+     trigger rings above. */
+  --color-focus-ring: var(--color-azure-ring);
 }
 
 /* Shared layout tokens (not color) — dropdown-panel scroll-height caps.
@@ -165,6 +172,11 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* :where() keeps specificity at zero so any component focus style wins. */
+:where(:focus-visible) {
+  outline: 0.125rem solid var(--color-focus-ring);
 }
 
 html, body, div, span, applet, object, iframe,

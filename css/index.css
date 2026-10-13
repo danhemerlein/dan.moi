@@ -24,7 +24,6 @@ dropdown-trigger:not(:defined) {
   display: inline;
 }
 
-
 image-element:not(:defined) {
   display: block;
   min-height: 0;
@@ -64,7 +63,7 @@ blog-panel:not(:defined) {
 }
 
 .container.article-open {
-  padding-top: 2rem;
+  padding-top: 1.25rem;
 }
 
 .container.moodboard-open {

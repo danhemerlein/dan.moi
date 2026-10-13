@@ -24,14 +24,18 @@
     <title>dan.moi</title>
   </head>
   <body>
-    <theme-toggle></theme-toggle>
     <main
-      class="main-content w-full max-w-full overflow-hidden flex items-center justify-center"
+      class="main-content w-full max-w-full overflow-hidden flex items-center justify-center flex-col"
     >
-      <div class="container container--404 w-full max-w-full min-h-0 flex flex-col h-full">
+      <theme-toggle></theme-toggle>
+      <div
+        class="container container--404 w-full max-w-full min-h-0 flex flex-col h-full"
+      >
         <div class="paragraph-container flex flex-col max-w-full">
           <p class="text-display text-center">404</p>
-          <p class="text-center trigger-link-wrap"><a href="/" class="trigger-link">go home</a></p>
+          <p class="text-center trigger-link-wrap">
+            <a href="/" class="trigger-link">go home</a>
+          </p>
         </div>
         <video-element
           class="hero-image"
