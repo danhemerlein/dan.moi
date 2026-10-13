@@ -167,6 +167,10 @@
   pointer-events: none;
 }
 
+.z-40 {
+  z-index: 40;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
