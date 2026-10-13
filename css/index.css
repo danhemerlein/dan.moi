@@ -65,7 +65,7 @@ blog-panel:not(:defined) {
 }
 
 .container.moodboard-open {
-  padding: 8rem 0 2rem 0rem;
+  padding: 4rem 0 2rem 0rem;
 }
 
 .paragraph-container {
@@ -101,6 +101,10 @@ image-element.hero-image {
 
 image-element.hero-image.hero-image--exit {
   transform: translate3d(0, calc(100vh + 100%), 0);
+  visibility: hidden;
+  transition:
+    transform 600ms cubic-bezier(0.45, 0, 0.55, 1),
+    visibility 0s 600ms;
 }
 
 image-element.image-dock {
@@ -145,6 +149,10 @@ video-element.hero-image {
 
 video-element.hero-image.hero-image--exit {
   transform: translate3d(0, calc(100vh + 100%), 0);
+  visibility: hidden;
+  transition:
+    transform 600ms cubic-bezier(0.45, 0, 0.55, 1),
+    visibility 0s 600ms;
 }
 
 video-element.image-dock {

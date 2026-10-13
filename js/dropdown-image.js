@@ -29,6 +29,12 @@
     dock.setAttribute("aria-hidden", String(!visible));
   }
 
+  /** inert as soon as the hero starts leaving so its controls can't be focused mid-slide. */
+  function setHeroExit(hero, exiting) {
+    hero.classList.toggle("hero-image--exit", exiting);
+    hero.inert = exiting;
+  }
+
   /**
    * @param {HTMLElement} el
    * @param {string} propertyName
@@ -56,7 +62,7 @@
 
   function applyClosedVisuals(els) {
     const { hero, dock } = els;
-    hero.classList.remove("hero-image--exit");
+    setHeroExit(hero, false);
     dock.classList.remove(
       "image-dock--prep-open",
       "image-dock--open-anim",
@@ -89,12 +95,12 @@
       "image-dock--exit",
       "image-dock--shown",
     );
-    hero.classList.remove("hero-image--exit");
+    setHeroExit(hero, false);
     syncDockAria(dock, false);
 
     requestAnimationFrame(() => {
       if (gen !== generation) return;
-      hero.classList.add("hero-image--exit");
+      setHeroExit(hero, true);
 
       /* Next frame: hero transition has started — begin dock in parallel (overlap). */
       requestAnimationFrame(() => {
@@ -137,7 +143,7 @@
     dock.classList.remove("image-dock--prep-open", "image-dock--open-anim");
     dock.classList.add("image-dock--exit");
     /* Same moment dock starts receding: hero begins rising from below (overlap). */
-    hero.classList.remove("hero-image--exit");
+    setHeroExit(hero, false);
 
     waitTransition(dock, "transform", 600, gen, () => {
       if (gen !== generation) return;
