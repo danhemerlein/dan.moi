@@ -62,6 +62,7 @@ Prefer composable utility classes over component-specific CSS. Utility classes l
 | `.list-none` | `list-style: none` |
 | `.cursor-pointer` | `cursor: pointer` |
 | `.pointer-events-none` | `pointer-events: none` |
+| `.z-40` | `z-index: 40` |
 
 **Responsive variants** (apply at `min-width: 768px`):
 

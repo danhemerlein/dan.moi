@@ -1,5 +1,4 @@
 dropdown-panel#blog {
-  /* In-flow panel: max height + inner scroll so layout doesn’t grow unbounded. */
   --dropdown-scroll-max-height: var(--dropdown-scroll-max-height-list);
 }
 
@@ -15,14 +14,10 @@ dropdown-panel#blog.blog-panel--article::part(panel) {
   margin-top: 0;
 }
 
-/* When the note taker is closed, take #blog-panel out of layout entirely so the
-   async blog list (dozens of rows) cannot affect min-content / CLS. When [open],
-   this rule does not apply and #blog-panel is shown normally. */
 dropdown-panel#blog:not([open]) #blog-panel {
   display: none !important;
 }
 
-/* When any article is open, hide all non-active dropdowns for maximum vertical space. */
 .article-open dropdown-panel#blog:not([open]),
 .article-open dropdown-panel#writes-code:not([open]),
 .article-open dropdown-panel#makes-music,
@@ -30,18 +25,14 @@ dropdown-panel#blog:not([open]) #blog-panel {
   display: none;
 }
 
-/* Intro paragraph hidden whenever any article is open. */
 .article-open .intro-line {
   display: none;
 }
 
-/* Middle line hidden once it has exited. */
 .article-open .middle-line.blog-article--exit-down {
   display: none;
 }
 
-/* Both hidden when a code article is open.
-   When a blog article is open they must stay visible. */
 .article-open:has(dropdown-panel#writes-code[open]) .intro-line,
 .article-open:has(dropdown-panel#writes-code[open]) dropdown-panel#blog {
   display: none;

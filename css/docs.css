@@ -22,8 +22,6 @@ body {
   }
 }
 
-/* ─── Sidebar nav ───────────────────────────────────── */
-
 .docs-nav {
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
@@ -55,8 +53,8 @@ body {
 .docs-nav__toggle-icon {
   width: 0.5rem;
   height: 0.5rem;
-  border-right: 1px solid var(--color-ink); /* px: hairline border */
-  border-bottom: 1px solid var(--color-ink); /* px: hairline border */
+  border-right: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
   transform: rotate(45deg);
   transition: transform 200ms ease;
 }
@@ -99,8 +97,6 @@ body {
 .docs-nav__link[aria-current="true"] {
   color: var(--color-ink);
 }
-
-/* ─── Header ────────────────────────────────────────── */
 
 .docs-content {
   min-width: 0;
@@ -160,8 +156,6 @@ body {
   max-width: 38rem;
 }
 
-/* ─── Sections ──────────────────────────────────────── */
-
 .docs-sections {
   gap: 3.5rem;
 }
@@ -200,8 +194,6 @@ body {
   color: var(--color-ink);
 }
 
-/* ─── Dependency table ──────────────────────────────── */
-
 .docs-table {
   width: 100%;
   border-collapse: collapse;
@@ -228,10 +220,6 @@ body {
   font-family: var(--font-mono);
   font-size: 0.92em;
 }
-
-/* ─── Decision cards ────────────────────────────────── */
-/* Left-border accent cycles through the four panel hues (blog/code/music/
-   moodboard) as a light callback to the site's own palette. */
 
 .docs-decisions {
   gap: 2rem;

@@ -14,7 +14,6 @@ dropdown-panel#writes-code.code-panel--article::part(panel) {
   color: var(--color-stone-gray);
 }
 
-/* Code projects list row: markup order title → year; title left, year right. */
 #code-panel .panel-list__item {
   background-color: var(--color-lavender-cream);
   border: 1px solid var(--color-lilac-border);
