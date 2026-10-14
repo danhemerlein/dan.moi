@@ -19,6 +19,15 @@
             margin: 0;
             cursor: pointer;
           }
+
+          .theme-toggle-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding-top: 1.25rem;
+            padding-right: 1.25rem;
+          }
+
           .track {
             box-sizing: border-box;
             position: relative;
@@ -47,8 +56,10 @@
           button[aria-checked="true"] .thumb {
             transform: translateX(1.25rem);
           }
-          button:focus-visible .track {
-            border-color: var(--color-azure);
+          button:focus-visible {
+            outline: 0.125rem solid var(--color-focus-ring);
+            outline-offset: 0.125rem;
+            border-radius: 0.75rem;
           }
           @media (prefers-reduced-motion: reduce) {
             .track,
@@ -57,11 +68,13 @@
             }
           }
         </style>
-        <button type="button" tabindex="0" role="switch" aria-checked="false" aria-label="Switch to dark theme">
-          <span class="track">
-            <span class="thumb"></span>
-          </span>
-        </button>
+        <div class="theme-toggle-container">
+          <button type="button" tabindex="0" role="switch" aria-checked="false" aria-label="Switch to dark theme">
+            <span class="track">
+              <span class="thumb"></span>
+            </span>
+          </button>
+        </div>
       `
     }
 

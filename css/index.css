@@ -14,7 +14,6 @@ body {
   transition: background-color 260ms ease;
 }
 
-/* Match upgraded custom-element layout before/after definition (first paint stability) */
 dropdown-panel:not(:defined) {
   display: block;
   min-height: 0;
@@ -23,7 +22,6 @@ dropdown-panel:not(:defined) {
 dropdown-trigger:not(:defined) {
   display: inline;
 }
-
 
 image-element:not(:defined) {
   display: block;
@@ -43,7 +41,6 @@ blog-panel:not(:defined) {
 }
 
 .main-content {
-  /* Avoid 100vw — it ignores scrollbar gutter and can disagree with % width when inner scrollbars appear. */
   height: 100vh;
   max-height: 100vh;
 }
@@ -64,23 +61,23 @@ blog-panel:not(:defined) {
 }
 
 .container.article-open {
-  padding-top: 2rem;
+  padding-top: 1.25rem;
 }
 
 .container.moodboard-open {
-  padding: 8rem 0 2rem 0rem;
+  padding: 4rem 0 2rem 0rem;
 }
 
 .paragraph-container {
   width: min(100%, 42rem);
   align-self: center;
-  /* Isolate subtree layout from hero/dock and late async updates where possible */
+
   contain: layout;
 }
 
 .middle-line {
   margin-top: 0.75rem;
-  /* Match blog intro: cap scroll height for writes-code / other dropdowns here */
+
   --dropdown-scroll-max-height: var(--dropdown-scroll-max-height-list);
 }
 
@@ -94,10 +91,6 @@ blog-panel:not(:defined) {
   margin-top: 1rem;
 }
 
-/* Hero (bottom) ↔ dock (top-left) when any dropdown is open.
-   Hero is slightly slower than the dock (600ms vs 480/460ms). Open/close sequences overlap:
-   dock motion starts as soon as the hero begins moving, and vice versa on close.
-   Easing: symmetric ease-in-out so motion eases at both start and end (less abrupt / distracting). */
 image-element.hero-image {
   margin-top: 4rem;
   max-width: 70%;
@@ -108,6 +101,10 @@ image-element.hero-image {
 
 image-element.hero-image.hero-image--exit {
   transform: translate3d(0, calc(100vh + 100%), 0);
+  visibility: hidden;
+  transition:
+    transform 600ms cubic-bezier(0.45, 0, 0.55, 1),
+    visibility 0s 600ms;
 }
 
 image-element.image-dock {
@@ -137,8 +134,6 @@ image-element.image-dock.image-dock--shown:not(.image-dock--exit) {
   transform: translate3d(0, 0, 0);
 }
 
-/* Must keep opacity:1 while exiting — without this, :shown:not(.exit) drops
-   and the base .image-dock opacity:0 wins, so the dock vanishes instantly */
 image-element.image-dock.image-dock--exit {
   visibility: visible;
   opacity: 1;
@@ -154,6 +149,10 @@ video-element.hero-image {
 
 video-element.hero-image.hero-image--exit {
   transform: translate3d(0, calc(100vh + 100%), 0);
+  visibility: hidden;
+  transition:
+    transform 600ms cubic-bezier(0.45, 0, 0.55, 1),
+    visibility 0s 600ms;
 }
 
 video-element.image-dock {
@@ -190,7 +189,6 @@ video-element.image-dock.image-dock--exit {
   transform: translate3d(0, calc(-100vh - 100%), 0);
 }
 
-/* Text elements that slide away when a blog article is open. */
 .intro-line,
 .middle-line,
 .bottom-line {
@@ -261,7 +259,6 @@ video-element.image-dock.image-dock--exit {
 @media (prefers-reduced-motion: reduce) {
   image-element.hero-image,
   image-element.image-dock {
-    /* Effectively disables motion while keeping transitionend reliable in some engines */
     transition-duration: 0.01ms !important;
     transition-timing-function: linear !important;
   }

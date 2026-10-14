@@ -30,7 +30,6 @@
     <script src="/js/design-system.js" defer></script>
   </head>
   <body>
-    <theme-toggle></theme-toggle>
     <div class="ds-page">
       <nav class="ds-nav">
         <button
@@ -153,6 +152,7 @@
         </header>
 
         <main>
+          <theme-toggle class="w-full z-40"></theme-toggle>
           <section class="ds-section" id="colors">
             <h2 class="ds-section__heading type-heading-l">colors</h2>
             <div class="ds-swatch-grid">
@@ -631,13 +631,13 @@
                 accessible-select
               </h3>
               <p class="ds-component__desc type-body-sm">
-                A shadow-DOM combobox implementing the WAI-ARIA listbox
-                pattern as a native
+                A shadow-DOM combobox implementing the WAI-ARIA listbox pattern
+                as a native
                 <code class="ds-inline-code">&lt;select&gt;</code> replacement.
                 Options aren&rsquo;t known until Contentful data loads, so
                 they&rsquo;re set programmatically with
-                <code class="ds-inline-code">setOptions()</code> rather than
-                as markup. Used by the blog panel&rsquo;s year filter.
+                <code class="ds-inline-code">setOptions()</code> rather than as
+                markup. Used by the blog panel&rsquo;s year filter.
               </p>
 
               <div class="ds-component__section">
@@ -682,10 +682,10 @@
                       >
                     </div>
                     <span class="ds-attr-list__desc type-ui"
-                      >Label shown before the reader has picked an option.
-                      Once they commit a value, the picked option&rsquo;s
-                      label replaces it &mdash; even if that value is an
-                      empty string (e.g. an &ldquo;all&rdquo; option).</span
+                      >Label shown before the reader has picked an option. Once
+                      they commit a value, the picked option&rsquo;s label
+                      replaces it &mdash; even if that value is an empty string
+                      (e.g. an &ldquo;all&rdquo; option).</span
                     >
                   </li>
                 </ul>
@@ -709,10 +709,9 @@
                     >
                     <span class="ds-attr-list__desc type-ui"
                       >Replaces the option list. Takes an array of
-                      <code class="ds-inline-code"
-                        >{ value, label }</code
-                      >. If the current value isn&rsquo;t in the new list, it
-                      falls back to the first option.</span
+                      <code class="ds-inline-code">{ value, label }</code>. If
+                      the current value isn&rsquo;t in the new list, it falls
+                      back to the first option.</span
                     >
                   </li>
                 </ul>
@@ -761,7 +760,9 @@
                 <h4 class="ds-component__section-label type-ui uppercase">
                   example
                 </h4>
-                <pre class="ds-code"><code>&lt;accessible-select id="year-filter" placeholder="all years"&gt;&lt;/accessible-select&gt;
+                <pre
+                  class="ds-code"
+                ><code>&lt;accessible-select id="year-filter" placeholder="all years"&gt;&lt;/accessible-select&gt;
 
 &lt;script&gt;
   document.getElementById('year-filter').setOptions([
@@ -780,8 +781,8 @@
                 <code class="ds-inline-code">&lt;img&gt;</code>, used for
                 Contentful-sourced images across the blog, code, and music
                 panels. Exists so image rendering has one owned place to add
-                shared behavior later, rather than every panel writing its
-                own <code class="ds-inline-code">&lt;img&gt;</code> markup.
+                shared behavior later, rather than every panel writing its own
+                <code class="ds-inline-code">&lt;img&gt;</code> markup.
               </p>
 
               <div class="ds-component__section">
@@ -825,9 +826,8 @@
                       >
                     </div>
                     <span class="ds-attr-list__desc type-ui"
-                      >Defaults to an empty string, not a missing
-                      attribute &mdash; treat every image as needing
-                      real alt text.</span
+                      >Defaults to an empty string, not a missing attribute
+                      &mdash; treat every image as needing real alt text.</span
                     >
                   </li>
                   <li class="ds-attr-list__item flex flex-col gap-1">
@@ -873,9 +873,7 @@
                 </h4>
                 <ul class="ds-attr-list flex flex-col gap-2">
                   <li class="ds-attr-list__item flex flex-col gap-1">
-                    <span class="ds-attr-list__name type-ui"
-                      >::part(img)</span
-                    >
+                    <span class="ds-attr-list__name type-ui">::part(img)</span>
                     <span class="ds-attr-list__desc type-ui"
                       >The internal &lt;img&gt; element.</span
                     >
@@ -957,8 +955,8 @@
                       >
                     </div>
                     <span class="ds-attr-list__desc type-ui"
-                      >Becomes a visually-hidden caption for screen readers.
-                      The video itself is
+                      >Becomes a visually-hidden caption for screen readers. The
+                      video itself is
                       <code class="ds-inline-code">aria-hidden</code>, so this
                       is the only description assistive tech will
                       announce.</span
@@ -992,8 +990,8 @@
                     >
                     <span class="ds-attr-list__desc type-ui"
                       >Plays or pauses this instance. Clicking any
-                      video-element&rsquo;s own play/pause button calls this
-                      on <em>every</em> video-element on the page, so all
+                      video-element&rsquo;s own play/pause button calls this on
+                      <em>every</em> video-element on the page, so all
                       background clips play or pause together.</span
                     >
                   </li>
@@ -1021,8 +1019,8 @@
                 <code class="ds-inline-code">data-theme</code> attribute on
                 <code class="ds-inline-code">&lt;html&gt;</code> and persists
                 the choice to <code class="ds-inline-code">localStorage</code>.
-                Dark mode is opt-in only: a first-time visitor always sees
-                light mode, regardless of their OS
+                Dark mode is opt-in only: a first-time visitor always sees light
+                mode, regardless of their OS
                 <code class="ds-inline-code">prefers-color-scheme</code> &mdash;
                 <code class="ds-inline-code">theme-init.js</code> applies the
                 stored choice (or defaults to light) before first paint, so
@@ -1037,10 +1035,10 @@
                   See the toggle in this page&rsquo;s own top-right corner.
                   <code class="ds-inline-code">theme-toggle</code> is styled
                   <code class="ds-inline-code">position: fixed</code>
-                  globally (in <code class="ds-inline-code"
-                    >css/theme-toggle.css</code
-                  >), so a second instance placed inline here would render on
-                  top of that corner instance instead of inside this box.
+                  globally (in
+                  <code class="ds-inline-code">css/theme-toggle.css</code>), so
+                  a second instance placed inline here would render on top of
+                  that corner instance instead of inside this box.
                 </p>
               </div>
 
@@ -1049,8 +1047,8 @@
                   attributes
                 </h4>
                 <p class="ds-attr-list__desc type-ui">
-                  None. Add it anywhere in the document; every instance stays
-                  in sync since they all read and write the same
+                  None. Add it anywhere in the document; every instance stays in
+                  sync since they all read and write the same
                   <code class="ds-inline-code">data-theme</code> attribute
                   &mdash; though in practice, only one should ever be on the
                   page at a time, given the fixed positioning above.
@@ -1080,7 +1078,9 @@
                 <h4 class="ds-component__section-label type-ui uppercase">
                   example
                 </h4>
-                <pre class="ds-code"><code>&lt;theme-toggle&gt;&lt;/theme-toggle&gt;</code></pre>
+                <pre
+                  class="ds-code"
+                ><code>&lt;theme-toggle&gt;&lt;/theme-toggle&gt;</code></pre>
               </div>
             </div>
 
@@ -1091,11 +1091,11 @@
                 Renders the Blog panel&rsquo;s full list-to-detail view: a
                 year-filterable, infinite-scroll list of posts (via
                 <code class="ds-inline-code">accessible-select</code> and an
-                <code class="ds-inline-code">IntersectionObserver</code>),
-                and an article detail view rendered with the site&rsquo;s
-                local rich text renderer. A zero-configuration singleton
-                &mdash; it builds its own markup and fetches its own content
-                as soon as it&rsquo;s connected to the page.
+                <code class="ds-inline-code">IntersectionObserver</code>), and
+                an article detail view rendered with the site&rsquo;s local rich
+                text renderer. A zero-configuration singleton &mdash; it builds
+                its own markup and fetches its own content as soon as it&rsquo;s
+                connected to the page.
               </p>
 
               <div class="ds-component__section">
@@ -1130,7 +1130,9 @@
                 <h4 class="ds-component__section-label type-ui uppercase">
                   example
                 </h4>
-                <pre class="ds-code"><code>&lt;dropdown-panel id="blog" variant="scroll"&gt;
+                <pre
+                  class="ds-code"
+                ><code>&lt;dropdown-panel id="blog" variant="scroll"&gt;
   &lt;blog-panel&gt;&lt;/blog-panel&gt;
 &lt;/dropdown-panel&gt;</code></pre>
               </div>
@@ -1141,9 +1143,9 @@
               <h3 class="ds-component__name type-heading-m">code-panel</h3>
               <p class="ds-component__desc type-body-sm">
                 Renders the Writes Code panel: a list of code projects that
-                opens into a detail view with a hero image, a timeline, and
-                the project&rsquo;s rich text body. Fetches its full project
-                list in one request &mdash; no pagination, unlike
+                opens into a detail view with a hero image, a timeline, and the
+                project&rsquo;s rich text body. Fetches its full project list in
+                one request &mdash; no pagination, unlike
                 <code class="ds-inline-code">blog-panel</code>.
               </p>
 
@@ -1162,7 +1164,9 @@
                 <h4 class="ds-component__section-label type-ui uppercase">
                   example
                 </h4>
-                <pre class="ds-code"><code>&lt;dropdown-panel id="writes-code" variant="scroll"&gt;
+                <pre
+                  class="ds-code"
+                ><code>&lt;dropdown-panel id="writes-code" variant="scroll"&gt;
   &lt;code-panel&gt;&lt;/code-panel&gt;
 &lt;/dropdown-panel&gt;</code></pre>
               </div>
@@ -1174,7 +1178,9 @@
               <p class="ds-component__desc type-body-sm">
                 Renders the Makes Music panel&rsquo;s list view. Fetches every
                 music project in one request via
-                <code class="ds-inline-code">window.fetchAllMusicProjects()</code>
+                <code class="ds-inline-code"
+                  >window.fetchAllMusicProjects()</code
+                >
                 &mdash; the simplest of the four panels, with no filtering,
                 pagination, or detail view of its own.
               </p>
@@ -1194,7 +1200,9 @@
                 <h4 class="ds-component__section-label type-ui uppercase">
                   example
                 </h4>
-                <pre class="ds-code"><code>&lt;dropdown-panel id="makes-music" variant="scroll"&gt;
+                <pre
+                  class="ds-code"
+                ><code>&lt;dropdown-panel id="makes-music" variant="scroll"&gt;
   &lt;music-panel&gt;&lt;/music-panel&gt;
 &lt;/dropdown-panel&gt;</code></pre>
               </div>
@@ -1202,17 +1210,14 @@
 
             <!-- moodboard-panel -->
             <div class="ds-component" id="component-moodboard-panel">
-              <h3 class="ds-component__name type-heading-m">
-                moodboard-panel
-              </h3>
+              <h3 class="ds-component__name type-heading-m">moodboard-panel</h3>
               <p class="ds-component__desc type-body-sm">
                 Renders the Collects Moods panel&rsquo;s image grid, paging
                 through entries with an
-                <code class="ds-inline-code">IntersectionObserver</code> as
-                the reader scrolls, the same pattern
+                <code class="ds-inline-code">IntersectionObserver</code> as the
+                reader scrolls, the same pattern
                 <code class="ds-inline-code">blog-panel</code> uses for its
-                list. Also watches a media query to adjust its grid on
-                resize.
+                list. Also watches a media query to adjust its grid on resize.
               </p>
 
               <div class="ds-component__section">
@@ -1237,8 +1242,7 @@
                     >
                     <span class="ds-attr-list__desc type-ui"
                       >Listened for on document, so the panel can hide the
-                      site&rsquo;s introductory copy behind it while
-                      open.</span
+                      site&rsquo;s introductory copy behind it while open.</span
                     >
                   </li>
                 </ul>
@@ -1248,7 +1252,9 @@
                 <h4 class="ds-component__section-label type-ui uppercase">
                   example
                 </h4>
-                <pre class="ds-code"><code>&lt;dropdown-panel id="collects-moods" variant="scroll"&gt;
+                <pre
+                  class="ds-code"
+                ><code>&lt;dropdown-panel id="collects-moods" variant="scroll"&gt;
   &lt;moodboard-panel&gt;&lt;/moodboard-panel&gt;
 &lt;/dropdown-panel&gt;</code></pre>
               </div>
